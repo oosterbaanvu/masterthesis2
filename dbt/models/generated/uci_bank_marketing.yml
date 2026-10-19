@@ -1,0 +1,673 @@
+# GENERATED from config/contracts/uci_bank_marketing.yaml by `dqf controls generate`. Do not edit.
+# Rules recorded in the contract but NOT enforced:
+#   D_PDAYS999_NO_PREVIOUS (expression, status=unsupported, enabled=False): Literal reading of the documentation (999 = not previously contacted) is contradicted by 4,110 untouched rows with previous > 0.
+version: 2
+models:
+- name: stg_uci_bank_marketing
+  description: One row per telemarketing contact of a Portuguese bank (May 2008 - Nov 2010), ordered by date, with client
+    attributes, contact attributes, previous-campaign attributes and national macro-economic indicators. Treated as a monthly
+    delivery from a CRM/campaign system.
+  config:
+    meta:
+      dataset: uci_bank_marketing
+      contract: config/contracts/uci_bank_marketing.yaml
+  data_tests:
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__age
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"age"'
+        column_name_text: age
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__job
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"job"'
+        column_name_text: job
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__marital
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"marital"'
+        column_name_text: marital
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__education
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"education"'
+        column_name_text: education
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__default
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"default"'
+        column_name_text: default
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__housing
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"housing"'
+        column_name_text: housing
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__loan
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"loan"'
+        column_name_text: loan
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__contact
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"contact"'
+        column_name_text: contact
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__month
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"month"'
+        column_name_text: month
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__day_of_week
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"day_of_week"'
+        column_name_text: day_of_week
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__duration
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"duration"'
+        column_name_text: duration
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__campaign
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"campaign"'
+        column_name_text: campaign
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__pdays
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"pdays"'
+        column_name_text: pdays
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__previous
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"previous"'
+        column_name_text: previous
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__poutcome
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"poutcome"'
+        column_name_text: poutcome
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__emp_var_rate
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"emp.var.rate"'
+        column_name_text: emp.var.rate
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__cons_price_idx
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"cons.price.idx"'
+        column_name_text: cons.price.idx
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__cons_conf_idx
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"cons.conf.idx"'
+        column_name_text: cons.conf.idx
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__euribor3m
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"euribor3m"'
+        column_name_text: euribor3m
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_bank_marketing__d_not_null__nr_employed
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"nr.employed"'
+        column_name_text: nr.employed
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_bank_marketing__d_domain_job
+      arguments:
+        rule_id: D_DOMAIN_job
+        column_sql: '"job"'
+        column_name_text: job
+        values_sql: '''admin.'', ''blue-collar'', ''entrepreneur'', ''housemaid'', ''management'', ''retired'', ''self-employed'',
+          ''services'', ''student'', ''technician'', ''unemployed'', ''unknown'''
+      config:
+        meta:
+          rule_id: D_DOMAIN_job
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_bank_marketing__d_domain_marital
+      arguments:
+        rule_id: D_DOMAIN_marital
+        column_sql: '"marital"'
+        column_name_text: marital
+        values_sql: '''divorced'', ''married'', ''single'', ''unknown'''
+      config:
+        meta:
+          rule_id: D_DOMAIN_marital
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_bank_marketing__d_domain_education
+      arguments:
+        rule_id: D_DOMAIN_education
+        column_sql: '"education"'
+        column_name_text: education
+        values_sql: '''basic.4y'', ''basic.6y'', ''basic.9y'', ''high.school'', ''illiterate'', ''professional.course'', ''university.degree'',
+          ''unknown'''
+      config:
+        meta:
+          rule_id: D_DOMAIN_education
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_bank_marketing__d_domain_default
+      arguments:
+        rule_id: D_DOMAIN_default
+        column_sql: '"default"'
+        column_name_text: default
+        values_sql: '''no'', ''yes'', ''unknown'''
+      config:
+        meta:
+          rule_id: D_DOMAIN_default
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_bank_marketing__d_domain_housing
+      arguments:
+        rule_id: D_DOMAIN_housing
+        column_sql: '"housing"'
+        column_name_text: housing
+        values_sql: '''no'', ''yes'', ''unknown'''
+      config:
+        meta:
+          rule_id: D_DOMAIN_housing
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_bank_marketing__d_domain_loan
+      arguments:
+        rule_id: D_DOMAIN_loan
+        column_sql: '"loan"'
+        column_name_text: loan
+        values_sql: '''no'', ''yes'', ''unknown'''
+      config:
+        meta:
+          rule_id: D_DOMAIN_loan
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_bank_marketing__d_domain_contact
+      arguments:
+        rule_id: D_DOMAIN_contact
+        column_sql: '"contact"'
+        column_name_text: contact
+        values_sql: '''cellular'', ''telephone'''
+      config:
+        meta:
+          rule_id: D_DOMAIN_contact
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_bank_marketing__d_domain_month
+      arguments:
+        rule_id: D_DOMAIN_month
+        column_sql: '"month"'
+        column_name_text: month
+        values_sql: '''jan'', ''feb'', ''mar'', ''apr'', ''may'', ''jun'', ''jul'', ''aug'', ''sep'', ''oct'', ''nov'', ''dec'''
+      config:
+        meta:
+          rule_id: D_DOMAIN_month
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_bank_marketing__d_domain_day_of_week
+      arguments:
+        rule_id: D_DOMAIN_day_of_week
+        column_sql: '"day_of_week"'
+        column_name_text: day_of_week
+        values_sql: '''mon'', ''tue'', ''wed'', ''thu'', ''fri'''
+      config:
+        meta:
+          rule_id: D_DOMAIN_day_of_week
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_bank_marketing__d_domain_poutcome
+      arguments:
+        rule_id: D_DOMAIN_poutcome
+        column_sql: '"poutcome"'
+        column_name_text: poutcome
+        values_sql: '''failure'', ''nonexistent'', ''success'''
+      config:
+        meta:
+          rule_id: D_DOMAIN_poutcome
+          tier: deterministic
+          status: verified
+  - dq_range:
+      name: uci_bank_marketing__d_age_range
+      arguments:
+        rule_id: D_AGE_RANGE
+        column_sql: '"age"'
+        column_name_text: age
+        min_value: 17
+        max_value: 100
+      config:
+        meta:
+          rule_id: D_AGE_RANGE
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_bank_marketing__d_duration_nonneg
+      arguments:
+        rule_id: D_DURATION_NONNEG
+        column_sql: '"duration"'
+        column_name_text: duration
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_DURATION_NONNEG
+          tier: deterministic
+          status: verified
+  - dq_range:
+      name: uci_bank_marketing__d_campaign_min1
+      arguments:
+        rule_id: D_CAMPAIGN_MIN1
+        column_sql: '"campaign"'
+        column_name_text: campaign
+        min_value: 1
+      config:
+        meta:
+          rule_id: D_CAMPAIGN_MIN1
+          tier: deterministic
+          status: verified
+  - dq_range:
+      name: uci_bank_marketing__d_previous_nonneg
+      arguments:
+        rule_id: D_PREVIOUS_NONNEG
+        column_sql: '"previous"'
+        column_name_text: previous
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_PREVIOUS_NONNEG
+          tier: deterministic
+          status: verified
+  - dq_range:
+      name: uci_bank_marketing__d_pdays_range
+      arguments:
+        rule_id: D_PDAYS_RANGE
+        column_sql: '"pdays"'
+        column_name_text: pdays
+        min_value: 0
+        max_value: 999
+      config:
+        meta:
+          rule_id: D_PDAYS_RANGE
+          tier: deterministic
+          status: verified
+  - dq_expression:
+      name: uci_bank_marketing__d_poutcome_previous
+      arguments:
+        rule_id: D_POUTCOME_PREVIOUS
+        condition: ("previous" = 0) = ("poutcome" = 'nonexistent')
+        columns_text: previous,poutcome
+        observed_sql: coalesce(cast("previous" as varchar), 'NULL') || '|' || coalesce(cast("poutcome" as varchar), 'NULL')
+      config:
+        meta:
+          rule_id: D_POUTCOME_PREVIOUS
+          tier: deterministic
+          status: verified
+  - dq_expression:
+      name: uci_bank_marketing__d_pdays_previous
+      arguments:
+        rule_id: D_PDAYS_PREVIOUS
+        condition: '"pdays" = 999 or "previous" > 0'
+        columns_text: pdays,previous
+        observed_sql: coalesce(cast("pdays" as varchar), 'NULL') || '|' || coalesce(cast("previous" as varchar), 'NULL')
+      config:
+        meta:
+          rule_id: D_PDAYS_PREVIOUS
+          tier: deterministic
+          status: verified
+  - dq_envelope:
+      name: uci_bank_marketing__s_env_age
+      arguments:
+        rule_id: S_ENV_age
+        expression: '"age"'
+        columns_text: age
+      config:
+        meta:
+          rule_id: S_ENV_age
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_bank_marketing__s_env_duration
+      arguments:
+        rule_id: S_ENV_duration
+        expression: '"duration"'
+        columns_text: duration
+      config:
+        meta:
+          rule_id: S_ENV_duration
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_bank_marketing__s_env_campaign
+      arguments:
+        rule_id: S_ENV_campaign
+        expression: '"campaign"'
+        columns_text: campaign
+      config:
+        meta:
+          rule_id: S_ENV_campaign
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_bank_marketing__s_env_previous
+      arguments:
+        rule_id: S_ENV_previous
+        expression: '"previous"'
+        columns_text: previous
+      config:
+        meta:
+          rule_id: S_ENV_previous
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_bank_marketing__s_env_emp_var_rate
+      arguments:
+        rule_id: S_ENV_emp.var.rate
+        expression: '"emp.var.rate"'
+        columns_text: emp.var.rate
+      config:
+        meta:
+          rule_id: S_ENV_emp.var.rate
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_bank_marketing__s_env_cons_price_idx
+      arguments:
+        rule_id: S_ENV_cons.price.idx
+        expression: '"cons.price.idx"'
+        columns_text: cons.price.idx
+      config:
+        meta:
+          rule_id: S_ENV_cons.price.idx
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_bank_marketing__s_env_cons_conf_idx
+      arguments:
+        rule_id: S_ENV_cons.conf.idx
+        expression: '"cons.conf.idx"'
+        columns_text: cons.conf.idx
+      config:
+        meta:
+          rule_id: S_ENV_cons.conf.idx
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_bank_marketing__s_env_euribor3m
+      arguments:
+        rule_id: S_ENV_euribor3m
+        expression: '"euribor3m"'
+        columns_text: euribor3m
+      config:
+        meta:
+          rule_id: S_ENV_euribor3m
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_bank_marketing__s_env_nr_employed
+      arguments:
+        rule_id: S_ENV_nr.employed
+        expression: '"nr.employed"'
+        columns_text: nr.employed
+      config:
+        meta:
+          rule_id: S_ENV_nr.employed
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_bank_marketing__s_env_pdays
+      arguments:
+        rule_id: S_ENV_pdays
+        expression: case when "pdays" < 999 then "pdays" end
+        columns_text: pdays
+      config:
+        meta:
+          rule_id: S_ENV_pdays
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_macro_lookup
+      arguments:
+        rule_id: S_MACRO_LOOKUP
+        expression: concat_ws('|', "cons.price.idx", "month", "cons.conf.idx", "emp.var.rate", "nr.employed")
+        columns_text: cons.price.idx,month,cons.conf.idx,emp.var.rate,nr.employed
+      config:
+        meta:
+          rule_id: S_MACRO_LOOKUP
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_rare_job
+      arguments:
+        rule_id: S_RARE_job
+        expression: '"job"'
+        columns_text: job
+      config:
+        meta:
+          rule_id: S_RARE_job
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_rare_marital
+      arguments:
+        rule_id: S_RARE_marital
+        expression: '"marital"'
+        columns_text: marital
+      config:
+        meta:
+          rule_id: S_RARE_marital
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_rare_education
+      arguments:
+        rule_id: S_RARE_education
+        expression: '"education"'
+        columns_text: education
+      config:
+        meta:
+          rule_id: S_RARE_education
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_rare_default
+      arguments:
+        rule_id: S_RARE_default
+        expression: '"default"'
+        columns_text: default
+      config:
+        meta:
+          rule_id: S_RARE_default
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_rare_housing
+      arguments:
+        rule_id: S_RARE_housing
+        expression: '"housing"'
+        columns_text: housing
+      config:
+        meta:
+          rule_id: S_RARE_housing
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_rare_loan
+      arguments:
+        rule_id: S_RARE_loan
+        expression: '"loan"'
+        columns_text: loan
+      config:
+        meta:
+          rule_id: S_RARE_loan
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_rare_contact
+      arguments:
+        rule_id: S_RARE_contact
+        expression: '"contact"'
+        columns_text: contact
+      config:
+        meta:
+          rule_id: S_RARE_contact
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_rare_month
+      arguments:
+        rule_id: S_RARE_month
+        expression: '"month"'
+        columns_text: month
+      config:
+        meta:
+          rule_id: S_RARE_month
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_rare_day_of_week
+      arguments:
+        rule_id: S_RARE_day_of_week
+        expression: '"day_of_week"'
+        columns_text: day_of_week
+      config:
+        meta:
+          rule_id: S_RARE_day_of_week
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_bank_marketing__s_rare_poutcome
+      arguments:
+        rule_id: S_RARE_poutcome
+        expression: '"poutcome"'
+        columns_text: poutcome
+      config:
+        meta:
+          rule_id: S_RARE_poutcome
+          tier: statistical
+          status: provisional

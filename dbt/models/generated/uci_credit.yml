@@ -1,0 +1,925 @@
+# GENERATED from config/contracts/uci_credit.yaml by `dqf controls generate`. Do not edit.
+# Rules recorded in the contract but NOT enforced:
+#   D_EDUCATION_DOCUMENTED (accepted_values, status=unsupported, enabled=False): Documented domain, but 345 untouched rows (1.15%) use 0/5/6. Enforcing it would flag published data; replaced by D_EDUCATION_OBSERVED.
+#   D_BILL_OVER_LIMIT (expression, status=unsupported, enabled=False): Candidate business rule from the earlier pilot. Over-limit balances are plausible (interest, fees, supplementary cards) and the multiplier 1.5 is not documented. Replaced by the fitted statistical control S_BILL{i}_TO_LIMIT.
+version: 2
+models:
+- name: stg_uci_credit
+  description: 'One row per credit-card client of a Taiwanese bank (2005): credit limit, demographics, six months (Apr-Sep
+    2005) of repayment status, bill statement and payment amounts. Treated here as a monthly client snapshot delivered by
+    an upstream card system.'
+  config:
+    meta:
+      dataset: uci_credit
+      contract: config/contracts/uci_credit.yaml
+  data_tests:
+  - dq_not_null:
+      name: uci_credit__d_not_null__limit_bal
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"LIMIT_BAL"'
+        column_name_text: LIMIT_BAL
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__sex
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"SEX"'
+        column_name_text: SEX
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__education
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"EDUCATION"'
+        column_name_text: EDUCATION
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__marriage
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"MARRIAGE"'
+        column_name_text: MARRIAGE
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__age
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"AGE"'
+        column_name_text: AGE
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_0
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_0"'
+        column_name_text: PAY_0
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_2
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_2"'
+        column_name_text: PAY_2
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_3
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_3"'
+        column_name_text: PAY_3
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_4
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_4"'
+        column_name_text: PAY_4
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_5
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_5"'
+        column_name_text: PAY_5
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_6
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_6"'
+        column_name_text: PAY_6
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__bill_amt1
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"BILL_AMT1"'
+        column_name_text: BILL_AMT1
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__bill_amt2
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"BILL_AMT2"'
+        column_name_text: BILL_AMT2
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__bill_amt3
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"BILL_AMT3"'
+        column_name_text: BILL_AMT3
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__bill_amt4
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"BILL_AMT4"'
+        column_name_text: BILL_AMT4
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__bill_amt5
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"BILL_AMT5"'
+        column_name_text: BILL_AMT5
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__bill_amt6
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"BILL_AMT6"'
+        column_name_text: BILL_AMT6
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_amt1
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_AMT1"'
+        column_name_text: PAY_AMT1
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_amt2
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_AMT2"'
+        column_name_text: PAY_AMT2
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_amt3
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_AMT3"'
+        column_name_text: PAY_AMT3
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_amt4
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_AMT4"'
+        column_name_text: PAY_AMT4
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_amt5
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_AMT5"'
+        column_name_text: PAY_AMT5
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_credit__d_not_null__pay_amt6
+      arguments:
+        rule_id: D_NOT_NULL
+        column_sql: '"PAY_AMT6"'
+        column_name_text: PAY_AMT6
+      config:
+        meta:
+          rule_id: D_NOT_NULL
+          tier: deterministic
+          status: verified
+  - dq_unique:
+      name: uci_credit__d_unique_id
+      arguments:
+        rule_id: D_UNIQUE_ID
+        column_sql: '"ID"'
+        column_name_text: ID
+      config:
+        meta:
+          rule_id: D_UNIQUE_ID
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_credit__d_sex_domain
+      arguments:
+        rule_id: D_SEX_DOMAIN
+        column_sql: '"SEX"'
+        column_name_text: SEX
+        values_sql: 1, 2
+      config:
+        meta:
+          rule_id: D_SEX_DOMAIN
+          tier: deterministic
+          status: verified
+  - dq_accepted_values:
+      name: uci_credit__d_education_observed
+      arguments:
+        rule_id: D_EDUCATION_OBSERVED
+        column_sql: '"EDUCATION"'
+        column_name_text: EDUCATION
+        values_sql: 0, 1, 2, 3, 4, 5, 6
+      config:
+        meta:
+          rule_id: D_EDUCATION_OBSERVED
+          tier: deterministic
+          status: provisional
+  - dq_accepted_values:
+      name: uci_credit__d_marriage_observed
+      arguments:
+        rule_id: D_MARRIAGE_OBSERVED
+        column_sql: '"MARRIAGE"'
+        column_name_text: MARRIAGE
+        values_sql: 0, 1, 2, 3
+      config:
+        meta:
+          rule_id: D_MARRIAGE_OBSERVED
+          tier: deterministic
+          status: provisional
+  - dq_accepted_values:
+      name: uci_credit__d_pay_0_domain
+      arguments:
+        rule_id: D_PAY_0_DOMAIN
+        column_sql: '"PAY_0"'
+        column_name_text: PAY_0
+        values_sql: -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+      config:
+        meta:
+          rule_id: D_PAY_0_DOMAIN
+          tier: deterministic
+          status: provisional
+  - dq_accepted_values:
+      name: uci_credit__d_pay_2_domain
+      arguments:
+        rule_id: D_PAY_2_DOMAIN
+        column_sql: '"PAY_2"'
+        column_name_text: PAY_2
+        values_sql: -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+      config:
+        meta:
+          rule_id: D_PAY_2_DOMAIN
+          tier: deterministic
+          status: provisional
+  - dq_accepted_values:
+      name: uci_credit__d_pay_3_domain
+      arguments:
+        rule_id: D_PAY_3_DOMAIN
+        column_sql: '"PAY_3"'
+        column_name_text: PAY_3
+        values_sql: -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+      config:
+        meta:
+          rule_id: D_PAY_3_DOMAIN
+          tier: deterministic
+          status: provisional
+  - dq_accepted_values:
+      name: uci_credit__d_pay_4_domain
+      arguments:
+        rule_id: D_PAY_4_DOMAIN
+        column_sql: '"PAY_4"'
+        column_name_text: PAY_4
+        values_sql: -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+      config:
+        meta:
+          rule_id: D_PAY_4_DOMAIN
+          tier: deterministic
+          status: provisional
+  - dq_accepted_values:
+      name: uci_credit__d_pay_5_domain
+      arguments:
+        rule_id: D_PAY_5_DOMAIN
+        column_sql: '"PAY_5"'
+        column_name_text: PAY_5
+        values_sql: -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+      config:
+        meta:
+          rule_id: D_PAY_5_DOMAIN
+          tier: deterministic
+          status: provisional
+  - dq_accepted_values:
+      name: uci_credit__d_pay_6_domain
+      arguments:
+        rule_id: D_PAY_6_DOMAIN
+        column_sql: '"PAY_6"'
+        column_name_text: PAY_6
+        values_sql: -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+      config:
+        meta:
+          rule_id: D_PAY_6_DOMAIN
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_credit__d_age_range
+      arguments:
+        rule_id: D_AGE_RANGE
+        column_sql: '"AGE"'
+        column_name_text: AGE
+        min_value: 18
+        max_value: 100
+      config:
+        meta:
+          rule_id: D_AGE_RANGE
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_credit__d_limit_positive
+      arguments:
+        rule_id: D_LIMIT_POSITIVE
+        column_sql: '"LIMIT_BAL"'
+        column_name_text: LIMIT_BAL
+        min_value: 1
+      config:
+        meta:
+          rule_id: D_LIMIT_POSITIVE
+          tier: deterministic
+          status: verified
+  - dq_expression:
+      name: uci_credit__d_limit_granularity
+      arguments:
+        rule_id: D_LIMIT_GRANULARITY
+        condition: '"LIMIT_BAL" % 10000 = 0'
+        columns_text: LIMIT_BAL
+        observed_sql: coalesce(cast("LIMIT_BAL" as varchar), 'NULL')
+      config:
+        meta:
+          rule_id: D_LIMIT_GRANULARITY
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_credit__d_pay_amt1_nonneg
+      arguments:
+        rule_id: D_PAY_AMT1_NONNEG
+        column_sql: '"PAY_AMT1"'
+        column_name_text: PAY_AMT1
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_PAY_AMT1_NONNEG
+          tier: deterministic
+          status: verified
+  - dq_range:
+      name: uci_credit__d_pay_amt2_nonneg
+      arguments:
+        rule_id: D_PAY_AMT2_NONNEG
+        column_sql: '"PAY_AMT2"'
+        column_name_text: PAY_AMT2
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_PAY_AMT2_NONNEG
+          tier: deterministic
+          status: verified
+  - dq_range:
+      name: uci_credit__d_pay_amt3_nonneg
+      arguments:
+        rule_id: D_PAY_AMT3_NONNEG
+        column_sql: '"PAY_AMT3"'
+        column_name_text: PAY_AMT3
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_PAY_AMT3_NONNEG
+          tier: deterministic
+          status: verified
+  - dq_range:
+      name: uci_credit__d_pay_amt4_nonneg
+      arguments:
+        rule_id: D_PAY_AMT4_NONNEG
+        column_sql: '"PAY_AMT4"'
+        column_name_text: PAY_AMT4
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_PAY_AMT4_NONNEG
+          tier: deterministic
+          status: verified
+  - dq_range:
+      name: uci_credit__d_pay_amt5_nonneg
+      arguments:
+        rule_id: D_PAY_AMT5_NONNEG
+        column_sql: '"PAY_AMT5"'
+        column_name_text: PAY_AMT5
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_PAY_AMT5_NONNEG
+          tier: deterministic
+          status: verified
+  - dq_range:
+      name: uci_credit__d_pay_amt6_nonneg
+      arguments:
+        rule_id: D_PAY_AMT6_NONNEG
+        column_sql: '"PAY_AMT6"'
+        column_name_text: PAY_AMT6
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_PAY_AMT6_NONNEG
+          tier: deterministic
+          status: verified
+  - dq_envelope:
+      name: uci_credit__s_env_limit_bal
+      arguments:
+        rule_id: S_ENV_LIMIT_BAL
+        expression: '"LIMIT_BAL"'
+        columns_text: LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_ENV_LIMIT_BAL
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_age
+      arguments:
+        rule_id: S_ENV_AGE
+        expression: '"AGE"'
+        columns_text: AGE
+      config:
+        meta:
+          rule_id: S_ENV_AGE
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_bill_amt1
+      arguments:
+        rule_id: S_ENV_BILL_AMT1
+        expression: '"BILL_AMT1"'
+        columns_text: BILL_AMT1
+      config:
+        meta:
+          rule_id: S_ENV_BILL_AMT1
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_bill_amt2
+      arguments:
+        rule_id: S_ENV_BILL_AMT2
+        expression: '"BILL_AMT2"'
+        columns_text: BILL_AMT2
+      config:
+        meta:
+          rule_id: S_ENV_BILL_AMT2
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_bill_amt3
+      arguments:
+        rule_id: S_ENV_BILL_AMT3
+        expression: '"BILL_AMT3"'
+        columns_text: BILL_AMT3
+      config:
+        meta:
+          rule_id: S_ENV_BILL_AMT3
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_bill_amt4
+      arguments:
+        rule_id: S_ENV_BILL_AMT4
+        expression: '"BILL_AMT4"'
+        columns_text: BILL_AMT4
+      config:
+        meta:
+          rule_id: S_ENV_BILL_AMT4
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_bill_amt5
+      arguments:
+        rule_id: S_ENV_BILL_AMT5
+        expression: '"BILL_AMT5"'
+        columns_text: BILL_AMT5
+      config:
+        meta:
+          rule_id: S_ENV_BILL_AMT5
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_bill_amt6
+      arguments:
+        rule_id: S_ENV_BILL_AMT6
+        expression: '"BILL_AMT6"'
+        columns_text: BILL_AMT6
+      config:
+        meta:
+          rule_id: S_ENV_BILL_AMT6
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_pay_amt1
+      arguments:
+        rule_id: S_ENV_PAY_AMT1
+        expression: '"PAY_AMT1"'
+        columns_text: PAY_AMT1
+      config:
+        meta:
+          rule_id: S_ENV_PAY_AMT1
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_pay_amt2
+      arguments:
+        rule_id: S_ENV_PAY_AMT2
+        expression: '"PAY_AMT2"'
+        columns_text: PAY_AMT2
+      config:
+        meta:
+          rule_id: S_ENV_PAY_AMT2
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_pay_amt3
+      arguments:
+        rule_id: S_ENV_PAY_AMT3
+        expression: '"PAY_AMT3"'
+        columns_text: PAY_AMT3
+      config:
+        meta:
+          rule_id: S_ENV_PAY_AMT3
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_pay_amt4
+      arguments:
+        rule_id: S_ENV_PAY_AMT4
+        expression: '"PAY_AMT4"'
+        columns_text: PAY_AMT4
+      config:
+        meta:
+          rule_id: S_ENV_PAY_AMT4
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_pay_amt5
+      arguments:
+        rule_id: S_ENV_PAY_AMT5
+        expression: '"PAY_AMT5"'
+        columns_text: PAY_AMT5
+      config:
+        meta:
+          rule_id: S_ENV_PAY_AMT5
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_env_pay_amt6
+      arguments:
+        rule_id: S_ENV_PAY_AMT6
+        expression: '"PAY_AMT6"'
+        columns_text: PAY_AMT6
+      config:
+        meta:
+          rule_id: S_ENV_PAY_AMT6
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill1_to_limit
+      arguments:
+        rule_id: S_BILL1_TO_LIMIT
+        expression: '"BILL_AMT1" / "LIMIT_BAL"'
+        columns_text: BILL_AMT1,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL1_TO_LIMIT
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill2_to_limit
+      arguments:
+        rule_id: S_BILL2_TO_LIMIT
+        expression: '"BILL_AMT2" / "LIMIT_BAL"'
+        columns_text: BILL_AMT2,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL2_TO_LIMIT
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill3_to_limit
+      arguments:
+        rule_id: S_BILL3_TO_LIMIT
+        expression: '"BILL_AMT3" / "LIMIT_BAL"'
+        columns_text: BILL_AMT3,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL3_TO_LIMIT
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill4_to_limit
+      arguments:
+        rule_id: S_BILL4_TO_LIMIT
+        expression: '"BILL_AMT4" / "LIMIT_BAL"'
+        columns_text: BILL_AMT4,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL4_TO_LIMIT
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill5_to_limit
+      arguments:
+        rule_id: S_BILL5_TO_LIMIT
+        expression: '"BILL_AMT5" / "LIMIT_BAL"'
+        columns_text: BILL_AMT5,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL5_TO_LIMIT
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill6_to_limit
+      arguments:
+        rule_id: S_BILL6_TO_LIMIT
+        expression: '"BILL_AMT6" / "LIMIT_BAL"'
+        columns_text: BILL_AMT6,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL6_TO_LIMIT
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill_mom1
+      arguments:
+        rule_id: S_BILL_MOM1
+        expression: ("BILL_AMT1" - "BILL_AMT2") / "LIMIT_BAL"
+        columns_text: BILL_AMT1,BILL_AMT2,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL_MOM1
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill_mom2
+      arguments:
+        rule_id: S_BILL_MOM2
+        expression: ("BILL_AMT2" - "BILL_AMT3") / "LIMIT_BAL"
+        columns_text: BILL_AMT2,BILL_AMT3,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL_MOM2
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill_mom3
+      arguments:
+        rule_id: S_BILL_MOM3
+        expression: ("BILL_AMT3" - "BILL_AMT4") / "LIMIT_BAL"
+        columns_text: BILL_AMT3,BILL_AMT4,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL_MOM3
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill_mom4
+      arguments:
+        rule_id: S_BILL_MOM4
+        expression: ("BILL_AMT4" - "BILL_AMT5") / "LIMIT_BAL"
+        columns_text: BILL_AMT4,BILL_AMT5,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL_MOM4
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_bill_mom5
+      arguments:
+        rule_id: S_BILL_MOM5
+        expression: ("BILL_AMT5" - "BILL_AMT6") / "LIMIT_BAL"
+        columns_text: BILL_AMT5,BILL_AMT6,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_BILL_MOM5
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_pay_to_bill1
+      arguments:
+        rule_id: S_PAY_TO_BILL1
+        expression: ("PAY_AMT1" - greatest("BILL_AMT2", 0)) / "LIMIT_BAL"
+        columns_text: PAY_AMT1,BILL_AMT2,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_PAY_TO_BILL1
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_pay_to_bill2
+      arguments:
+        rule_id: S_PAY_TO_BILL2
+        expression: ("PAY_AMT2" - greatest("BILL_AMT3", 0)) / "LIMIT_BAL"
+        columns_text: PAY_AMT2,BILL_AMT3,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_PAY_TO_BILL2
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_pay_to_bill3
+      arguments:
+        rule_id: S_PAY_TO_BILL3
+        expression: ("PAY_AMT3" - greatest("BILL_AMT4", 0)) / "LIMIT_BAL"
+        columns_text: PAY_AMT3,BILL_AMT4,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_PAY_TO_BILL3
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_pay_to_bill4
+      arguments:
+        rule_id: S_PAY_TO_BILL4
+        expression: ("PAY_AMT4" - greatest("BILL_AMT5", 0)) / "LIMIT_BAL"
+        columns_text: PAY_AMT4,BILL_AMT5,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_PAY_TO_BILL4
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_credit__s_pay_to_bill5
+      arguments:
+        rule_id: S_PAY_TO_BILL5
+        expression: ("PAY_AMT5" - greatest("BILL_AMT6", 0)) / "LIMIT_BAL"
+        columns_text: PAY_AMT5,BILL_AMT6,LIMIT_BAL
+      config:
+        meta:
+          rule_id: S_PAY_TO_BILL5
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_credit__s_rare_sex
+      arguments:
+        rule_id: S_RARE_SEX
+        expression: '"SEX"'
+        columns_text: SEX
+      config:
+        meta:
+          rule_id: S_RARE_SEX
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_credit__s_rare_education
+      arguments:
+        rule_id: S_RARE_EDUCATION
+        expression: '"EDUCATION"'
+        columns_text: EDUCATION
+      config:
+        meta:
+          rule_id: S_RARE_EDUCATION
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_credit__s_rare_marriage
+      arguments:
+        rule_id: S_RARE_MARRIAGE
+        expression: '"MARRIAGE"'
+        columns_text: MARRIAGE
+      config:
+        meta:
+          rule_id: S_RARE_MARRIAGE
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_credit__s_rare_pay_0
+      arguments:
+        rule_id: S_RARE_PAY_0
+        expression: '"PAY_0"'
+        columns_text: PAY_0
+      config:
+        meta:
+          rule_id: S_RARE_PAY_0
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_credit__s_rare_pay_2
+      arguments:
+        rule_id: S_RARE_PAY_2
+        expression: '"PAY_2"'
+        columns_text: PAY_2
+      config:
+        meta:
+          rule_id: S_RARE_PAY_2
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_credit__s_rare_pay_3
+      arguments:
+        rule_id: S_RARE_PAY_3
+        expression: '"PAY_3"'
+        columns_text: PAY_3
+      config:
+        meta:
+          rule_id: S_RARE_PAY_3
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_credit__s_rare_pay_4
+      arguments:
+        rule_id: S_RARE_PAY_4
+        expression: '"PAY_4"'
+        columns_text: PAY_4
+      config:
+        meta:
+          rule_id: S_RARE_PAY_4
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_credit__s_rare_pay_5
+      arguments:
+        rule_id: S_RARE_PAY_5
+        expression: '"PAY_5"'
+        columns_text: PAY_5
+      config:
+        meta:
+          rule_id: S_RARE_PAY_5
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: uci_credit__s_rare_pay_6
+      arguments:
+        rule_id: S_RARE_PAY_6
+        expression: '"PAY_6"'
+        columns_text: PAY_6
+      config:
+        meta:
+          rule_id: S_RARE_PAY_6
+          tier: statistical
+          status: provisional

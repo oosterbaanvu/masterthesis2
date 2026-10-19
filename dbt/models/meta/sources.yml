@@ -1,0 +1,10 @@
+version: 2
+sources:
+  - name: dq_meta
+    description: Reference statistics fitted on the reference partition by the Python runner.
+    schema: main
+    tables:
+      - name: dq_reference_bounds
+        description: "One row per (rule_id): lower/upper bounds of a statistical envelope."
+      - name: dq_reference_categories
+        description: "One row per (rule_id, value): category values with reference share >= min_share."

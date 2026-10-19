@@ -27,8 +27,8 @@ logs/
 # Experiment outputs: only small, curated summaries are committed (see results/README.md)
 results/runs/
 results/**/*.parquet
-models/
-AutogluonModels/
+/models/
+**/AutogluonModels/
 catboost_info/
 mlruns/
 
@@ -36,3 +36,4 @@ mlruns/
 .env
 *.pem
 *.key
+envs/*/install.log
