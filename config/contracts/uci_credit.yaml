@@ -1,0 +1,177 @@
+# Source contract: UCI Default of Credit Card Clients
+# Semantics source: UCI dataset page "variable_info" (retrieved 2026-10-19 via
+# https://archive.ics.uci.edu/api/dataset?id=350), quoted in docs/dataset_qualification.md.
+# Failure rates of every rule on the untouched table: results/qualification/uci_credit.json
+
+dataset: uci_credit
+table: credit_card_clients
+description: >-
+  One row per credit-card client of a Taiwanese bank (2005): credit limit, demographics,
+  six months (Apr-Sep 2005) of repayment status, bill statement and payment amounts.
+  Treated here as a monthly client snapshot delivered by an upstream card system.
+row_id: ID
+
+excluded_columns:
+  "default payment next month": >-
+    Prediction target (default outcome). It is not a data-quality label; it is excluded from
+    controls, error injection and detector features.
+
+columns:
+  - {name: LIMIT_BAL, type: numeric, semantic: money_amount, unit: NTD, description: "Amount of given credit, incl. supplementary credit (X1)"}
+  - {name: SEX, type: categorical, semantic: code, documented_values: [1, 2], description: "Gender (X2)"}
+  - {name: EDUCATION, type: categorical, semantic: code, documented_values: [1, 2, 3, 4], description: "Education (X3); data also contains undocumented 0, 5, 6"}
+  - {name: MARRIAGE, type: categorical, semantic: code, documented_values: [1, 2, 3], description: "Marital status (X4); data also contains undocumented 0"}
+  - {name: AGE, type: numeric, semantic: age_years, unit: years, description: "Age in years (X5)"}
+  - {name: PAY_0, type: categorical, semantic: repayment_status, documented_values: [-1, 1, 2, 3, 4, 5, 6, 7, 8, 9], description: "Repayment status Sep 2005 (X6); data also contains undocumented -2 and 0"}
+  - {name: PAY_2, type: categorical, semantic: repayment_status, documented_values: [-1, 1, 2, 3, 4, 5, 6, 7, 8, 9], description: "Repayment status Aug 2005 (X7)"}
+  - {name: PAY_3, type: categorical, semantic: repayment_status, documented_values: [-1, 1, 2, 3, 4, 5, 6, 7, 8, 9], description: "Repayment status Jul 2005 (X8)"}
+  - {name: PAY_4, type: categorical, semantic: repayment_status, documented_values: [-1, 1, 2, 3, 4, 5, 6, 7, 8, 9], description: "Repayment status Jun 2005 (X9)"}
+  - {name: PAY_5, type: categorical, semantic: repayment_status, documented_values: [-1, 1, 2, 3, 4, 5, 6, 7, 8, 9], description: "Repayment status May 2005 (X10)"}
+  - {name: PAY_6, type: categorical, semantic: repayment_status, documented_values: [-1, 1, 2, 3, 4, 5, 6, 7, 8, 9], description: "Repayment status Apr 2005 (X11)"}
+  - {name: BILL_AMT1, type: numeric, semantic: money_amount_signed, unit: NTD, description: "Bill statement amount Sep 2005 (X12); negative = credit balance"}
+  - {name: BILL_AMT2, type: numeric, semantic: money_amount_signed, unit: NTD, description: "Bill statement amount Aug 2005 (X13)"}
+  - {name: BILL_AMT3, type: numeric, semantic: money_amount_signed, unit: NTD, description: "Bill statement amount Jul 2005 (X14)"}
+  - {name: BILL_AMT4, type: numeric, semantic: money_amount_signed, unit: NTD, description: "Bill statement amount Jun 2005 (X15)"}
+  - {name: BILL_AMT5, type: numeric, semantic: money_amount_signed, unit: NTD, description: "Bill statement amount May 2005 (X16)"}
+  - {name: BILL_AMT6, type: numeric, semantic: money_amount_signed, unit: NTD, description: "Bill statement amount Apr 2005 (X17)"}
+  - {name: PAY_AMT1, type: numeric, semantic: money_amount, unit: NTD, description: "Amount paid Sep 2005 (X18)"}
+  - {name: PAY_AMT2, type: numeric, semantic: money_amount, unit: NTD, description: "Amount paid Aug 2005 (X19)"}
+  - {name: PAY_AMT3, type: numeric, semantic: money_amount, unit: NTD, description: "Amount paid Jul 2005 (X20)"}
+  - {name: PAY_AMT4, type: numeric, semantic: money_amount, unit: NTD, description: "Amount paid Jun 2005 (X21)"}
+  - {name: PAY_AMT5, type: numeric, semantic: money_amount, unit: NTD, description: "Amount paid May 2005 (X22)"}
+  - {name: PAY_AMT6, type: numeric, semantic: money_amount, unit: NTD, description: "Amount paid Apr 2005 (X23)"}
+
+# ---------------------------------------------------------------------------
+# Deterministic rules (dbt generic tests). Written from documentation and the
+# untouched data only; never from injected test errors.
+# ---------------------------------------------------------------------------
+rules:
+  - id: D_NOT_NULL
+    kind: not_null
+    columns: all
+    status: verified
+    evidence: "UCI metadata has_missing_values = no; 0 nulls in the published table."
+  - id: D_UNIQUE_ID
+    kind: unique
+    columns: [ID]
+    status: verified
+    evidence: "ID is the record key; unique 1..30000 in the published table."
+  - id: D_SEX_DOMAIN
+    kind: accepted_values
+    columns: [SEX]
+    values: [1, 2]
+    status: verified
+    evidence: "Documented codes 1/2; 0 violations."
+  - id: D_EDUCATION_DOCUMENTED
+    kind: accepted_values
+    columns: [EDUCATION]
+    values: [1, 2, 3, 4]
+    status: unsupported
+    enabled: false
+    evidence: "Documented domain, but 345 untouched rows (1.15%) use 0/5/6. Enforcing it would flag published data; replaced by D_EDUCATION_OBSERVED."
+  - id: D_EDUCATION_OBSERVED
+    kind: accepted_values
+    columns: [EDUCATION]
+    values: [0, 1, 2, 3, 4, 5, 6]
+    status: provisional
+    evidence: "Documented codes plus undocumented codes present in the published data (meaning unknown)."
+  - id: D_MARRIAGE_OBSERVED
+    kind: accepted_values
+    columns: [MARRIAGE]
+    values: [0, 1, 2, 3]
+    status: provisional
+    evidence: "Documented 1-3 plus undocumented 0 (54 rows) present in published data."
+  - id: D_PAY_{i}_DOMAIN
+    kind: accepted_values
+    for_each: [0, 2, 3, 4, 5, 6]
+    columns: ["PAY_{i}"]
+    values: [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    status: provisional
+    evidence: "Documented scale -1, 1..9 plus undocumented -2 and 0, which make up most of the published values."
+  - id: D_AGE_RANGE
+    kind: range
+    columns: [AGE]
+    min: 18
+    max: 100
+    status: provisional
+    evidence: "Card holders are adults; plausible upper bound. Observed 21-79, 0 violations."
+  - id: D_LIMIT_POSITIVE
+    kind: range
+    columns: [LIMIT_BAL]
+    min: 1
+    status: verified
+    evidence: "A granted credit amount is positive by definition; 0 violations."
+  - id: D_LIMIT_GRANULARITY
+    kind: expression
+    columns: [LIMIT_BAL]
+    expression: '"LIMIT_BAL" % 10000 = 0'
+    status: provisional
+    evidence: "Data-derived: 29,997 of 30,000 limits are multiples of 10,000 (3 untouched exceptions, status unknown)."
+  - id: D_PAY_AMT{i}_NONNEG
+    kind: range
+    for_each: [1, 2, 3, 4, 5, 6]
+    columns: ["PAY_AMT{i}"]
+    min: 0
+    status: verified
+    evidence: "A payment amount is non-negative; 0 violations."
+  - id: D_BILL_OVER_LIMIT
+    kind: expression
+    columns: [BILL_AMT1, LIMIT_BAL]
+    expression: '"BILL_AMT1" <= 1.5 * "LIMIT_BAL"'
+    status: unsupported
+    enabled: false
+    evidence: >-
+      Candidate business rule from the earlier pilot. Over-limit balances are plausible (interest, fees,
+      supplementary cards) and the multiplier 1.5 is not documented. Replaced by the fitted statistical
+      control S_BILL{i}_TO_LIMIT.
+
+# ---------------------------------------------------------------------------
+# Statistical controls: thresholds are fitted on the reference partition only
+# (quantiles of the expression), then executed as dbt tests.
+# ---------------------------------------------------------------------------
+statistical_controls:
+  - id: S_ENV_{i}
+    kind: envelope
+    for_each: [LIMIT_BAL, AGE, BILL_AMT1, BILL_AMT2, BILL_AMT3, BILL_AMT4, BILL_AMT5, BILL_AMT6,
+               PAY_AMT1, PAY_AMT2, PAY_AMT3, PAY_AMT4, PAY_AMT5, PAY_AMT6]
+    columns: ["{i}"]
+    expression: '"{i}"'
+    lower_q: 0.0005
+    upper_q: 0.9995
+    status: provisional
+    evidence: "Univariate reference envelope (0.05%/99.95% quantiles). Expected alert rate on in-distribution data about 0.1% per column."
+  - id: S_BILL{i}_TO_LIMIT
+    kind: envelope
+    for_each: [1, 2, 3, 4, 5, 6]
+    columns: ["BILL_AMT{i}", LIMIT_BAL]
+    expression: '"BILL_AMT{i}" / "LIMIT_BAL"'
+    lower_q: 0.0005
+    upper_q: 0.9995
+    status: provisional
+    evidence: "Utilisation ratio envelope; the statistical replacement for an undocumented over-limit business rule."
+  - id: S_BILL_MOM{i}
+    kind: envelope
+    for_each: [1, 2, 3, 4, 5]
+    columns: ["BILL_AMT{i}", "BILL_AMT{i1}", LIMIT_BAL]
+    expression: '("BILL_AMT{i}" - "BILL_AMT{i1}") / "LIMIT_BAL"'
+    lower_q: 0.0005
+    upper_q: 0.9995
+    status: provisional
+    evidence: "Month-over-month balance change relative to the limit; a standard consistency check for statement series."
+  - id: S_PAY_TO_BILL{i}
+    kind: envelope
+    for_each: [1, 2, 3, 4, 5]
+    columns: ["PAY_AMT{i}", "BILL_AMT{i1}", LIMIT_BAL]
+    expression: '("PAY_AMT{i}" - greatest("BILL_AMT{i1}", 0)) / "LIMIT_BAL"'
+    lower_q: 0.0005
+    upper_q: 0.9995
+    status: provisional
+    evidence: "Payment relative to the preceding statement (overpayment allowed within the reference envelope)."
+  - id: S_RARE_{i}
+    kind: rare_category
+    for_each: [SEX, EDUCATION, MARRIAGE, PAY_0, PAY_2, PAY_3, PAY_4, PAY_5, PAY_6]
+    columns: ["{i}"]
+    expression: '"{i}"'
+    min_share: 0.0005
+    status: provisional
+    evidence: "Category value seen in fewer than 0.05% of reference rows (or never) is alerted."

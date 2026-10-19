@@ -1,0 +1,27 @@
+# dbt Core project executing the conventional data-quality controls.
+# Models and tests under models/generated/ are generated from config/contracts/*.yaml
+# by `dqf controls generate` (do not edit by hand; a test checks they are up to date).
+name: dq_eval
+version: "0.1.0"
+config-version: 2
+profile: dq_eval
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target", "logs"]
+
+vars:
+  batch_path: "unset"   # Parquet file with the batch under test (set by the runner)
+
+models:
+  dq_eval:
+    +materialized: table
+
+data_tests:
+  dq_eval:
+    +store_failures: true
+    +store_failures_as: table
+    +schema: dq_audit
+    +severity: warn     # a failing control is an exception to report, not a build failure

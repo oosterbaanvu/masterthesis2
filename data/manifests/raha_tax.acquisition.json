@@ -1,0 +1,47 @@
+{
+  "landing_page": "https://github.com/BigDaMa/raha/tree/master/datasets/tax",
+  "licence": "Repository Apache-2.0 (BigDaMa/raha LICENSE.md); synthetic generator origin, see docs/dataset_qualification.md",
+  "version": "BigDaMa/raha commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c",
+  "citation": "Mahdavi et al. (2019) Raha, SIGMOD (benchmark copy)",
+  "dataset": "raha_tax",
+  "title": "Tax (Raha benchmark copy; synthetic tax records with generated errors)",
+  "status": "VERIFIED",
+  "checked_utc": "2026-10-19T22:19:59+00:00",
+  "files": [
+    {
+      "path": "dirty.csv",
+      "sha256": "8dd3429ec4791b2ed1a688c308a57a9f3d1a94f77d1f4e98294a67273270b973",
+      "bytes": 14633203,
+      "writable": true
+    },
+    {
+      "path": "clean.csv",
+      "sha256": "201290927ae92e65b3940d776b3df5b4d953c5dfd9abb231715a2e65ecca87b0",
+      "bytes": 14621003,
+      "writable": true
+    }
+  ],
+  "problems": [],
+  "unpinned": [],
+  "downloads": [
+    {
+      "file": "dirty.csv",
+      "url": "https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/tax/dirty.csv",
+      "sha256": "8dd3429ec4791b2ed1a688c308a57a9f3d1a94f77d1f4e98294a67273270b973",
+      "bytes": 14633203,
+      "retrieved_utc": "2026-10-19T22:19:58+00:00",
+      "extracted": [],
+      "path": "dirty.csv"
+    },
+    {
+      "file": "clean.csv",
+      "url": "https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/tax/clean.csv",
+      "sha256": "201290927ae92e65b3940d776b3df5b4d953c5dfd9abb231715a2e65ecca87b0",
+      "bytes": 14621003,
+      "retrieved_utc": "2026-10-19T22:19:59+00:00",
+      "extracted": [],
+      "path": "clean.csv"
+    }
+  ],
+  "unpinned_at_download": []
+}

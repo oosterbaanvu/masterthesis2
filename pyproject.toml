@@ -1,0 +1,53 @@
+[project]
+name = "dq-framework"
+version = "0.1.0"
+description = "Financial Data Quality Evaluation Framework: measure what conventional data-quality controls miss and whether a learned cell-level detector adds value."
+readme = "README.md"
+# tab_err 0.2.1 declares requires-python <3.13; dbt-core 1.12 needs >=3.10.
+requires-python = ">=3.11,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "MSc AI thesis project (University of Groningen)" }]
+dependencies = [
+    "pandas>=2.3,<2.4",        # upper bound imposed by tab_err 0.2.1
+    "numpy>=2.0,<3",
+    "pyarrow>=20",
+    "duckdb>=1.3,<2",
+    "pyyaml>=6.0",
+    "scikit-learn>=1.6,<2",
+    "scipy>=1.13",
+    "tab-err==0.2.1",
+    "xlrd>=2.0",               # UCI Credit is distributed as .xls
+    "dbt-core>=1.10,<1.13",
+    "dbt-duckdb>=1.10,<1.12",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+dqf = "dq_framework.cli:main"
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dq_framework"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "data: requires downloaded datasets under data/raw (skipped in CI when absent)",
+    "dbt: runs dbt-core against DuckDB",
+    "slow: longer-running integration tests",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+ignore = ["E501"]

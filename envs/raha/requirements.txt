@@ -1,0 +1,13 @@
+# Isolated environment for the original Raha implementation (BigDaMa/raha v1.26).
+# Pins follow the upstream requirements.txt at commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c.
+numpy==1.22.4
+pandas==2.1.0
+scipy==1.10.0
+scikit-learn==1.2.2
+matplotlib==3.7.1
+prettytable==0.7.2
+mwparserfromhell==0.5.4
+beautifulsoup4==4.6.0
+py7zr==0.20.2
+pyarrow==14.0.2
+raha==1.26

@@ -1,0 +1,47 @@
+{
+  "landing_page": "https://github.com/BigDaMa/raha/tree/master/datasets/hospital",
+  "licence": "Repository Apache-2.0 (BigDaMa/raha LICENSE.md)",
+  "version": "BigDaMa/raha commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c",
+  "citation": "Mahdavi et al. (2019) Raha, SIGMOD (benchmark copy)",
+  "dataset": "raha_hospital",
+  "title": "Hospital (Raha benchmark; synthetic character-substitution errors)",
+  "status": "VERIFIED",
+  "checked_utc": "2026-10-19T22:20:00+00:00",
+  "files": [
+    {
+      "path": "dirty.csv",
+      "sha256": "dbc5575b915fe8b5e0ac6dc6172f38ba91e611fdb76d09a8f4a81cb7ea9925ac",
+      "bytes": 303306,
+      "writable": true
+    },
+    {
+      "path": "clean.csv",
+      "sha256": "ea3ee44998455c0b491750c348509de176c758a3bbf58e4530c0a136bb248b4b",
+      "bytes": 303324,
+      "writable": true
+    }
+  ],
+  "problems": [],
+  "unpinned": [],
+  "downloads": [
+    {
+      "file": "dirty.csv",
+      "url": "https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/hospital/dirty.csv",
+      "sha256": "dbc5575b915fe8b5e0ac6dc6172f38ba91e611fdb76d09a8f4a81cb7ea9925ac",
+      "bytes": 303306,
+      "retrieved_utc": "2026-10-19T22:19:59+00:00",
+      "extracted": [],
+      "path": "dirty.csv"
+    },
+    {
+      "file": "clean.csv",
+      "url": "https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/hospital/clean.csv",
+      "sha256": "ea3ee44998455c0b491750c348509de176c758a3bbf58e4530c0a136bb248b4b",
+      "bytes": 303324,
+      "retrieved_utc": "2026-10-19T22:20:00+00:00",
+      "extracted": [],
+      "path": "clean.csv"
+    }
+  ],
+  "unpinned_at_download": []
+}

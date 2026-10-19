@@ -1,0 +1,47 @@
+{
+  "landing_page": "https://github.com/BigDaMa/raha/tree/master/datasets/beers",
+  "licence": "Repository Apache-2.0 (BigDaMa/raha LICENSE.md)",
+  "version": "BigDaMa/raha commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c",
+  "citation": "Mahdavi et al. (2019) Raha, SIGMOD (benchmark copy)",
+  "dataset": "raha_beers",
+  "title": "Beers (Raha benchmark; craft-beer listings with real formatting/value errors, manually cleaned)",
+  "status": "VERIFIED",
+  "checked_utc": "2026-10-19T22:19:59+00:00",
+  "files": [
+    {
+      "path": "dirty.csv",
+      "sha256": "7110bf4931a9445a1675e544d6c996817c739136239f8a2b02e088c7ec0a1f68",
+      "bytes": 255295,
+      "writable": true
+    },
+    {
+      "path": "clean.csv",
+      "sha256": "373227df59ad197e154dd5149125789e415019535c7223355e9486ee1b3b93de",
+      "bytes": 233019,
+      "writable": true
+    }
+  ],
+  "problems": [],
+  "unpinned": [],
+  "downloads": [
+    {
+      "file": "dirty.csv",
+      "url": "https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/beers/dirty.csv",
+      "sha256": "7110bf4931a9445a1675e544d6c996817c739136239f8a2b02e088c7ec0a1f68",
+      "bytes": 255295,
+      "retrieved_utc": "2026-10-19T22:19:59+00:00",
+      "extracted": [],
+      "path": "dirty.csv"
+    },
+    {
+      "file": "clean.csv",
+      "url": "https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/beers/clean.csv",
+      "sha256": "373227df59ad197e154dd5149125789e415019535c7223355e9486ee1b3b93de",
+      "bytes": 233019,
+      "retrieved_utc": "2026-10-19T22:19:59+00:00",
+      "extracted": [],
+      "path": "clean.csv"
+    }
+  ],
+  "unpinned_at_download": []
+}

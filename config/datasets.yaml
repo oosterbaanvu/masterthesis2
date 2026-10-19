@@ -1,0 +1,175 @@
+# Dataset registry: authoritative sources, pinned versions and hashes, research roles.
+#
+# Roles (a dataset need not serve all of them):
+#   controlled_financial : financial table into which we inject controlled errors (labels by construction)
+#   existing_error_benchmark : published dirty/clean pair with independently known cell errors
+#   engineering_demo : scalability / configuration-driven onboarding demonstration
+#
+# Hash policy: hashes were pinned at first acquisition on 2026-10-19 from the URLs below.
+# A mismatch makes acquisition fail; it never silently replaces a file.
+# Qualification evidence and verdicts: docs/dataset_qualification.md
+
+datasets:
+
+  uci_credit:
+    title: "Default of Credit Card Clients (Taiwan, 2005)"
+    landing_page: https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients
+    doi: 10.24432/C55S3H
+    licence: "CC BY 4.0 (UCI dataset page)"
+    citation: "Yeh, I-C. (2009). Default of Credit Card Clients [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C55S3H"
+    version: "UCI static archive; member dated 2023-05-22"
+    roles: [controlled_financial]
+    cell_error_ground_truth: false
+    acquisition:
+      files:
+        - name: default_of_credit_card_clients.zip
+          url: https://archive.ics.uci.edu/static/public/350/default+of+credit+card+clients.zip
+          sha256: 56c885f84457f6680f8438f02bfcdac9579323d8a94465ee5f26e32baa727602
+          extract:
+            - member: "default of credit card clients.xls"
+              path: default_of_credit_card_clients.xls
+              sha256: 30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933
+    table:
+      file: default_of_credit_card_clients.xls
+      format: xls
+      read_options: {header: 1}
+      expected_rows: 30000
+      expected_columns: [ID, LIMIT_BAL, SEX, EDUCATION, MARRIAGE, AGE, PAY_0, PAY_2, PAY_3, PAY_4, PAY_5, PAY_6,
+                         BILL_AMT1, BILL_AMT2, BILL_AMT3, BILL_AMT4, BILL_AMT5, BILL_AMT6,
+                         PAY_AMT1, PAY_AMT2, PAY_AMT3, PAY_AMT4, PAY_AMT5, PAY_AMT6, default payment next month]
+    contract: config/contracts/uci_credit.yaml
+
+  uci_bank_marketing:
+    title: "Bank Marketing (Portuguese bank telemarketing, May 2008 - Nov 2010), bank-additional-full"
+    landing_page: https://archive.ics.uci.edu/dataset/222/bank+marketing
+    doi: 10.24432/C5K306
+    licence: "CC BY 4.0 (UCI dataset page)"
+    citation: "Moro, S., Rita, P., & Cortez, P. (2014). Bank Marketing [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5K306"
+    version: "UCI static archive; members dated 2023-05-22"
+    roles: [controlled_financial, engineering_demo]
+    cell_error_ground_truth: false
+    acquisition:
+      files:
+        - name: bank_marketing.zip
+          url: https://archive.ics.uci.edu/static/public/222/bank+marketing.zip
+          sha256: e0bf5f5de5b846e2f18e9d90606637267d46dfa260e0f17bb12e605db5efbeb4
+          extract:
+            - member: "bank-additional.zip!/bank-additional/bank-additional-full.csv"
+              path: bank-additional-full.csv
+              sha256: 74adfc578bf77a7ff4bb1ba4a9f8709d9e3c6907342959c2c8416847e0afb4d8
+            - member: "bank-additional.zip!/bank-additional/bank-additional-names.txt"
+              path: bank-additional-names.txt
+              sha256: 10045462a4c026f858dffa159370c4270510230c1fc63c6c91ca51bba4b3df26
+            - member: "bank.zip!/bank-full.csv"
+              path: bank-full.csv
+              sha256: d1513ec63b385506f7cfce9f2c5caa9fe99e7ba4e8c3fa264b3aaf0f849ed32d
+    table:
+      file: bank-additional-full.csv
+      format: csv
+      read_options: {sep: ";"}
+      expected_rows: 41188
+      expected_columns: [age, job, marital, education, default, housing, loan, contact, month, day_of_week,
+                         duration, campaign, pdays, previous, poutcome, emp.var.rate, cons.price.idx,
+                         cons.conf.idx, euribor3m, nr.employed, y]
+    contract: config/contracts/uci_bank_marketing.yaml
+
+  raha_flights:
+    title: "Flights (Raha benchmark copy of the Li et al. deep-web flight data)"
+    landing_page: https://github.com/BigDaMa/raha/tree/master/datasets/flights
+    licence: "Repository Apache-2.0 (BigDaMa/raha LICENSE.md); upstream data from Li et al. (PVLDB 2012), no separate data licence stated"
+    citation: "Mahdavi et al. (2019) Raha, SIGMOD; data originally from Li, Dong, Lyons, Meng, Srivastava (2012) Truth Finding on the Deep Web, PVLDB 6(2)"
+    version: "BigDaMa/raha commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c"
+    roles: [existing_error_benchmark]
+    cell_error_ground_truth: true
+    acquisition:
+      files:
+        - name: dirty.csv
+          url: https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/flights/dirty.csv
+          path: dirty.csv
+          sha256: 1b5c1afa10aa0e7c20fd7e14d05c56772715b2771aa0f5fa67ed1709e1eecd46
+        - name: clean.csv
+          url: https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/flights/clean.csv
+          path: clean.csv
+          sha256: 0acfcfd8985b06fdd363965c9e8d9522c43e7589a93d79ae7dc311e1c37fdf3b
+    pair: {dirty: dirty.csv, clean: clean.csv, read_as_string: true}
+
+  raha_tax:
+    title: "Tax (Raha benchmark copy; synthetic tax records with generated errors)"
+    landing_page: https://github.com/BigDaMa/raha/tree/master/datasets/tax
+    licence: "Repository Apache-2.0 (BigDaMa/raha LICENSE.md); synthetic generator origin, see docs/dataset_qualification.md"
+    citation: "Mahdavi et al. (2019) Raha, SIGMOD (benchmark copy)"
+    version: "BigDaMa/raha commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c"
+    roles: [engineering_demo]
+    cell_error_ground_truth: true
+    acquisition:
+      files:
+        - name: dirty.csv
+          url: https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/tax/dirty.csv
+          path: dirty.csv
+          sha256: 8dd3429ec4791b2ed1a688c308a57a9f3d1a94f77d1f4e98294a67273270b973
+        - name: clean.csv
+          url: https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/tax/clean.csv
+          path: clean.csv
+          sha256: 201290927ae92e65b3940d776b3df5b4d953c5dfd9abb231715a2e65ecca87b0
+    pair: {dirty: dirty.csv, clean: clean.csv, read_as_string: true}
+
+  raha_beers:
+    title: "Beers (Raha benchmark; craft-beer listings with real formatting/value errors, manually cleaned)"
+    landing_page: https://github.com/BigDaMa/raha/tree/master/datasets/beers
+    licence: "Repository Apache-2.0 (BigDaMa/raha LICENSE.md)"
+    citation: "Mahdavi et al. (2019) Raha, SIGMOD (benchmark copy)"
+    version: "BigDaMa/raha commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c"
+    roles: [existing_error_benchmark]
+    cell_error_ground_truth: true
+    acquisition:
+      files:
+        - name: dirty.csv
+          url: https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/beers/dirty.csv
+          path: dirty.csv
+          sha256: 7110bf4931a9445a1675e544d6c996817c739136239f8a2b02e088c7ec0a1f68
+        - name: clean.csv
+          url: https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/beers/clean.csv
+          path: clean.csv
+          sha256: 373227df59ad197e154dd5149125789e415019535c7223355e9486ee1b3b93de
+    # Headers differ between dirty and clean (e.g. beer_name vs beer-name): aligned by position.
+    pair: {dirty: dirty.csv, clean: clean.csv, read_as_string: true, align_columns: positional}
+
+  raha_hospital:
+    title: "Hospital (Raha benchmark; synthetic character-substitution errors)"
+    landing_page: https://github.com/BigDaMa/raha/tree/master/datasets/hospital
+    licence: "Repository Apache-2.0 (BigDaMa/raha LICENSE.md)"
+    citation: "Mahdavi et al. (2019) Raha, SIGMOD (benchmark copy)"
+    version: "BigDaMa/raha commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c"
+    roles: [engineering_demo]
+    cell_error_ground_truth: true
+    acquisition:
+      files:
+        - name: dirty.csv
+          url: https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/hospital/dirty.csv
+          path: dirty.csv
+          sha256: dbc5575b915fe8b5e0ac6dc6172f38ba91e611fdb76d09a8f4a81cb7ea9925ac
+        - name: clean.csv
+          url: https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/hospital/clean.csv
+          path: clean.csv
+          sha256: ea3ee44998455c0b491750c348509de176c758a3bbf58e4530c0a136bb248b4b
+    # Headers differ between dirty and clean (snake_case vs CamelCase): aligned by position.
+    pair: {dirty: dirty.csv, clean: clean.csv, read_as_string: true, align_columns: positional}
+
+  baf_base:
+    title: "Feedzai Bank Account Fraud (BAF) suite, Base variant (NeurIPS 2022 Datasets & Benchmarks)"
+    landing_page: https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022
+    licence: "UNRESOLVED: publisher datasheet states CC BY-NC-ND 4.0; Kaggle page not verified from this environment"
+    citation: "Jesus et al. (2022). Turning the Tables: Biased, Imbalanced, Dynamic Tabular Datasets for ML Evaluation. NeurIPS Datasets and Benchmarks."
+    roles: [controlled_financial]
+    cell_error_ground_truth: false
+    status: BLOCKED
+    acquisition:
+      manual: true
+      instructions: >-
+        Requires a logged-in Kaggle download and licence clearance (non-commercial, no-derivatives).
+        Place unmodified Base.csv at data/raw/baf_base/Base.csv and pin its sha256 here. Never commit it.
+      files:
+        - name: Base.csv
+          url: https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022
+          path: Base.csv
+          sha256: null

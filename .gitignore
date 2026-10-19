@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+envs/*/.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Data: raw third-party files are never committed (downloaded reproducibly, verified by hash)
+data/raw/**
+!data/raw/README.md
+data/interim/
+data/scenarios/
+data/manual/
+*.parquet
+*.duckdb
+*.duckdb.wal
+
+# dbt build artefacts
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/generated/
+logs/
+
+# Experiment outputs: only small, curated summaries are committed (see results/README.md)
+results/runs/
+results/**/*.parquet
+models/
+AutogluonModels/
+catboost_info/
+mlruns/
+
+# Local secrets
+.env
+*.pem
+*.key

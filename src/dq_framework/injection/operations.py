@@ -1,0 +1,281 @@
+"""Error *operations*: how a selected cell value is changed.
+
+An operation is separated from the *mechanism* that decides where errors occur
+(``mechanisms.py``). Each operation declares
+
+* ``column_types``: logical types it applies to,
+* ``eligible(...)``: the cells where it produces a real, semantically valid change
+  (e.g. scaling a 0 changes nothing, so zeros are not eligible), and
+* ``apply(...)``: new values for the selected rows.
+
+Where tab_err implements the operation appropriately it is used (WrongUnit,
+CategorySwap, MissingValue, Outlier). Financial operations missing from tab_err
+(sign flip, digit transposition, period shift, rounding, plausible substitution)
+are small custom injectors, tested in tests/test_injection.py.
+"""
+
+from __future__ import annotations
+
+import random
+import warnings
+from abc import ABC, abstractmethod
+from dataclasses import dataclass, field
+from typing import Any, ClassVar
+
+import numpy as np
+import pandas as pd
+
+
+@dataclass
+class OpContext:
+    """Information an operation may use. Only reference-partition data is exposed."""
+
+    column_type: str  # numeric | categorical
+    reference_values: pd.Series  # values of the column in the reference partition
+    batch: pd.DataFrame  # the batch being corrupted (uncorrupted values)
+    domain: list[Any] = field(default_factory=list)  # valid categories (reference-observed)
+
+
+class Operation(ABC):
+    name: ClassVar[str]
+    column_types: ClassVar[tuple[str, ...]]
+    uses_tab_err: ClassVar[bool] = False
+    sanity_only: ClassVar[bool] = False  # trivially detectable by design; used as sanity checks
+
+    def __init__(self, **params: Any) -> None:
+        self.params = params
+
+    def describe(self) -> dict[str, Any]:
+        return {"operation": self.name, "params": self.params, "tab_err": self.uses_tab_err}
+
+    @abstractmethod
+    def eligible(self, s: pd.Series, ctx: OpContext) -> pd.Series: ...
+
+    @abstractmethod
+    def apply(self, s: pd.Series, rows: pd.Index, ctx: OpContext, seed: int) -> pd.Series:
+        """Return new values for ``rows`` (index aligned)."""
+
+
+# --------------------------------------------------------------------------- tab_err-backed operations
+
+
+def _tab_err_apply(error_type, s: pd.Series, rows: pd.Index) -> pd.Series:
+    df = s.to_frame("v")
+    mask = pd.DataFrame(False, index=df.index, columns=["v"])
+    mask.loc[rows, "v"] = True
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        out = error_type.apply(df, mask, "v")
+    return out.loc[rows]
+
+
+class Scale(Operation):
+    """Unit / magnitude error (x10, x100, x1000, /100) via tab_err WrongUnit."""
+
+    name = "scale"
+    column_types = ("numeric",)
+    uses_tab_err = True
+
+    def eligible(self, s, ctx):
+        return s.notna() & (s != 0)
+
+    def apply(self, s, rows, ctx, seed):
+        from tab_err.error_type import WrongUnit
+
+        f = float(self.params.get("factor", 10.0))
+        et = WrongUnit(config={"wrong_unit_scaling": lambda x, f=f: x * f}, seed=seed)
+        return _tab_err_apply(et, s.astype("float64"), rows)
+
+
+class CategorySwap(Operation):
+    """Valid-but-wrong category (uniform over the other reference-observed categories) via tab_err."""
+
+    name = "category_swap"
+    column_types = ("categorical",)
+    uses_tab_err = True
+
+    def eligible(self, s, ctx):
+        return s.notna() & s.isin(ctx.domain) & (len(ctx.domain) > 1)
+
+    def apply(self, s, rows, ctx, seed):
+        from tab_err.error_type import CategorySwap as TECategorySwap
+
+        cat = pd.Series(pd.Categorical(s.astype(object), categories=list(ctx.domain)), index=s.index)
+        et = TECategorySwap(config={"mislabel_weighing": "uniform"}, seed=seed)
+        state = random.getstate()  # tab_err seeds the global `random` module; restore it afterwards
+        try:
+            out = _tab_err_apply(et, cat, rows)
+        finally:
+            random.setstate(state)
+        return out.astype(object)
+
+
+class Missing(Operation):
+    """Missing value in a mandatory field (sanity check: not_null catches it) via tab_err MissingValue."""
+
+    name = "missing"
+    column_types = ("numeric", "categorical")
+    uses_tab_err = True
+    sanity_only = True
+
+    def eligible(self, s, ctx):
+        return s.notna()
+
+    def apply(self, s, rows, ctx, seed):
+        from tab_err.error_type import MissingValue
+
+        base = s.astype("float64") if ctx.column_type == "numeric" else s.astype(object)
+        return _tab_err_apply(MissingValue(seed=seed), base, rows)
+
+
+class Outlier(Operation):
+    """Extreme value beyond the IQR fences (tab_err Outlier). Sanity check."""
+
+    name = "outlier"
+    column_types = ("numeric",)
+    uses_tab_err = True
+    sanity_only = True
+
+    def eligible(self, s, ctx):
+        return s.notna()
+
+    def apply(self, s, rows, ctx, seed):
+        from tab_err.error_type import Outlier as TEOutlier
+
+        et = TEOutlier(config={"outlier_coefficient": float(self.params.get("coefficient", 1.0))}, seed=seed)
+        return _tab_err_apply(et, s.astype("float64"), rows)
+
+
+# --------------------------------------------------------------------------- custom financial operations
+
+
+class SignFlip(Operation):
+    """Debit/credit sign convention error: x -> -x."""
+
+    name = "sign_flip"
+    column_types = ("numeric",)
+
+    def eligible(self, s, ctx):
+        return s.notna() & (s != 0)
+
+    def apply(self, s, rows, ctx, seed):
+        return -s.loc[rows].astype("float64")
+
+
+def _transpose(v: float, rng: np.random.Generator) -> float | None:
+    neg = v < 0
+    digits = list(str(int(round(abs(v)))))
+    cand = [i for i in range(len(digits) - 1) if digits[i] != digits[i + 1]]
+    # transposing into a leading zero would also change the magnitude; exclude it
+    cand = [i for i in cand if not (i == 0 and digits[1] == "0")]
+    if not cand:
+        return None
+    i = int(rng.choice(cand))
+    digits[i], digits[i + 1] = digits[i + 1], digits[i]
+    out = float(int("".join(digits)))
+    return -out if neg else out
+
+
+class DigitTransposition(Operation):
+    """Manual-entry error: two adjacent (different) digits of an integer amount swapped."""
+
+    name = "digit_transposition"
+    column_types = ("numeric",)
+
+    def eligible(self, s, ctx):
+        rng = np.random.default_rng(0)
+        ok = s.notna() & (s.abs() >= 10) & np.isclose(s.fillna(0) % 1, 0)
+        return ok & s.where(ok, 0).map(lambda v: _transpose(v, rng) is not None)
+
+    def apply(self, s, rows, ctx, seed):
+        rng = np.random.default_rng(seed)
+        return pd.Series([_transpose(v, rng) for v in s.loc[rows]], index=rows, dtype="float64")
+
+
+class PeriodShift(Operation):
+    """Column misalignment: the value of an adjacent period column is delivered in this column."""
+
+    name = "period_shift"
+    column_types = ("numeric", "categorical")
+
+    def eligible(self, s, ctx):
+        src = ctx.batch[self.params["source_column"]]
+        return s.notna() & src.notna() & (s.astype(object) != src.astype(object))
+
+    def apply(self, s, rows, ctx, seed):
+        return ctx.batch.loc[rows, self.params["source_column"]].astype(s.dtype if s.dtype != "Int64" else object)
+
+
+class Rounding(Operation):
+    """Precision loss: amount rounded to the nearest ``unit`` (e.g. 1000)."""
+
+    name = "rounding"
+    column_types = ("numeric",)
+
+    def eligible(self, s, ctx):
+        unit = float(self.params.get("unit", 1000))
+        r = (s / unit).round() * unit
+        return s.notna() & (r != s)
+
+    def apply(self, s, rows, ctx, seed):
+        unit = float(self.params.get("unit", 1000))
+        return (s.loc[rows] / unit).round() * unit
+
+
+class PlausibleSubstitution(Operation):
+    """Wrong-but-plausible value: drawn from the reference distribution of the column.
+
+    For numeric columns the draw must differ from the original by at least
+    ``min_rel_diff`` (relative) so the change is material; the new value lies inside
+    the observed reference range by construction.
+    """
+
+    name = "plausible_substitution"
+    column_types = ("numeric", "categorical")
+
+    def eligible(self, s, ctx):
+        return s.notna()
+
+    def apply(self, s, rows, ctx, seed):
+        rng = np.random.default_rng(seed)
+        pool = ctx.reference_values.dropna().to_numpy()
+        min_rel = float(self.params.get("min_rel_diff", 0.2))
+        out = []
+        for v in s.loc[rows]:
+            for _ in range(100):
+                w = pool[rng.integers(len(pool))]
+                if ctx.column_type == "categorical":
+                    if w != v:
+                        break
+                elif abs(w - v) > min_rel * max(abs(v), 1.0):
+                    break
+            else:
+                w = v  # no material change found: left unchanged and recorded as unrealised
+            out.append(w)
+        return pd.Series(out, index=rows, dtype=object if ctx.column_type == "categorical" else "float64")
+
+
+class InvalidCode(Operation):
+    """Out-of-domain category code (sanity check: accepted_values catches it)."""
+
+    name = "invalid_code"
+    column_types = ("categorical",)
+    sanity_only = True
+
+    def eligible(self, s, ctx):
+        return s.notna()
+
+    def apply(self, s, rows, ctx, seed):
+        code = self.params.get("code", -99)
+        return pd.Series([code] * len(rows), index=rows, dtype=object)
+
+
+OPERATIONS: dict[str, type[Operation]] = {
+    cls.name: cls
+    for cls in (Scale, CategorySwap, Missing, Outlier, SignFlip, DigitTransposition, PeriodShift, Rounding,
+                PlausibleSubstitution, InvalidCode)
+}
+
+
+def make_operation(name: str, **params: Any) -> Operation:
+    return OPERATIONS[name](**params)

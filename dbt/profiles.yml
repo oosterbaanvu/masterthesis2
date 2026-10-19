@@ -1,0 +1,7 @@
+dq_eval:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: "{{ env_var('DQF_DUCKDB_PATH', 'target/dq_eval.duckdb') }}"
+      threads: 4

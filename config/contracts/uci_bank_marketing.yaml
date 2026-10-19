@@ -1,0 +1,149 @@
+# Source contract: UCI Bank Marketing, bank-additional-full.csv
+# Semantics source: bank-additional-names.txt shipped in the UCI archive (sha256 pinned in
+# config/datasets.yaml) and the UCI API variable_info (retrieved 2026-10-19).
+
+dataset: uci_bank_marketing
+table: bank_marketing_contacts
+description: >-
+  One row per telemarketing contact of a Portuguese bank (May 2008 - Nov 2010), ordered by date,
+  with client attributes, contact attributes, previous-campaign attributes and national
+  macro-economic indicators. Treated as a monthly delivery from a CRM/campaign system.
+row_id: null   # no natural key; _row_id = 1-based position in the published file
+
+derived_columns:
+  _period:
+    description: >-
+      Delivery period index 1..26. The file is ordered by date and has no year column; each
+      contiguous run of the monthly indicator cons.price.idx is one calendar month (26 runs,
+      May 2008 .. Nov 2010; verified: cons.price.idx -> month is a function). Used only for
+      batch-aware splits and as a batch identifier, never as a detector feature.
+    method: contiguous_runs
+    source_column: cons.price.idx
+
+excluded_columns:
+  y: "Prediction target (term-deposit subscription). Not a data-quality label."
+
+columns:
+  - {name: age, type: numeric, semantic: age_years, unit: years}
+  - {name: job, type: categorical, semantic: code, documented_values: [admin., blue-collar, entrepreneur, housemaid, management, retired, self-employed, services, student, technician, unemployed, unknown]}
+  - {name: marital, type: categorical, semantic: code, documented_values: [divorced, married, single, unknown]}
+  - {name: education, type: categorical, semantic: code, documented_values: [basic.4y, basic.6y, basic.9y, high.school, illiterate, professional.course, university.degree, unknown]}
+  - {name: default, type: categorical, semantic: flag, documented_values: ["no", "yes", unknown]}
+  - {name: housing, type: categorical, semantic: flag, documented_values: ["no", "yes", unknown]}
+  - {name: loan, type: categorical, semantic: flag, documented_values: ["no", "yes", unknown]}
+  - {name: contact, type: categorical, semantic: channel, documented_values: [cellular, telephone]}
+  - {name: month, type: categorical, semantic: calendar_month, documented_values: [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]}
+  - {name: day_of_week, type: categorical, semantic: weekday, documented_values: [mon, tue, wed, thu, fri]}
+  - {name: duration, type: numeric, semantic: seconds, unit: s, description: "Last contact duration"}
+  - {name: campaign, type: numeric, semantic: count, description: "Contacts in this campaign incl. last"}
+  - {name: pdays, type: numeric, semantic: days_with_sentinel, description: "Days since previous-campaign contact; 999 = not previously contacted"}
+  - {name: previous, type: numeric, semantic: count, description: "Contacts before this campaign"}
+  - {name: poutcome, type: categorical, semantic: code, documented_values: [failure, nonexistent, success]}
+  - {name: emp.var.rate, type: numeric, semantic: macro_indicator_quarterly}
+  - {name: cons.price.idx, type: numeric, semantic: macro_indicator_monthly}
+  - {name: cons.conf.idx, type: numeric, semantic: macro_indicator_monthly}
+  - {name: euribor3m, type: numeric, semantic: interest_rate_percent_daily, unit: percent}
+  - {name: nr.employed, type: numeric, semantic: macro_indicator_quarterly, unit: thousands}
+
+rules:
+  - id: D_NOT_NULL
+    kind: not_null
+    columns: all
+    status: verified
+    evidence: "Documentation: missing values are coded 'unknown' (categorical) or 999 (pdays); no empty fields."
+  - id: D_DOMAIN_{i}
+    kind: accepted_values
+    for_each: [job, marital, education, default, housing, loan, contact, month, day_of_week, poutcome]
+    columns: ["{i}"]
+    from_documented: true
+    status: verified
+    evidence: "Documented category list in bank-additional-names.txt."
+  - id: D_AGE_RANGE
+    kind: range
+    columns: [age]
+    min: 17
+    max: 100
+    status: provisional
+    evidence: "Plausible adult client ages; observed 17-98, 0 violations."
+  - id: D_DURATION_NONNEG
+    kind: range
+    columns: [duration]
+    min: 0
+    status: verified
+    evidence: "A duration in seconds is non-negative."
+  - id: D_CAMPAIGN_MIN1
+    kind: range
+    columns: [campaign]
+    min: 1
+    status: verified
+    evidence: "Documented: number of contacts in this campaign, includes the last contact."
+  - id: D_PREVIOUS_NONNEG
+    kind: range
+    columns: [previous]
+    min: 0
+    status: verified
+    evidence: "A count is non-negative."
+  - id: D_PDAYS_RANGE
+    kind: range
+    columns: [pdays]
+    min: 0
+    max: 999
+    status: verified
+    evidence: "Days >= 0 or the documented sentinel 999."
+  - id: D_POUTCOME_PREVIOUS
+    kind: expression
+    columns: [previous, poutcome]
+    expression: '("previous" = 0) = ("poutcome" = ''nonexistent'')'
+    status: verified
+    evidence: "poutcome is the outcome of the previous campaign, 'nonexistent' iff there was no previous contact; 0 violations."
+  - id: D_PDAYS_PREVIOUS
+    kind: expression
+    columns: [pdays, previous]
+    expression: '"pdays" = 999 or "previous" > 0'
+    status: verified
+    evidence: "A known number of days since a previous contact implies at least one previous contact; 0 violations."
+  - id: D_PDAYS999_NO_PREVIOUS
+    kind: expression
+    columns: [pdays, previous]
+    expression: '"pdays" < 999 or "previous" = 0'
+    status: unsupported
+    enabled: false
+    evidence: "Literal reading of the documentation (999 = not previously contacted) is contradicted by 4,110 untouched rows with previous > 0."
+
+statistical_controls:
+  - id: S_ENV_{i}
+    kind: envelope
+    for_each: [age, duration, campaign, previous, emp.var.rate, cons.price.idx, cons.conf.idx, euribor3m, nr.employed]
+    columns: ["{i}"]
+    expression: '"{i}"'
+    lower_q: 0.0005
+    upper_q: 0.9995
+    status: provisional
+    evidence: "Univariate reference envelope (0.05%/99.95% quantiles)."
+  - id: S_ENV_pdays
+    kind: envelope
+    columns: [pdays]
+    expression: 'case when "pdays" < 999 then "pdays" end'
+    lower_q: 0.0005
+    upper_q: 0.9995
+    status: provisional
+    evidence: "Envelope over non-sentinel pdays values."
+  - id: S_MACRO_LOOKUP
+    kind: rare_category
+    columns: [cons.price.idx, month, cons.conf.idx, emp.var.rate, nr.employed]
+    expression: 'concat_ws(''|'', "cons.price.idx", "month", "cons.conf.idx", "emp.var.rate", "nr.employed")'
+    min_share: 0.0
+    status: provisional
+    evidence: >-
+      Monthly/quarterly national indicators are published per month, so (cons.price.idx, month,
+      cons.conf.idx, emp.var.rate, nr.employed) must be an existing published combination. The reference
+      combinations stand in for the official Banco de Portugal series (not independently re-downloaded).
+      A new delivery month requires updating the reference, so this check alerts on every row of an unseen month.
+  - id: S_RARE_{i}
+    kind: rare_category
+    for_each: [job, marital, education, default, housing, loan, contact, month, day_of_week, poutcome]
+    columns: ["{i}"]
+    expression: '"{i}"'
+    min_share: 0.0005
+    status: provisional
+    evidence: "Category value seen in fewer than 0.05% of reference rows (or never) is alerted."
