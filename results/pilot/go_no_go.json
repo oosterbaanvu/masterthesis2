@@ -1,0 +1,631 @@
+{
+  "primary_detectors": [
+    "cdc",
+    "dboost_gaussian",
+    "dboost_gaussian_text"
+  ],
+  "replications": [
+    "uci_bank_marketing-delivery-d1",
+    "uci_bank_marketing-delivery-d2",
+    "uci_bank_marketing-delivery-d3",
+    "uci_bank_marketing-delivery-d4",
+    "uci_bank_marketing-random-s11",
+    "uci_bank_marketing-random-s12",
+    "uci_bank_marketing-random-s13",
+    "uci_bank_marketing-random-s14",
+    "uci_bank_marketing-random-s15",
+    "uci_credit-random-s11",
+    "uci_credit-random-s12",
+    "uci_credit-random-s13",
+    "uci_credit-random-s14",
+    "uci_credit-random-s15"
+  ],
+  "10.0": {
+    "budget": 10.0,
+    "G1_usable_detectors_per_unit": {
+      "Bank Marketing (consecutive deliveries)": [
+        "cdc",
+        "dboost_gaussian_text"
+      ],
+      "Bank Marketing (random splits)": [
+        "cdc",
+        "dboost_gaussian_text"
+      ],
+      "UCI Credit (random splits)": [
+        "cdc",
+        "dboost_gaussian",
+        "dboost_gaussian_text"
+      ]
+    },
+    "G1_units_with_two_usable": 3,
+    "G1_pass": true,
+    "G2_units_baselines_with_measurable_difference": [
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "diff_mean": 0.061900221729490015,
+        "diff_lo": 0.0540571569352057,
+        "diff_hi": 0.06997068243409706
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "diff_mean": 0.05772579453067257,
+        "diff_lo": 0.05129563932002955,
+        "diff_hi": 0.06526435082532642
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "diff_mean": -0.013555555555555552,
+        "diff_lo": -0.021972222222222216,
+        "diff_hi": -0.0045000000000000005
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "diff_mean": -0.010888888888888889,
+        "diff_lo": -0.013027777777777777,
+        "diff_hi": -0.009027777777777782
+      }
+    ],
+    "G2_pass": true,
+    "G3_sample_size": [
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "deterministic",
+        "delta": 0.01,
+        "observed_sd": 0.029640576595032588,
+        "observed_diff": -0.015663953702385623,
+        "n_replications_needed": 69.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "deterministic",
+        "delta": 0.02,
+        "observed_sd": 0.029640576595032588,
+        "observed_diff": -0.015663953702385623,
+        "n_replications_needed": 18.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "deterministic",
+        "delta": 0.05,
+        "observed_sd": 0.029640576595032588,
+        "observed_diff": -0.015663953702385623,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "delta": 0.01,
+        "observed_sd": 0.032059101533347685,
+        "observed_diff": -0.023669669698073152,
+        "n_replications_needed": 81.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "delta": 0.02,
+        "observed_sd": 0.032059101533347685,
+        "observed_diff": -0.023669669698073152,
+        "n_replications_needed": 21.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "delta": 0.05,
+        "observed_sd": 0.032059101533347685,
+        "observed_diff": -0.023669669698073152,
+        "n_replications_needed": 4.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.01,
+        "observed_sd": 0.010654819990829012,
+        "observed_diff": 0.061900221729490015,
+        "n_replications_needed": 9.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.02,
+        "observed_sd": 0.010654819990829012,
+        "observed_diff": 0.061900221729490015,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.05,
+        "observed_sd": 0.010654819990829012,
+        "observed_diff": 0.061900221729490015,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "delta": 0.01,
+        "observed_sd": 0.008925503981527179,
+        "observed_diff": 0.05772579453067257,
+        "n_replications_needed": 7.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "delta": 0.02,
+        "observed_sd": 0.008925503981527179,
+        "observed_diff": 0.05772579453067257,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "delta": 0.05,
+        "observed_sd": 0.008925503981527179,
+        "observed_diff": 0.05772579453067257,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.01,
+        "observed_sd": 0.011362435402307238,
+        "observed_diff": -0.013555555555555552,
+        "n_replications_needed": 11.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.02,
+        "observed_sd": 0.011362435402307238,
+        "observed_diff": -0.013555555555555552,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.05,
+        "observed_sd": 0.011362435402307238,
+        "observed_diff": -0.013555555555555552,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "delta": 0.01,
+        "observed_sd": 0.0025432220498929534,
+        "observed_diff": -0.010888888888888889,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "delta": 0.02,
+        "observed_sd": 0.0025432220498929534,
+        "observed_diff": -0.010888888888888889,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "delta": 0.05,
+        "observed_sd": 0.0025432220498929534,
+        "observed_diff": -0.010888888888888889,
+        "n_replications_needed": 3.0
+      }
+    ]
+  },
+  "25.0": {
+    "budget": 25.0,
+    "G1_usable_detectors_per_unit": {
+      "Bank Marketing (consecutive deliveries)": [
+        "cdc",
+        "dboost_gaussian_text"
+      ],
+      "Bank Marketing (random splits)": [
+        "cdc",
+        "dboost_gaussian",
+        "dboost_gaussian_text"
+      ],
+      "UCI Credit (random splits)": [
+        "cdc",
+        "dboost_gaussian",
+        "dboost_gaussian_text"
+      ]
+    },
+    "G1_units_with_two_usable": 3,
+    "G1_pass": true,
+    "G2_units_baselines_with_measurable_difference": [
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "diff_mean": -0.03873958812657721,
+        "diff_lo": -0.06371737270004278,
+        "diff_hi": -0.01210689209164819
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "diff_mean": 0.1036617256576606,
+        "diff_lo": 0.09235349429251868,
+        "diff_hi": 0.11355826558265583
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "diff_mean": 0.0634880512441488,
+        "diff_lo": 0.05995901699926089,
+        "diff_hi": 0.06628750923872875
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "diff_mean": 0.07833333333333332,
+        "diff_lo": 0.0595,
+        "diff_hi": 0.096
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "diff_mean": 0.02038888888888888,
+        "diff_lo": 0.014583333333333327,
+        "diff_hi": 0.028416666666666656
+      }
+    ],
+    "G2_pass": true,
+    "G3_sample_size": [
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "deterministic",
+        "delta": 0.01,
+        "observed_sd": 0.04958676422982083,
+        "observed_diff": -0.025642023877824223,
+        "n_replications_needed": 193.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "deterministic",
+        "delta": 0.02,
+        "observed_sd": 0.04958676422982083,
+        "observed_diff": -0.025642023877824223,
+        "n_replications_needed": 49.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "deterministic",
+        "delta": 0.05,
+        "observed_sd": 0.04958676422982083,
+        "observed_diff": -0.025642023877824223,
+        "n_replications_needed": 8.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "delta": 0.01,
+        "observed_sd": 0.03236234950388192,
+        "observed_diff": -0.03873958812657721,
+        "n_replications_needed": 83.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "delta": 0.02,
+        "observed_sd": 0.03236234950388192,
+        "observed_diff": -0.03873958812657721,
+        "n_replications_needed": 21.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "delta": 0.05,
+        "observed_sd": 0.03236234950388192,
+        "observed_diff": -0.03873958812657721,
+        "n_replications_needed": 4.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.01,
+        "observed_sd": 0.014268367646975458,
+        "observed_diff": 0.1036617256576606,
+        "n_replications_needed": 16.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.02,
+        "observed_sd": 0.014268367646975458,
+        "observed_diff": 0.1036617256576606,
+        "n_replications_needed": 4.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.05,
+        "observed_sd": 0.014268367646975458,
+        "observed_diff": 0.1036617256576606,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "delta": 0.01,
+        "observed_sd": 0.0043824551530833675,
+        "observed_diff": 0.0634880512441488,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "delta": 0.02,
+        "observed_sd": 0.0043824551530833675,
+        "observed_diff": 0.0634880512441488,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "delta": 0.05,
+        "observed_sd": 0.0043824551530833675,
+        "observed_diff": 0.0634880512441488,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.01,
+        "observed_sd": 0.022952203086919774,
+        "observed_diff": 0.07833333333333332,
+        "n_replications_needed": 42.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.02,
+        "observed_sd": 0.022952203086919774,
+        "observed_diff": 0.07833333333333332,
+        "n_replications_needed": 11.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.05,
+        "observed_sd": 0.022952203086919774,
+        "observed_diff": 0.07833333333333332,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "delta": 0.01,
+        "observed_sd": 0.009082844873036988,
+        "observed_diff": 0.02038888888888888,
+        "n_replications_needed": 7.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "delta": 0.02,
+        "observed_sd": 0.009082844873036988,
+        "observed_diff": 0.02038888888888888,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "delta": 0.05,
+        "observed_sd": 0.009082844873036988,
+        "observed_diff": 0.02038888888888888,
+        "n_replications_needed": 3.0
+      }
+    ]
+  },
+  "50.0": {
+    "budget": 50.0,
+    "G1_usable_detectors_per_unit": {
+      "Bank Marketing (consecutive deliveries)": [
+        "cdc",
+        "dboost_gaussian",
+        "dboost_gaussian_text"
+      ],
+      "Bank Marketing (random splits)": [
+        "cdc",
+        "dboost_gaussian",
+        "dboost_gaussian_text"
+      ],
+      "UCI Credit (random splits)": [
+        "cdc",
+        "dboost_gaussian",
+        "dboost_gaussian_text"
+      ]
+    },
+    "G1_units_with_two_usable": 3,
+    "G1_pass": true,
+    "G2_units_baselines_with_measurable_difference": [
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "diff_mean": -0.05533533513879803,
+        "diff_lo": -0.08496030288400991,
+        "diff_hi": -0.02169557416267942
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "diff_mean": 0.12371261394432127,
+        "diff_lo": 0.1188669623059867,
+        "diff_hi": 0.13135661492978565
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "diff_mean": 0.02675092387287508,
+        "diff_lo": 0.020041143138704108,
+        "diff_hi": 0.03730968218773095
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "diff_mean": 0.09744444444444444,
+        "diff_lo": 0.08980555555555558,
+        "diff_hi": 0.10513888888888889
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "diff_mean": 0.05016666666666665,
+        "diff_lo": 0.041972222222222216,
+        "diff_hi": 0.058361111111111086
+      }
+    ],
+    "G2_pass": true,
+    "G3_sample_size": [
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "deterministic",
+        "delta": 0.01,
+        "observed_sd": 0.04958676422982083,
+        "observed_diff": -0.025642023877824223,
+        "n_replications_needed": 193.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "deterministic",
+        "delta": 0.02,
+        "observed_sd": 0.04958676422982083,
+        "observed_diff": -0.025642023877824223,
+        "n_replications_needed": 49.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "deterministic",
+        "delta": 0.05,
+        "observed_sd": 0.04958676422982083,
+        "observed_diff": -0.025642023877824223,
+        "n_replications_needed": 8.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "delta": 0.01,
+        "observed_sd": 0.0384968748077307,
+        "observed_diff": -0.05533533513879803,
+        "n_replications_needed": 117.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "delta": 0.02,
+        "observed_sd": 0.0384968748077307,
+        "observed_diff": -0.05533533513879803,
+        "n_replications_needed": 30.0
+      },
+      {
+        "unit": "Bank Marketing (consecutive deliveries)",
+        "baseline": "full",
+        "delta": 0.05,
+        "observed_sd": 0.0384968748077307,
+        "observed_diff": -0.05533533513879803,
+        "n_replications_needed": 5.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.01,
+        "observed_sd": 0.008643847247536059,
+        "observed_diff": 0.12371261394432127,
+        "n_replications_needed": 6.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.02,
+        "observed_sd": 0.008643847247536059,
+        "observed_diff": 0.12371261394432127,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.05,
+        "observed_sd": 0.008643847247536059,
+        "observed_diff": 0.12371261394432127,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "delta": 0.01,
+        "observed_sd": 0.011666088767643077,
+        "observed_diff": 0.02675092387287508,
+        "n_replications_needed": 11.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "delta": 0.02,
+        "observed_sd": 0.011666088767643077,
+        "observed_diff": 0.02675092387287508,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "Bank Marketing (random splits)",
+        "baseline": "full",
+        "delta": 0.05,
+        "observed_sd": 0.011666088767643077,
+        "observed_diff": 0.02675092387287508,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.01,
+        "observed_sd": 0.00983005673595522,
+        "observed_diff": 0.09744444444444444,
+        "n_replications_needed": 8.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.02,
+        "observed_sd": 0.00983005673595522,
+        "observed_diff": 0.09744444444444444,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "deterministic",
+        "delta": 0.05,
+        "observed_sd": 0.00983005673595522,
+        "observed_diff": 0.09744444444444444,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "delta": 0.01,
+        "observed_sd": 0.01088679826869267,
+        "observed_diff": 0.05016666666666665,
+        "n_replications_needed": 10.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "delta": 0.02,
+        "observed_sd": 0.01088679826869267,
+        "observed_diff": 0.05016666666666665,
+        "n_replications_needed": 3.0
+      },
+      {
+        "unit": "UCI Credit (random splits)",
+        "baseline": "full",
+        "delta": 0.05,
+        "observed_sd": 0.01088679826869267,
+        "observed_diff": 0.05016666666666665,
+        "n_replications_needed": 3.0
+      }
+    ]
+  }
+}

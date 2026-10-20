@@ -1,0 +1,109 @@
+dataset,scheme,baseline,budget,strategy,test_set,n_replications,selected,decisions,test_decisions,decision_agreement,selected_is_best,regret_mean,regret_lo,regret_hi,regret_max,test_utility_selected,test_utility_best
+uci_bank_marketing,delivery,deterministic,10,diverse,test_diverse,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,INSUFFICIENT_EVIDENCE×2; DO_NOT_ADOPT×2,0.75,0.75,0.004383,0,0.01315,0.01753,0.05059,0.05497
+uci_bank_marketing,delivery,deterministic,10,diverse,test_heldout,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,DO_NOT_ADOPT×3; INSUFFICIENT_EVIDENCE×1,0.5,0.5,0.008758,0,0.01752,0.01846,0.0187,0.02746
+uci_bank_marketing,delivery,deterministic,10,diverse,test_simple,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,INSUFFICIENT_EVIDENCE×2; DO_NOT_ADOPT×2,0.75,0.75,0.004083,0,0.01225,0.01633,0.05082,0.05491
+uci_bank_marketing,delivery,deterministic,10,simple,test_diverse,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,INSUFFICIENT_EVIDENCE×2; DO_NOT_ADOPT×2,0.75,0.75,0.004383,0,0.01315,0.01753,0.05059,0.05497
+uci_bank_marketing,delivery,deterministic,10,simple,test_heldout,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,DO_NOT_ADOPT×3; INSUFFICIENT_EVIDENCE×1,0.5,0.5,0.008758,0,0.01752,0.01846,0.0187,0.02746
+uci_bank_marketing,delivery,deterministic,10,simple,test_simple,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,INSUFFICIENT_EVIDENCE×2; DO_NOT_ADOPT×2,0.75,0.75,0.004083,0,0.01225,0.01633,0.05082,0.05491
+uci_bank_marketing,delivery,deterministic,25,diverse,test_diverse,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.75,0.01118,0,0.03353,0.0447,0.06869,0.07987
+uci_bank_marketing,delivery,deterministic,25,diverse,test_heldout,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×4,DO_NOT_ADOPT×2; INSUFFICIENT_EVIDENCE×2,0.5,0.5,0.02298,0,0.04595,0.04707,0.03323,0.0562
+uci_bank_marketing,delivery,deterministic,25,diverse,test_simple,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.75,0.01041,0,0.03124,0.04165,0.06874,0.07915
+uci_bank_marketing,delivery,deterministic,25,simple,test_diverse,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.75,0.01118,0,0.03353,0.0447,0.06869,0.07987
+uci_bank_marketing,delivery,deterministic,25,simple,test_heldout,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×4,DO_NOT_ADOPT×2; INSUFFICIENT_EVIDENCE×2,0.5,0.5,0.02298,0,0.04595,0.04707,0.03323,0.0562
+uci_bank_marketing,delivery,deterministic,25,simple,test_simple,4,dboost_gaussian_text×2; dboost_gaussian×1; sd_outlier×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.75,0.01041,0,0.03124,0.04165,0.06874,0.07915
+uci_bank_marketing,delivery,deterministic,50,diverse,test_diverse,4,lucario_core×2; sd_outlier×1; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.25,0.0377,0.01004,0.07171,0.0881,0.06018,0.09788
+uci_bank_marketing,delivery,deterministic,50,diverse,test_heldout,4,lucario_core×2; sd_outlier×1; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×4,DO_NOT_ADOPT×2; INSUFFICIENT_EVIDENCE×2,0.5,0.25,0.04362,0.01439,0.07069,0.08293,0.03283,0.07645
+uci_bank_marketing,delivery,deterministic,50,diverse,test_simple,4,lucario_core×2; sd_outlier×1; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.5,0.03011,0,0.062,0.08267,0.06891,0.09902
+uci_bank_marketing,delivery,deterministic,50,simple,test_diverse,4,lucario_core×2; sd_outlier×1; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.25,0.0377,0.01004,0.07171,0.0881,0.06018,0.09788
+uci_bank_marketing,delivery,deterministic,50,simple,test_heldout,4,lucario_core×2; sd_outlier×1; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×4,DO_NOT_ADOPT×2; INSUFFICIENT_EVIDENCE×2,0.5,0.25,0.04362,0.01439,0.07069,0.08293,0.03283,0.07645
+uci_bank_marketing,delivery,deterministic,50,simple,test_simple,4,lucario_core×2; sd_outlier×1; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.5,0.03011,0,0.062,0.08267,0.06891,0.09902
+uci_bank_marketing,delivery,full,10,diverse,test_diverse,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,1,0.75,0.0007407,0,0.002222,0.002963,0.0351,0.03585
+uci_bank_marketing,delivery,full,10,diverse,test_heldout,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,DO_NOT_ADOPT×2; INSUFFICIENT_EVIDENCE×2,0.75,0.5,0.006307,0,0.01261,0.01397,0.02962,0.03592
+uci_bank_marketing,delivery,full,10,diverse,test_simple,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,1,0.75,0.0006739,0,0.002022,0.002696,0.02907,0.02974
+uci_bank_marketing,delivery,full,10,simple,test_diverse,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,1,0.75,0.0007407,0,0.002222,0.002963,0.0351,0.03585
+uci_bank_marketing,delivery,full,10,simple,test_heldout,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,DO_NOT_ADOPT×2; INSUFFICIENT_EVIDENCE×2,0.75,0.5,0.006307,0,0.01261,0.01397,0.02962,0.03592
+uci_bank_marketing,delivery,full,10,simple,test_simple,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,1,0.75,0.0006739,0,0.002022,0.002696,0.02907,0.02974
+uci_bank_marketing,delivery,full,25,diverse,test_diverse,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.75,0.001852,0,0.005555,0.007407,0.03786,0.03971
+uci_bank_marketing,delivery,full,25,diverse,test_heldout,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.75,0.007038,0,0.02112,0.02815,0.04748,0.05452
+uci_bank_marketing,delivery,full,25,diverse,test_simple,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.75,0.001685,0,0.005054,0.006739,0.02997,0.03166
+uci_bank_marketing,delivery,full,25,simple,test_diverse,4,dboost_gaussian_text×3; lucario_core×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,1,0,0,0,0,0.03971,0.03971
+uci_bank_marketing,delivery,full,25,simple,test_heldout,4,dboost_gaussian_text×3; lucario_core×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×4,1,0.75,0.001972,0,0.005915,0.007886,0.05255,0.05452
+uci_bank_marketing,delivery,full,25,simple,test_simple,4,dboost_gaussian_text×3; lucario_core×1,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.75,0.0004849,0,0.001455,0.00194,0.03117,0.03166
+uci_bank_marketing,delivery,full,50,diverse,test_diverse,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×4,1,1,0,0,0,0,0.04719,0.04719
+uci_bank_marketing,delivery,full,50,diverse,test_heldout,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.75,0.01285,0,0.03854,0.05138,0.06541,0.07826
+uci_bank_marketing,delivery,full,50,diverse,test_simple,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×4,1,1,0,0,0,0,0.03932,0.03932
+uci_bank_marketing,delivery,full,50,simple,test_diverse,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×4,1,1,0,0,0,0,0.04719,0.04719
+uci_bank_marketing,delivery,full,50,simple,test_heldout,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×3; DO_NOT_ADOPT×1,0.75,0.75,0.01285,0,0.03854,0.05138,0.06541,0.07826
+uci_bank_marketing,delivery,full,50,simple,test_simple,4,dboost_gaussian_text×4,INSUFFICIENT_EVIDENCE×4,INSUFFICIENT_EVIDENCE×4,1,1,0,0,0,0,0.03932,0.03932
+uci_bank_marketing,random,deterministic,10,diverse,test_diverse,5,cdc×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.1428,0.1428
+uci_bank_marketing,random,deterministic,10,diverse,test_heldout,5,cdc×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.08193,0.08193
+uci_bank_marketing,random,deterministic,10,diverse,test_simple,5,cdc×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.1427,0.1427
+uci_bank_marketing,random,deterministic,10,simple,test_diverse,5,cdc×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.1428,0.1428
+uci_bank_marketing,random,deterministic,10,simple,test_heldout,5,cdc×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.08193,0.08193
+uci_bank_marketing,random,deterministic,10,simple,test_simple,5,cdc×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.1427,0.1427
+uci_bank_marketing,random,deterministic,25,diverse,test_diverse,5,cdc×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×4; ADOPT×1,0.8,1,0,0,0,0,0.2409,0.2409
+uci_bank_marketing,random,deterministic,25,diverse,test_heldout,5,cdc×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.143,0.143
+uci_bank_marketing,random,deterministic,25,diverse,test_simple,5,cdc×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×3; ADOPT×2,0.6,1,0,0,0,0,0.2437,0.2437
+uci_bank_marketing,random,deterministic,25,simple,test_diverse,5,cdc×5,INSUFFICIENT_EVIDENCE×3; ADOPT×2,INSUFFICIENT_EVIDENCE×4; ADOPT×1,0.8,1,0,0,0,0,0.2409,0.2409
+uci_bank_marketing,random,deterministic,25,simple,test_heldout,5,cdc×5,INSUFFICIENT_EVIDENCE×3; ADOPT×2,INSUFFICIENT_EVIDENCE×5,0.6,1,0,0,0,0,0.143,0.143
+uci_bank_marketing,random,deterministic,25,simple,test_simple,5,cdc×5,INSUFFICIENT_EVIDENCE×3; ADOPT×2,INSUFFICIENT_EVIDENCE×3; ADOPT×2,1,1,0,0,0,0,0.2437,0.2437
+uci_bank_marketing,random,deterministic,50,diverse,test_diverse,5,cdc×3; cdc[flags]×2,ADOPT×3; INSUFFICIENT_EVIDENCE×2,ADOPT×5,0.6,0.8,0.007706,0,0.02312,0.03853,0.2858,0.2935
+uci_bank_marketing,random,deterministic,50,diverse,test_heldout,5,cdc×3; cdc[flags]×2,ADOPT×3; INSUFFICIENT_EVIDENCE×2,ADOPT×3; INSUFFICIENT_EVIDENCE×2,0.2,0.6,0.04378,0,0.08757,0.1107,0.1882,0.232
+uci_bank_marketing,random,deterministic,50,diverse,test_simple,5,cdc×3; cdc[flags]×2,ADOPT×3; INSUFFICIENT_EVIDENCE×2,ADOPT×5,0.6,0.6,0.007996,0,0.02313,0.03784,0.2858,0.2938
+uci_bank_marketing,random,deterministic,50,simple,test_diverse,5,cdc×3; cdc[flags]×2,ADOPT×5,ADOPT×5,1,0.8,0.001273,0,0.003818,0.006364,0.2923,0.2935
+uci_bank_marketing,random,deterministic,50,simple,test_heldout,5,cdc×3; cdc[flags]×2,ADOPT×5,ADOPT×3; INSUFFICIENT_EVIDENCE×2,0.6,0.6,0.04203,0,0.08633,0.1107,0.19,0.232
+uci_bank_marketing,random,deterministic,50,simple,test_simple,5,cdc×3; cdc[flags]×2,ADOPT×5,ADOPT×4; INSUFFICIENT_EVIDENCE×1,0.8,0.6,0.0004981,0,0.001356,0.002146,0.2933,0.2938
+uci_bank_marketing,random,full,10,diverse,test_diverse,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.03805,0.03805
+uci_bank_marketing,random,full,10,diverse,test_heldout,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×4; DO_NOT_ADOPT×1,0.8,0,0.05773,0.0513,0.06526,0.07105,0.01743,0.07516
+uci_bank_marketing,random,full,10,diverse,test_simple,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.03301,0.03301
+uci_bank_marketing,random,full,10,simple,test_diverse,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.03805,0.03805
+uci_bank_marketing,random,full,10,simple,test_heldout,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×4; DO_NOT_ADOPT×1,0.8,0,0.05773,0.0513,0.06526,0.07105,0.01743,0.07516
+uci_bank_marketing,random,full,10,simple,test_simple,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.03301,0.03301
+uci_bank_marketing,random,full,25,diverse,test_diverse,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.0003331,0,0.0009994,0.001666,0.04213,0.04246
+uci_bank_marketing,random,full,25,diverse,test_heldout,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0,0.06349,0.05996,0.06629,0.06698,0.03506,0.09855
+uci_bank_marketing,random,full,25,diverse,test_simple,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.001359,0,0.004077,0.006795,0.03434,0.03569
+uci_bank_marketing,random,full,25,simple,test_diverse,5,dboost_gaussian_text×4; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.04246,0.04246
+uci_bank_marketing,random,full,25,simple,test_heldout,5,dboost_gaussian_text×4; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0,0.0566,0.0417,0.06629,0.06698,0.04195,0.09855
+uci_bank_marketing,random,full,25,simple,test_simple,5,dboost_gaussian_text×4; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.0005319,0,0.001596,0.00266,0.03516,0.03569
+uci_bank_marketing,random,full,50,diverse,test_diverse,5,cdc[flags]×4; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.002546,0,0.007638,0.01273,0.04695,0.04949
+uci_bank_marketing,random,full,50,diverse,test_heldout,5,cdc[flags]×4; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0,0.02208,0.01364,0.03487,0.04711,0.1004,0.1225
+uci_bank_marketing,random,full,50,diverse,test_simple,5,cdc[flags]×4; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.0002932,0,0.0008795,0.001466,0.04454,0.04483
+uci_bank_marketing,random,full,50,simple,test_diverse,5,cdc[flags]×4; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.002133,0,0.0064,0.01067,0.04736,0.04949
+uci_bank_marketing,random,full,50,simple,test_heldout,5,cdc[flags]×4; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0,0.02051,0.01481,0.02754,0.03335,0.102,0.1225
+uci_bank_marketing,random,full,50,simple,test_simple,5,cdc[flags]×4; dboost_gaussian_text×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.0003498,0,0.00105,0.001749,0.04448,0.04483
+uci_credit,random,deterministic,10,diverse,test_diverse,5,dboost_gaussian_text×4; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.6,0.001192,0,0.00262,0.004367,0.02667,0.02786
+uci_credit,random,deterministic,10,diverse,test_heldout,5,dboost_gaussian_text×4; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×4; INSUFFICIENT_EVIDENCE×1,0.2,0.2,0.02348,0.01079,0.03321,0.0391,0.01897,0.04245
+uci_credit,random,deterministic,10,diverse,test_simple,5,dboost_gaussian_text×4; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.0002458,0,0.0007374,0.001229,0.02634,0.02659
+uci_credit,random,deterministic,10,simple,test_diverse,5,dboost_gaussian_text×4; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.6,0.001192,0,0.00262,0.004367,0.02667,0.02786
+uci_credit,random,deterministic,10,simple,test_heldout,5,dboost_gaussian_text×4; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×4; INSUFFICIENT_EVIDENCE×1,0.2,0.2,0.02348,0.01079,0.03321,0.0391,0.01897,0.04245
+uci_credit,random,deterministic,10,simple,test_simple,5,dboost_gaussian_text×4; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.0002458,0,0.0007374,0.001229,0.02634,0.02659
+uci_credit,random,deterministic,25,diverse,test_diverse,5,dboost_gaussian_text×3; cdc×1; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,2.225e-05,0,6.675e-05,0.0001113,0.06533,0.06536
+uci_credit,random,deterministic,25,diverse,test_heldout,5,dboost_gaussian_text×3; cdc×1; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×3; INSUFFICIENT_EVIDENCE×2,0.4,0.2,0.08407,0.03896,0.1287,0.1493,0.05532,0.1394
+uci_credit,random,deterministic,25,diverse,test_simple,5,dboost_gaussian_text×3; cdc×1; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.001114,0,0.003342,0.005571,0.06147,0.06258
+uci_credit,random,deterministic,25,simple,test_diverse,5,dboost_gaussian_text×3; cdc×1; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,2.225e-05,0,6.675e-05,0.0001113,0.06533,0.06536
+uci_credit,random,deterministic,25,simple,test_heldout,5,dboost_gaussian_text×3; cdc×1; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×3; INSUFFICIENT_EVIDENCE×2,0.4,0.2,0.08407,0.03896,0.1287,0.1493,0.05532,0.1394
+uci_credit,random,deterministic,25,simple,test_simple,5,dboost_gaussian_text×3; cdc×1; cdc[flags]×1,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.001114,0,0.003342,0.005571,0.06147,0.06258
+uci_credit,random,deterministic,50,diverse,test_diverse,5,cdc×3; dboost_gaussian_text×2,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.001012,0,0.003036,0.00506,0.08698,0.088
+uci_credit,random,deterministic,50,diverse,test_heldout,5,cdc×3; dboost_gaussian_text×2,INSUFFICIENT_EVIDENCE×5,ADOPT×3; DO_NOT_ADOPT×2,0,0.6,0.07722,0,0.1565,0.1982,0.1294,0.2066
+uci_credit,random,deterministic,50,diverse,test_simple,5,cdc×3; dboost_gaussian_text×2,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,0.8,0.0002381,0,0.0007143,0.00119,0.08214,0.08238
+uci_credit,random,deterministic,50,simple,test_diverse,5,dboost_gaussian_text×3; cdc×2,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.088,0.088
+uci_credit,random,deterministic,50,simple,test_heldout,5,dboost_gaussian_text×3; cdc×2,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×2; ADOPT×2; INSUFFICIENT_EVIDENCE×1,0.2,0.4,0.1133,0.03608,0.1905,0.1982,0.09333,0.2066
+uci_credit,random,deterministic,50,simple,test_simple,5,dboost_gaussian_text×3; cdc×2,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.08238,0.08238
+uci_credit,random,full,10,diverse,test_diverse,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.02585,0.02585
+uci_credit,random,full,10,diverse,test_heldout,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×5,0,1,0,0,0,0,0.013,0.013
+uci_credit,random,full,10,diverse,test_simple,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.02669,0.02669
+uci_credit,random,full,10,simple,test_diverse,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.02585,0.02585
+uci_credit,random,full,10,simple,test_heldout,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×5,0,1,0,0,0,0,0.013,0.013
+uci_credit,random,full,10,simple,test_simple,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.02669,0.02669
+uci_credit,random,full,25,diverse,test_diverse,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.05877,0.05877
+uci_credit,random,full,25,diverse,test_heldout,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×5,0,0,0.02175,0.01542,0.02942,0.03556,0.01342,0.03517
+uci_credit,random,full,25,diverse,test_simple,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.05948,0.05948
+uci_credit,random,full,25,simple,test_diverse,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.05877,0.05877
+uci_credit,random,full,25,simple,test_heldout,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×5,0,0,0.02175,0.01542,0.02942,0.03556,0.01342,0.03517
+uci_credit,random,full,25,simple,test_simple,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.05948,0.05948
+uci_credit,random,full,50,diverse,test_diverse,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.0701,0.0701
+uci_credit,random,full,50,diverse,test_heldout,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×5,0,0,0.05614,0.05144,0.06114,0.06375,0.01589,0.07203
+uci_credit,random,full,50,diverse,test_simple,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.07181,0.07181
+uci_credit,random,full,50,simple,test_diverse,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.0701,0.0701
+uci_credit,random,full,50,simple,test_heldout,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,DO_NOT_ADOPT×5,0,0,0.05614,0.05144,0.06114,0.06375,0.01589,0.07203
+uci_credit,random,full,50,simple,test_simple,5,dboost_gaussian_text×5,INSUFFICIENT_EVIDENCE×5,INSUFFICIENT_EVIDENCE×5,1,1,0,0,0,0,0.07181,0.07181

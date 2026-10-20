@@ -1,0 +1,13 @@
+dataset,scheme,partition,baseline,alerts_per_1k
+uci_bank_marketing,delivery,selection,deterministic,0
+uci_bank_marketing,delivery,selection,full,6022
+uci_bank_marketing,delivery,test,deterministic,0
+uci_bank_marketing,delivery,test,full,6212
+uci_bank_marketing,random,selection,deterministic,0
+uci_bank_marketing,random,selection,full,14.39
+uci_bank_marketing,random,test,deterministic,0
+uci_bank_marketing,random,test,full,13.86
+uci_credit,random,selection,deterministic,0.2
+uci_credit,random,selection,full,50.7
+uci_credit,random,test,deterministic,0.1333
+uci_credit,random,test,full,47.64

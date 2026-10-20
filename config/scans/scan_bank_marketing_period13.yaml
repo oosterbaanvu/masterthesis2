@@ -10,9 +10,10 @@ budget_per_1k: 25
 detectors:
   cdc: {name: cdc_hgb, params: {confidence: 0.999, max_iter: 100, seed: 0, rank_score: normalized_residual}}
   dboost_gaussian_text: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5, type_mode: text}}
+  dboost_gaussian: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5}}
   lucario_core: {name: lucario_core, params: {fit_on: batch}}
   iforest: {name: iforest_row, params: {n_estimators: 300, max_samples: 1024, reference_alert_rate: 0.01, seed: 0}}
 # Offline evidence (produced by scripts/analyse_pilot.py from the pilot replications).
 evidence: results/pilot/detector_evidence.csv
-evidence_scheme: temporal
+evidence_scheme: delivery
 decision: {min_gain: 0.05, max_extra_alerts_per_1k: 50, max_shift_ratio: 3.0}

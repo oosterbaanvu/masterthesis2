@@ -216,3 +216,20 @@ copied.
   only. Decided after the qualification round (pilot seed 11, selection partition), where CDC's own flags
   outperformed its ranking at k = 25 against the rules-only baseline (0.034 vs 0.019); no test-set result was
   looked at. Both are legitimate uses of the same output, so neither mode is privileged.
+
+### D-27 · Ranking score for dBoost's Gaussian model — provisional
+- **Decision:** dBoost (Gaussian model) returns its own test statistic max_f |x_f − μ_f| / σ_f as a score; thresholding
+  at t reproduces the published flags exactly (`test_gaussian_score_reproduces_the_published_flag_exactly`).
+  Ranking by it is an extension of the published method, made because the brief's priority addendum asks for
+  scored label-free detectors; the histogram models stay binary. LUCARIO-core stays binary (no single statistic
+  across its constraint types).
+
+### D-28 · Primary analysis — final for the pilot (priority addendum, 2026-10-20)
+- **Decision:** primary = financial tables (UCI Credit, Bank Marketing random splits, Bank Marketing consecutive
+  deliveries; GMSC blocked), detectors CDC, dBoost-Gaussian (typed) and dBoost-Gaussian (text mode), ranked dR@k.
+  Raha, ZeroED, Isolation Forest, BAF, LUCARIO-core, dBoost histogram, SD, IQR and the injection-strategy comparison
+  are secondary; external benchmarks are qualified and reported only.
+- **Main question:** increment over each baseline, and baseline effect vs detector spread.
+- The first full run (binary dBoost, 5 finished replications) was superseded by a complete rerun with identical
+  scenarios; four Bank replications of the rerun were killed by the memory limit (four parallel processes) and
+  re-run; no result was selected on outcome.

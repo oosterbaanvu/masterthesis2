@@ -1,0 +1,168 @@
+{
+  "scan": "scan_bank_marketing_rules_only",
+  "dataset": "uci_bank_marketing",
+  "framework_version": "0.1.0",
+  "run_utc": "2026-10-20T19:07:11+00:00",
+  "elapsed_s": 51.0,
+  "history": {
+    "rows": 26336,
+    "select": "modulo",
+    "mod": 10,
+    "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "batch": {
+    "rows": 3308,
+    "select": "modulo",
+    "mod": 10,
+    "values": [
+      9
+    ]
+  },
+  "excluded_research_holdout": true,
+  "controls": {
+    "dbt": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+    "tests": {
+      "pass": 53,
+      "warn": 5
+    },
+    "alerts": 20,
+    "alerts_by_tier": {
+      "statistical": 20
+    },
+    "baseline_alert_cells_per_1k_rows": 6.0,
+    "evaluation_baseline_alert_cells_per_1k_rows": 13.9,
+    "shift_ratio": 0.44
+  },
+  "budget_per_1k": 25.0,
+  "review_slots": 83,
+  "baseline": "deterministic",
+  "detectors": [
+    {
+      "detector": "cdc",
+      "name": "cdc_hgb",
+      "granularity": "cell",
+      "fit_scope": "reference",
+      "provides_scores": true,
+      "compatibility": "CONDITIONAL",
+      "seconds": 33.9,
+      "flags": 141,
+      "extra_flags_beyond_controls": 141,
+      "extra_flags_per_1k": 42.6,
+      "findings_listed": 190,
+      "warnings": []
+    },
+    {
+      "detector": "dboost_gaussian_text",
+      "name": "dboost",
+      "granularity": "cell",
+      "fit_scope": "reference",
+      "provides_scores": true,
+      "compatibility": "PASS",
+      "seconds": 1.6,
+      "flags": 711,
+      "extra_flags_beyond_controls": 711,
+      "extra_flags_per_1k": 214.9,
+      "findings_listed": 711,
+      "warnings": []
+    },
+    {
+      "detector": "dboost_gaussian",
+      "name": "dboost",
+      "granularity": "cell",
+      "fit_scope": "reference",
+      "provides_scores": true,
+      "compatibility": "PASS",
+      "seconds": 0.8,
+      "flags": 902,
+      "extra_flags_beyond_controls": 902,
+      "extra_flags_per_1k": 272.7,
+      "findings_listed": 902,
+      "warnings": []
+    }
+  ],
+  "recommendations": [
+    {
+      "detector": "cdc",
+      "recommendation": "ADOPT",
+      "reasons": [
+        "offline held-out utility at 25 reviews/1k rows: 0.143 [0.131, 0.152] over 5 pilot replications (ranked; scheme random)"
+      ],
+      "evidence": {
+        "dataset": "uci_bank_marketing",
+        "scheme": "random",
+        "baseline": "deterministic",
+        "test_set": "test_heldout",
+        "detector": "cdc",
+        "budget": "25",
+        "utility": 0.143,
+        "utility_lo": 0.1313,
+        "utility_hi": 0.1524,
+        "n_replications": "5"
+      }
+    },
+    {
+      "detector": "dboost_gaussian_text",
+      "recommendation": "DO_NOT_ADOPT",
+      "reasons": [
+        "offline held-out utility at 25 reviews/1k rows: 0.039 [0.038, 0.041] over 5 pilot replications (ranked; scheme random)"
+      ],
+      "evidence": {
+        "dataset": "uci_bank_marketing",
+        "scheme": "random",
+        "baseline": "deterministic",
+        "test_set": "test_heldout",
+        "detector": "dboost_gaussian_text",
+        "budget": "25",
+        "utility": 0.03932,
+        "utility_lo": 0.03773,
+        "utility_hi": 0.04057,
+        "n_replications": "5"
+      }
+    },
+    {
+      "detector": "dboost_gaussian",
+      "recommendation": "DO_NOT_ADOPT",
+      "reasons": [
+        "offline held-out utility at 25 reviews/1k rows: 0.031 [0.027, 0.035] over 5 pilot replications (ranked; scheme random)"
+      ],
+      "evidence": {
+        "dataset": "uci_bank_marketing",
+        "scheme": "random",
+        "baseline": "deterministic",
+        "test_set": "test_heldout",
+        "detector": "dboost_gaussian",
+        "budget": "25",
+        "utility": 0.03104,
+        "utility_lo": 0.02679,
+        "utility_hi": 0.03471,
+        "n_replications": "5"
+      }
+    }
+  ],
+  "findings": {
+    "total": 1823,
+    "by_source": {
+      "detector:dboost_gaussian": 902,
+      "detector:dboost_gaussian_text": 711,
+      "detector:cdc": 190,
+      "rule:S_ENV_euribor3m": 16,
+      "rule:S_ENV_previous": 1,
+      "rule:S_ENV_campaign": 1,
+      "rule:S_ENV_age": 1,
+      "rule:S_RARE_education": 1
+    }
+  },
+  "notes": [
+    "Findings are review candidates, not verified errors; no ground truth exists for this batch.",
+    "Recommendations rest on offline synthetic-error evidence; see docs/comprehensive_pilot_report.md."
+  ]
+}

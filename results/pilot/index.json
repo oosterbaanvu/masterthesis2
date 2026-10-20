@@ -1,0 +1,48 @@
+{
+  "replications": [
+    "uci_bank_marketing-delivery-d1",
+    "uci_bank_marketing-delivery-d2",
+    "uci_bank_marketing-delivery-d3",
+    "uci_bank_marketing-delivery-d4",
+    "uci_bank_marketing-random-s11",
+    "uci_bank_marketing-random-s12",
+    "uci_bank_marketing-random-s13",
+    "uci_bank_marketing-random-s14",
+    "uci_bank_marketing-random-s15",
+    "uci_credit-random-s11",
+    "uci_credit-random-s12",
+    "uci_credit-random-s13",
+    "uci_credit-random-s14",
+    "uci_credit-random-s15"
+  ],
+  "budgets_per_1k": [
+    10.0,
+    25.0,
+    50.0
+  ],
+  "min_gain": 0.05,
+  "tables": [
+    "baseline_by_case",
+    "baseline_by_family",
+    "detector_by_case",
+    "detector_by_family",
+    "detector_evidence",
+    "detector_overall",
+    "evaluation_alert_rates",
+    "failures",
+    "overlap",
+    "replications",
+    "runtime",
+    "seed_sensitivity",
+    "selection",
+    "selection_summary",
+    "strategy_comparison",
+    "untouched_burden"
+  ],
+  "figures": [
+    "docs/figures/pilot_uci_bank_marketing_heldout_increment.png",
+    "docs/figures/pilot_uci_credit_heldout_increment.png",
+    "docs/figures/pilot_uci_bank_marketing_increment_by_family.png",
+    "docs/figures/pilot_uci_credit_increment_by_family.png"
+  ]
+}

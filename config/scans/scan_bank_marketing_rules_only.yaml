@@ -1,0 +1,17 @@
+# Operational demonstration for a team whose existing controls are only the documented deterministic rules
+# (no statistical controls). Non-temporal extract: history = rows with _row_id mod 10 in 0..7, new batch =
+# mod 10 == 9 (as received, no injection), so history and batch come from the same macro-economic regimes.
+# Evidence: random-split pilot replications, baseline "deterministic".
+name: scan_bank_marketing_rules_only
+dataset: uci_bank_marketing
+history: {select: modulo, mod: 10, values: [0, 1, 2, 3, 4, 5, 6, 7]}
+batch: {select: modulo, mod: 10, values: [9]}
+baseline: deterministic
+budget_per_1k: 25
+detectors:
+  cdc: {name: cdc_hgb, params: {confidence: 0.999, max_iter: 100, seed: 0, rank_score: normalized_residual}}
+  dboost_gaussian_text: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5, type_mode: text}}
+  dboost_gaussian: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5}}
+evidence: results/pilot/detector_evidence.csv
+evidence_scheme: random
+decision: {min_gain: 0.05, max_extra_alerts_per_1k: 50, max_shift_ratio: 3.0}

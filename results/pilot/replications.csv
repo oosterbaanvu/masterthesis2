@@ -1,0 +1,15 @@
+replication,dataset,pilot_seed,scheme,elapsed_s,n_scenarios,n_failed,dbt_s,n_reference,n_selection,n_test,n_holdout_excluded,n_unused
+uci_bank_marketing-delivery-d1,uci_bank_marketing,1,delivery,413.9,274,54,16.4,9764,5278,4159,8236,13751
+uci_bank_marketing-delivery-d2,uci_bank_marketing,2,delivery,331.5,280,48,13.3,9437,2958,2200,8236,18357
+uci_bank_marketing-delivery-d3,uci_bank_marketing,3,delivery,357.5,292,36,13.7,5105,4636,1898,8236,21313
+uci_bank_marketing-delivery-d4,uci_bank_marketing,4,delivery,334.6,316,12,12.7,6604,1898,2050,8236,22400
+uci_bank_marketing-random-s11,uci_bank_marketing,11,random,610.1,328,0,13.6,16474,8238,8240,8236,0
+uci_bank_marketing-random-s12,uci_bank_marketing,12,random,585.6,328,0,13,16472,8243,8237,8236,0
+uci_bank_marketing-random-s13,uci_bank_marketing,13,random,545.1,328,0,12.9,16477,8237,8238,8236,0
+uci_bank_marketing-random-s14,uci_bank_marketing,14,random,685.6,328,0,24.3,16475,8240,8237,8236,0
+uci_bank_marketing-random-s15,uci_bank_marketing,15,random,612.4,328,0,15.7,16475,8240,8237,8236,0
+uci_credit-random-s11,uci_credit,11,random,847.4,402,0,21.1,12001,5999,5997,6003,0
+uci_credit-random-s12,uci_credit,12,random,1016,402,0,15.7,11995,6001,6001,6003,0
+uci_credit-random-s13,uci_credit,13,random,733.6,402,0,14.3,11998,6002,5997,6003,0
+uci_credit-random-s14,uci_credit,14,random,841.7,402,0,20.7,11998,6001,5998,6003,0
+uci_credit-random-s15,uci_credit,15,random,1019,402,0,14.6,12000,5995,6002,6003,0

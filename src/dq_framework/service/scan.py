@@ -29,6 +29,8 @@ def _select(df: pd.DataFrame, spec: dict[str, Any], seed: int = 0) -> pd.Series:
         return df["_period"].isin(spec["periods"])
     if kind == "row_range":
         return df["_row_id"].between(spec["start"], spec["end"])
+    if kind == "modulo":  # deterministic, non-temporal selection: _row_id mod m in values (e.g. a new extract)
+        return (df["_row_id"] % int(spec["mod"])).isin(spec["values"])
     if kind == "sample":
         rng = np.random.default_rng(spec.get("seed", seed))
         m = np.zeros(len(df), dtype=bool)
