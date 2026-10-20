@@ -142,3 +142,37 @@ class DecisionRule:
             d = "INSUFFICIENT_EVIDENCE"
         return {"decision": d, "gain_mean": mean, "gain_ci": [lo, hi], "extra_alert_burden_per_1k": burden,
                 "n": int(np.sum(~np.isnan(np.asarray(gains, dtype=float))))}
+
+
+def evaluate_rows(
+    log: pd.DataFrame,
+    baseline_cells: pd.DataFrame,
+    detector_scores: pd.DataFrame | None,
+    n_rows: int,
+    budgets_per_1k: tuple[float, ...] = (5.0, 10.0, 25.0),
+) -> dict[str, Any]:
+    """Record-level view: a row is 'erroneous' if it contains an injected cell and 'alerted' if any control
+    implicates any of its cells. Cell-level detector output is aggregated to rows (max score, any flag);
+    row-level detectors are used as-is. Nothing is mapped from rows down to cells."""
+    inj_rows = set(log["_row_id"].astype("int64"))
+    n_inj = len(inj_rows)
+    b_rows = set(baseline_cells["_row_id"].astype("int64")) if len(baseline_cells) else set()
+    m: dict[str, Any] = {"row_n_injected": n_inj,
+                         "row_recall_B": len(inj_rows & b_rows) / n_inj if n_inj else np.nan,
+                         "row_B_alerts_untouched_per_1k": 1000 * len(b_rows - inj_rows) / n_rows}
+    if detector_scores is None or detector_scores.empty:
+        return m
+    r = (detector_scores.groupby("_row_id").agg(score=("score", "max"), flag=("flag", "any")).reset_index())
+    r["_row_id"] = r["_row_id"].astype("int64")
+    r["injected"] = r["_row_id"].isin(inj_rows)
+    r["in_B"] = r["_row_id"].isin(b_rows)
+    l_rows = set(r.loc[r["flag"], "_row_id"])
+    m["row_recall_L"] = len(inj_rows & l_rows) / n_inj if n_inj else np.nan
+    m["row_incremental_recall"] = len((inj_rows & l_rows) - b_rows) / n_inj if n_inj else np.nan
+    m["row_extra_alerts_untouched_per_1k"] = 1000 * len(l_rows - b_rows - inj_rows) / n_rows
+    cand = r[~r["in_B"] & r["score"].notna()].sort_values("score", ascending=False, kind="mergesort")
+    for b in budgets_per_1k:
+        k = int(round(b * n_rows / 1000))
+        add = int(cand.head(k)["injected"].sum())
+        m[f"row_incremental_recall_at_{b:g}_per_1k"] = add / n_inj if n_inj else np.nan
+    return m

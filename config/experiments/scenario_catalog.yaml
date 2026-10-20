@@ -1,0 +1,79 @@
+# Scenario catalog: candidate error operations per dataset and the mechanisms they are crossed with.
+# Used by scripts/validate_injection.py (qualification) and, after freezing, by the experiment protocol.
+#
+# category_swap draws wrong codes per cell, frequency-weighted by default (uniform weighting is a
+# sensitivity setting: it over-represents rare codes). code_remap is tab_err's CategorySwap, which in
+# tab_err 0.2.1 maps every true code to a single wrong code (systematic mapping error).
+#
+# Each case states WHY the error is plausible in a financial delivery and whether it is a
+# sanity check (trivially caught by documented rules) or a primary (non-trivial) error.
+# EAR conditioning columns are design choices that stand for "error concentrated in a
+# processing segment"; they are NOT claims about real banking error mechanisms.
+
+defaults:
+  rate: 0.05
+  seeds: [101, 202, 303]
+  soft_strength: 4.0     # logit slope over the centred rank; odds ratio extreme vs. extreme ~ e^4
+
+datasets:
+  uci_credit:
+    control_column: AGE   # placement test: a column unrelated to every mechanism below
+    ear_condition: {column: LIMIT_BAL, direction: high,
+                    rationale: "errors concentrated in high-limit (premium) accounts handled by a separate process"}
+    cases:
+      - {column: BILL_AMT1, operation: scale, params: {factor: 10}, role: primary, rationale: "unit/decimal shift"}
+      - {column: BILL_AMT1, operation: scale, params: {factor: 0.001}, role: primary, rationale: "amount delivered in thousands"}
+      - {column: PAY_AMT1, operation: scale, params: {factor: 10}, role: primary, rationale: "unit/decimal shift on a payment"}
+      - {column: BILL_AMT1, operation: sign_flip, role: primary, rationale: "debit/credit sign convention on a balance that may be negative"}
+      - {column: PAY_AMT1, operation: sign_flip, role: sanity, rationale: "negative payment; caught by PAY_AMT >= 0"}
+      - {column: BILL_AMT1, operation: digit_transposition, role: primary, rationale: "manual keying error"}
+      - {column: PAY_AMT1, operation: digit_transposition, role: primary, rationale: "manual keying error"}
+      - {column: LIMIT_BAL, operation: digit_transposition, role: primary, rationale: "manual keying error on the credit limit"}
+      - {column: BILL_AMT1, operation: period_shift, params: {source_column: BILL_AMT2}, role: primary, rationale: "column misalignment: previous month delivered"}
+      - {column: PAY_0, operation: period_shift, params: {source_column: PAY_2}, role: primary, rationale: "column misalignment of the status series"}
+      - {column: PAY_AMT1, operation: rounding, params: {unit: 1000}, role: primary, rationale: "precision loss in an upstream interface"}
+      - {column: LIMIT_BAL, operation: plausible_substitution, role: primary, rationale: "value from another client (wrong join key)"}
+      - {column: AGE, operation: plausible_substitution, role: primary, rationale: "value from another client"}
+      - {column: BILL_AMT1, operation: plausible_substitution, role: primary, rationale: "value from another client"}
+      - {column: PAY_0, operation: category_swap, params: {weighing: frequency}, role: primary, rationale: "valid but wrong repayment status code (frequency-weighted)"}
+      - {column: PAY_0, operation: code_remap, role: primary, rationale: "faulty code-mapping table: each true code mapped to one wrong code (tab_err CategorySwap)"}
+      - {column: EDUCATION, operation: category_swap, params: {weighing: frequency}, role: primary, rationale: "valid but wrong code"}
+      - {column: MARRIAGE, operation: category_swap, params: {weighing: frequency}, role: primary, rationale: "valid but wrong code"}
+      - {column: AGE, operation: missing, role: sanity, rationale: "mandatory field empty; caught by not_null"}
+      - {column: EDUCATION, operation: invalid_code, params: {code: 9}, role: sanity, rationale: "undefined code; caught by accepted_values"}
+      - {column: BILL_AMT1, operation: outlier, role: sanity, rationale: "extreme value (tab_err Outlier)"}
+    categorical_enar_segment:
+      PAY_0: [0]        # errors only on cells whose true status is 0 (code mapping error)
+      EDUCATION: [2]
+      MARRIAGE: [1]
+
+  uci_bank_marketing:
+    control_column: age
+    ear_condition: {column: contact, segment_values: [telephone],
+                    rationale: "errors concentrated in records captured via the telephone channel system"}
+    cases:
+      - {column: euribor3m, operation: scale, params: {factor: 0.01}, role: primary, rationale: "percent delivered as fraction"}
+      - {column: duration, operation: scale, params: {factor: 0.0166667}, role: primary, rationale: "seconds delivered as minutes"}
+      - {column: duration, operation: digit_transposition, role: primary, rationale: "manual keying error"}
+      - {column: age, operation: plausible_substitution, role: primary, rationale: "value from another client"}
+      - {column: campaign, operation: plausible_substitution, role: primary, rationale: "value from another record"}
+      - {column: job, operation: category_swap, params: {weighing: frequency}, role: primary, rationale: "valid but wrong code"}
+      - {column: job, operation: code_remap, role: primary, rationale: "faulty code-mapping table"}
+      - {column: education, operation: category_swap, params: {weighing: frequency}, role: primary, rationale: "valid but wrong code"}
+      - {column: housing, operation: category_swap, params: {weighing: frequency}, role: primary, rationale: "flag flipped"}
+      - {column: month, operation: category_swap, params: {weighing: frequency}, role: primary, rationale: "wrong month; inconsistent with monthly indicators"}
+      - {column: age, operation: missing, role: sanity, rationale: "mandatory field empty"}
+      - {column: job, operation: invalid_code, params: {code: "n/a"}, role: sanity, rationale: "undefined code"}
+    categorical_enar_segment:
+      job: [admin.]
+      education: [university.degree]
+      housing: ["yes"]
+      month: [may]
+
+mechanisms:
+  - {name: soft_ecar}
+  - {name: tab_err_ecar}
+  - {name: soft_ear}      # condition from datasets.<ds>.ear_condition
+  - {name: tab_err_ear}
+  - {name: soft_enar}     # numeric: direction high; categorical: categorical_enar_segment
+  - {name: tab_err_enar}

@@ -1,0 +1,15 @@
+# Same workflow on a second source, configuration only (no code changes).
+name: demo_uci_bank_marketing
+dataset: uci_bank_marketing
+split_seed: 1
+split_scheme: random
+partition: dev
+scenarios:
+  seeds: [101, 202]
+  rate: 0.01
+  roles: [primary, sanity]
+  mechanisms: [soft_ecar, soft_ear, soft_enar, tab_err_enar]
+detector:
+  name: cdc_hgb
+  params: {confidence: 0.999, max_iter: 100, seed: 0}
+budgets_per_1k: [5, 10, 25]

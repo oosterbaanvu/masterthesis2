@@ -1,7 +1,9 @@
 # Isolated environment for the original Conformal Data Cleaning implementation
 # (se-jaeger/conformal-data-cleaning commit fd8a2126c9626099f3d45511fd05d30af8de6b64, AISTATS 2024).
-# Upstream pins python ^3.9,<3.10, autogluon ^0.8.2 (extras all), scikit-learn <1.3.
-autogluon.tabular[lightgbm,catboost,xgboost,fastai]==0.8.2
+# Upstream pins python ^3.9,<3.10, autogluon ^0.8.2 [all], scikit-learn <1.3.
+# Deviation: the FASTAI model family (needs torch + spaCy, multi-GB) is not installed;
+# the fidelity check runs the original cleaner with the RF and XT model families only.
+autogluon.tabular==0.8.2
 scikit-learn==1.2.2
 pyarrow==14.0.2
-conformal-inference @ git+https://github.com/se-jaeger/conformal-inference@e25cb5938808360033201afc2ae567e5de3ad6c0
+pyod==1.1.3

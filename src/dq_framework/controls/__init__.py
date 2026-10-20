@@ -102,6 +102,7 @@ def run_controls(
     stats: ReferenceStats,
     workdir: Path,
     tiers: tuple[str, ...] = ("deterministic", "statistical"),
+    dbt_dir: Path | None = None,
 ) -> ControlRun:
     """Execute the generated dbt tests for ``contract`` against ``batch``.
 
@@ -124,8 +125,8 @@ def run_controls(
     target = workdir / "dbt_target"
     cmd = [
         *_dbt_executable(), "build",
-        "--project-dir", str(paths.DBT_DIR),
-        "--profiles-dir", str(paths.DBT_DIR),
+        "--project-dir", str(dbt_dir or paths.DBT_DIR),
+        "--profiles-dir", str(dbt_dir or paths.DBT_DIR),
         "--target-path", str(target),
         "--log-path", str(workdir / "dbt_logs"),
         "--select", f"{model_name(contract)}+",

@@ -9,7 +9,7 @@ An operation is separated from the *mechanism* that decides where errors occur
 * ``apply(...)``: new values for the selected rows.
 
 Where tab_err implements the operation appropriately it is used (WrongUnit,
-CategorySwap, MissingValue, Outlier). Financial operations missing from tab_err
+MissingValue, Outlier; CategorySwap only as the explicitly named ``code_remap``). Financial operations missing from tab_err
 (sign flip, digit transposition, period shift, rounding, plausible substitution)
 are small custom injectors, tested in tests/test_injection.py.
 """
@@ -88,9 +88,53 @@ class Scale(Operation):
 
 
 class CategorySwap(Operation):
-    """Valid-but-wrong category (uniform over the other reference-observed categories) via tab_err."""
+    """Valid-but-wrong category, drawn independently per cell (custom, reproducible).
+
+    ``weighing='frequency'`` (default) draws the wrong code with probability proportional to its
+    reference frequency (excluding the true code): wrong codes are then as plausible as real ones.
+    ``weighing='uniform'`` draws uniformly over the other reference-observed codes, which over-represents
+    rare codes and makes swaps easy for rare-category controls.
+
+    Not delegated to tab_err: in tab_err 0.2.1 (with pandas 2.3) CategorySwap applies its sampling
+    function once per *category* instead of once per cell, so all cells sharing a true code receive
+    the same wrong code (see ``CodeRemap`` and tests/test_tab_err_behaviour.py).
+    """
 
     name = "category_swap"
+    column_types = ("categorical",)
+
+    def eligible(self, s, ctx):
+        return s.notna() & s.isin(ctx.domain) & (len(ctx.domain) > 1)
+
+    def apply(self, s, rows, ctx, seed):
+        rng = np.random.default_rng(seed)
+        weighing = self.params.get("weighing", "frequency")
+        dom = list(ctx.domain)
+        if weighing == "frequency":
+            freq = ctx.reference_values.dropna().astype(object).value_counts()
+            w_all = np.array([float(freq.get(v, 0.0)) for v in dom])
+        elif weighing == "uniform":
+            w_all = np.ones(len(dom))
+        else:
+            raise ValueError("weighing must be 'frequency' or 'uniform'")
+        pos = {v: i for i, v in enumerate(dom)}
+        out = []
+        for v in s.loc[rows].astype(object):
+            w = w_all.copy()
+            w[pos[v]] = 0.0
+            out.append(dom[int(rng.choice(len(dom), p=w / w.sum()))])
+        return pd.Series(out, index=rows, dtype=object)
+
+
+class CodeRemap(Operation):
+    """Systematic code-mapping error via tab_err 0.2.1 CategorySwap (uniform).
+
+    Because tab_err applies its sampling per category, every selected cell with true code ``a``
+    receives the same wrong code ``f(a)`` within one scenario: a faulty mapping table rather than
+    independent mislabels. Kept as a separate, explicitly named operation.
+    """
+
+    name = "code_remap"
     column_types = ("categorical",)
     uses_tab_err = True
 
@@ -272,7 +316,7 @@ class InvalidCode(Operation):
 
 OPERATIONS: dict[str, type[Operation]] = {
     cls.name: cls
-    for cls in (Scale, CategorySwap, Missing, Outlier, SignFlip, DigitTransposition, PeriodShift, Rounding,
+    for cls in (Scale, CategorySwap, CodeRemap, Missing, Outlier, SignFlip, DigitTransposition, PeriodShift, Rounding,
                 PlausibleSubstitution, InvalidCode)
 }
 

@@ -1,0 +1,16 @@
+# Phase-4 feasibility demonstration with a row-level detector (NOT confirmatory).
+# Evaluated on the DEV partition of split seed 1; the test partition is not used.
+name: demo_uci_credit_iforest
+dataset: uci_credit
+split_seed: 1
+split_scheme: random
+partition: dev
+scenarios:
+  seeds: [101, 202]
+  rate: 0.01
+  roles: [primary, sanity]
+  mechanisms: [soft_ecar, soft_ear, soft_enar, tab_err_enar]
+detector:
+  name: iforest_row
+  params: {n_estimators: 300, reference_alert_rate: 0.01, seed: 0}
+budgets_per_1k: [5, 10, 25]

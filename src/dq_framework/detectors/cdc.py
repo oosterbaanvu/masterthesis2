@@ -20,7 +20,8 @@ Deviations from the original (documented in docs/method_compatibility.md):
 3. The interval test is strict (y < lower or y > upper) - the original uses <= / >=,
    which flags values *on* the interval boundary (frequent for integer data).
 4. Cells additionally receive a conformal p-value, so cells can be ranked for a
-   fixed review budget (score = 1 - p). For categorical columns the ranking uses the
+   fixed review budget (score = 1 - p, plus a tie-breaker < 1e-5 on the normalised
+   nonconformity, because many cells share the minimal p-value 1/(n_cal + 1)). For categorical columns the ranking uses the
    *marginal* p-value; class-conditional p-values are bounded below by 1/(n_label + 1)
    and are not comparable between rare and frequent labels.
 6. Categorical prediction sets are inclusive (label in set iff s <= q_hat), the
@@ -33,6 +34,7 @@ Deviations from the original (documented in docs/method_compatibility.md):
 
 from __future__ import annotations
 
+import hashlib
 import time
 import warnings
 from typing import Any
@@ -51,6 +53,13 @@ from dq_framework.detectors.base import (
     DetectorOutput,
     environment_info,
 )
+
+
+# Conformal p-values have resolution 1/(n_cal + 1); many cells share the minimum p-value. A tiny,
+# monotone tie-breaker (always < the p-value resolution for n_cal < 10,000) orders cells within a tie
+# by how far they lie from the model's prediction, so that fixed review budgets are not filled in
+# arbitrary (file) order.
+TIE_EPS = 1e-5
 
 
 def _q_hat(scores: np.ndarray, confidence: float) -> float | None:
@@ -89,8 +98,12 @@ class ConformalDataCleaningHGB(Detector):
         seed: int = 0,
         target_columns: list[str] | None = None,
         base_quantile: float | None = None,
+        set_rule: str = "inclusive",
     ) -> None:
+        if set_rule not in ("inclusive", "strict_original"):
+            raise ValueError("set_rule must be 'inclusive' or 'strict_original'")
         super().__init__(
+            set_rule=set_rule,
             base_quantile=base_quantile,
             confidence=confidence,
             calibration_rows=calibration_rows,
@@ -145,13 +158,14 @@ class ConformalDataCleaningHGB(Detector):
         self._levels = {c: sorted(reference[c].dropna().unique().tolist(), key=lambda v: (str(type(v)), v)) for c in self._cat_cols}
         targets = cfg["target_columns"] or self._cols
         alpha = 1 - cfg["confidence"]
-        rng = np.random.default_rng(cfg["seed"])
         self.models_: dict[str, dict[str, Any]] = {}
         self.warnings_: list[str] = []
         for target in targets:
             ref = reference[reference[target].notna()]
             n = len(ref)
-            perm = rng.permutation(n)
+            # per-column generator: the calibration split does not depend on the order of targets
+            col_seed = int.from_bytes(hashlib.sha256(f"{cfg['seed']}|{target}".encode()).digest()[:4], "little")
+            perm = np.random.default_rng(col_seed).permutation(n)
             n_cal = min(cfg["calibration_rows"], n // 2)
             cal_idx, tr_idx = perm[:n_cal], perm[n_cal:]
             tr, cal = ref.iloc[tr_idx], ref.iloc[cal_idx]
@@ -209,7 +223,9 @@ class ConformalDataCleaningHGB(Detector):
                 yv = y.astype("float64").to_numpy()
                 s = np.maximum(pred[:, 0] - yv, yv - pred[:, 2])
                 p = _p_values(m["cal"], s)
-                score = 1.0 - p
+                # tie-break among equal p-values by the nonconformity relative to the predicted interval width
+                width = np.maximum(pred[:, 2] - pred[:, 0], 1e-9)
+                score = 1.0 - p + TIE_EPS * (1.0 - np.exp(-np.maximum(s / width, 0.0)))
                 flag = (yv < pred[:, 0] - m["qhat"]) | (yv > pred[:, 2] + m["qhat"])
             else:
                 proba = m["model"].predict_proba(X)
@@ -220,12 +236,17 @@ class ConformalDataCleaningHGB(Detector):
                 s_obs = np.ones(len(batch))
                 s_obs[known] = 1.0 - proba[np.flatnonzero(known), j_obs[known]]
                 # ranking score: marginal conformal p-value (comparable across labels and columns)
-                score = 1.0 - _p_values(m["cal_marginal"], s_obs)
+                score = 1.0 - _p_values(m["cal_marginal"], s_obs) + TIE_EPS * s_obs
                 # flag: class-conditional (Mondrian) prediction set, inclusive: y in C(x) iff s(x, y) <= q_hat(y)
                 qh = np.array([m["qhat"][c] if m["qhat"][c] is not None else np.inf for c in m["classes"]])
-                in_any = ((1.0 - proba) <= qh[None, :]).any(axis=1)  # non-empty prediction set
-                in_set = np.zeros(len(batch), dtype=bool)
-                in_set[known] = s_obs[known] <= qh[j_obs[known]]
+                if self.config["set_rule"] == "inclusive":
+                    in_any = ((1.0 - proba) <= qh[None, :]).any(axis=1)  # non-empty prediction set
+                    in_set = np.zeros(len(batch), dtype=bool)
+                    in_set[known] = s_obs[known] <= qh[j_obs[known]]
+                else:  # reproduces conformal_inference ConformalClassifier.predict (strict '<')
+                    in_any = ((1.0 - proba) < qh[None, :]).any(axis=1)
+                    in_set = np.zeros(len(batch), dtype=bool)
+                    in_set[known] = s_obs[known] < qh[j_obs[known]]
                 unseen = (~known) & np.array([v is not None for v in lab])
                 flag = (~in_set & in_any) | unseen  # empty set -> inlier (original setting); unseen label -> flagged
                 score[unseen] = 1.0

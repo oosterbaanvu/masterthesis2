@@ -1,0 +1,1218 @@
+% references.bib - merged from three verification passes (2026-10-19).
+% Every entry carries a `note` stating how it was verified (Crossref/DataCite/arXiv/proceedings page,
+% full text read or abstract only). Entries marked UNVERIFIED in the note must be checked before citing.
+
+@article{schelter2018deequ,
+  author    = {Schelter, Sebastian and Lange, Dustin and Schmidt, Philipp and Celikel, Meltem and Biessmann, Felix and Grafberger, Andreas},
+  title     = {Automating Large-Scale Data Quality Verification},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {11},
+  number    = {12},
+  pages     = {1781--1794},
+  year      = {2018},
+  doi       = {10.14778/3229863.3229867},
+  url       = {http://www.vldb.org/pvldb/vol11/p1781-schelter.pdf},
+  note      = {verification: Crossref metadata and PDF first page (PVLDB reference format) read}
+}
+
+@inproceedings{schelter2019unittesting,
+  author    = {Schelter, Sebastian and Biessmann, Felix and Lange, Dustin and Rukat, Tammo and Schmidt, Phillipp and Seufert, Stephan and Brunelle, Pierre and Taptunov, Andrey},
+  title     = {Unit Testing Data with {Deequ}},
+  booktitle = {Proceedings of the 2019 International Conference on Management of Data (SIGMOD)},
+  pages     = {1993--1996},
+  year      = {2019},
+  doi       = {10.1145/3299869.3320210},
+  note      = {verification: Crossref metadata; abstract via Semantic Scholar API (full text not read)}
+}
+
+@inproceedings{mahdavi2019raha,
+  author    = {Mahdavi, Mohammad and Abedjan, Ziawasch and Castro Fernandez, Raul and Madden, Samuel and Ouzzani, Mourad and Stonebraker, Michael and Tang, Nan},
+  title     = {Raha: A Configuration-Free Error Detection System},
+  booktitle = {Proceedings of the 2019 International Conference on Management of Data (SIGMOD)},
+  pages     = {865--882},
+  year      = {2019},
+  doi       = {10.1145/3299869.3324956},
+  url       = {https://github.com/BigDaMa/raha},
+  note      = {verification: Crossref metadata; full text read from PDF shipped in BigDaMa/raha repo (documentation/raha_paper.pdf)}
+}
+
+@article{mahdavi2020baran,
+  author    = {Mahdavi, Mohammad and Abedjan, Ziawasch},
+  title     = {Baran: Effective Error Correction via a Unified Context Representation and Transfer Learning},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {13},
+  number    = {11},
+  pages     = {1948--1961},
+  year      = {2020},
+  doi       = {10.14778/3407790.3407801},
+  url       = {http://www.vldb.org/pvldb/vol13/p1948-mahdavi.pdf},
+  note      = {verification: PDF read (states Vol. 13, No. 11); Crossref metadata lists issue 12 -- discrepancy, PDF value used}
+}
+
+@inproceedings{abdelaal2023rein,
+  author    = {Abdelaal, Mohamed and Hammacher, Christian and Sch{\"o}ning, Harald},
+  title     = {{REIN}: A Comprehensive Benchmark Framework for Data Cleaning Methods in {ML} Pipelines},
+  booktitle = {Proceedings of the 26th International Conference on Extending Database Technology (EDBT)},
+  pages     = {499--511},
+  year      = {2023},
+  doi       = {10.48786/edbt.2023.43},
+  url       = {https://openproceedings.org/2023/conf/edbt/3-paper-49.pdf},
+  eprint    = {2302.04702},
+  archivePrefix = {arXiv},
+  note      = {verification: DataCite DOI record, OpenProceedings PDF read (page numbers from PDF), arXiv API; repo README wrongly cites PVLDB}
+}
+
+@inproceedings{jager2024conformal,
+  author    = {J{\"a}ger, Sebastian and Biessmann, Felix},
+  title     = {From Data Imputation to Data Cleaning -- Automated Cleaning of Tabular Data Improves Downstream Predictive Performance},
+  booktitle = {Proceedings of the 27th International Conference on Artificial Intelligence and Statistics (AISTATS)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {238},
+  pages     = {3394--3402},
+  publisher = {PMLR},
+  year      = {2024},
+  url       = {https://proceedings.mlr.press/v238/jager24a.html},
+  note      = {verification: PMLR citation metadata (pages, date 2024-04-18) and full PDF read; code github.com/se-jaeger/conformal-data-cleaning}
+}
+
+@article{jung2025realistic,
+  author    = {Jung, Philipp and J{\"a}ger, Sebastian and Chandler, Nicholas and Biessmann, Felix},
+  title     = {Towards Realistic Error Models for Tabular Data},
+  journal   = {ACM Journal of Data and Information Quality},
+  volume    = {17},
+  number    = {4},
+  articleno = {28},
+  pages     = {1--27},
+  year      = {2025},
+  month     = dec,
+  doi       = {10.1145/3774914},
+  url       = {https://doi.org/10.1145/3774914},
+  note      = {verification: Crossref metadata and abstract (published online 2025-12-04), Semantic Scholar (DBLP key journals/jdiq/JungJCB25), article number from authors' tab_err README; FULL TEXT NOT READ (ACM DL 403)}
+}
+
+@misc{tab_err_software,
+  author    = {Jung, Philipp and J{\"a}ger, Sebastian},
+  title     = {tab\_err: Fully-controllable error generation for tabular data (Python package, version 0.2.1)},
+  year      = {2025},
+  howpublished = {PyPI package \texttt{tab-err}, released 2025-12-17},
+  url       = {https://github.com/calgo-lab/tab_err},
+  note      = {verification: PyPI JSON metadata (version, date, requires-python >=3.9,<3.13, Apache-2.0) and git tag 0.2.1 = commit 5b344660; main HEAD 4e5d348e (2026-10-18, v0.2.2 unreleased)}
+}
+
+@misc{chandler2026cured,
+  author    = {Chandler, Nicholas and J{\"a}ger, Sebastian and Jung, Philipp and Bie{\ss}mann, Felix},
+  title     = {{CURED}: Creating, Understanding, and Repairing Errors Demonstrator},
+  year      = {2026},
+  eprint    = {2607.20140},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.LG},
+  url       = {https://arxiv.org/abs/2607.20140},
+  note      = {verification: arXiv API (v1, 2026-07-22) and full PDF read; venue not stated}
+}
+
+@misc{jung2025mechdetect,
+  author    = {Jung, Philipp and Chandler, Nicholas and J{\"a}ger, Sebastian and Biessmann, Felix},
+  title     = {{MechDetect}: Detecting Data-Dependent Errors},
+  year      = {2025},
+  eprint    = {2512.04138},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.LG},
+  url       = {https://arxiv.org/abs/2512.04138},
+  note      = {verification: arXiv API and full PDF read; arXiv comment says DSIS 2025, proceedings DOI not verified}
+}
+
+@inproceedings{abdelaal2024saged,
+  author    = {Abdelaal, Mohamed and Ktitarev, Tim and St{\"a}dtler, Daniel and Sch{\"o}ning, Harald},
+  title     = {{SAGED}: Few-Shot Meta Learning for Tabular Data Error Detection},
+  booktitle = {Proceedings of the 27th International Conference on Extending Database Technology (EDBT)},
+  pages     = {386--398},
+  year      = {2024},
+  doi       = {10.48786/edbt.2024.34},
+  url       = {https://openproceedings.org/2024/conf/edbt/paper-95.pdf},
+  note      = {verification: DataCite DOI record and OpenProceedings PDF read (page numbers from PDF)}
+}
+
+@article{qin2026lucario,
+  author    = {Qin, Qiaolin and Li, Heng and Merlo, Ettore},
+  title     = {Unsupervised, Robust, and Lightweight Detection of Data Pattern Anomalies and Outliers},
+  journal   = {Information and Software Technology},
+  volume    = {192},
+  pages     = {108035},
+  year      = {2026},
+  doi       = {10.1016/j.infsof.2026.108035},
+  url       = {https://doi.org/10.1016/j.infsof.2026.108035},
+  note      = {verification: Crossref metadata (issued 2026-04), PolyPublie record, Semantic Scholar; FULL TEXT NOT READ (ScienceDirect 403); code github.com/mooselab/Detect-Cell-level-Data-Anomalies-With-LUCARIO}
+}
+
+@inproceedings{qin2025riolu,
+  author    = {Qin, Qiaolin and Li, Heng and Merlo, Ettore and Lamothe, Maxime},
+  title     = {Automated, Unsupervised, and Auto-Parameterized Inference of Data Patterns and Anomaly Detection},
+  booktitle = {Proceedings of the 47th IEEE/ACM International Conference on Software Engineering (ICSE)},
+  pages     = {2419--2431},
+  year      = {2025},
+  doi       = {10.1109/ICSE55347.2025.00078},
+  eprint    = {2412.05240},
+  archivePrefix = {arXiv},
+  note      = {verification: Crossref metadata and arXiv API abstract}
+}
+
+@article{abedjan2016detecting,
+  author    = {Abedjan, Ziawasch and Chu, Xu and Deng, Dong and Castro Fernandez, Raul and Ilyas, Ihab F. and Ouzzani, Mourad and Papotti, Paolo and Stonebraker, Michael and Tang, Nan},
+  title     = {Detecting Data Errors: Where are we and what needs to be done?},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {9},
+  number    = {12},
+  pages     = {993--1004},
+  year      = {2016},
+  doi       = {10.14778/2994509.2994518},
+  url       = {http://www.vldb.org/pvldb/vol9/p993-abedjan.pdf},
+  note      = {verification: Crossref metadata and full PDF read}
+}
+
+@inproceedings{heidari2019holodetect,
+  author    = {Heidari, Alireza and McGrath, Joshua and Ilyas, Ihab F. and Rekatsinas, Theodoros},
+  title     = {{HoloDetect}: Few-Shot Learning for Error Detection},
+  booktitle = {Proceedings of the 2019 International Conference on Management of Data (SIGMOD)},
+  pages     = {829--846},
+  year      = {2019},
+  doi       = {10.1145/3299869.3319888},
+  eprint    = {1904.02285},
+  archivePrefix = {arXiv},
+  note      = {verification: Crossref metadata and arXiv abstract}
+}
+
+@inproceedings{neutatz2019ed2,
+  author    = {Neutatz, Felix and Mahdavi, Mohammad and Abedjan, Ziawasch},
+  title     = {{ED2}: A Case for Active Learning in Error Detection},
+  booktitle = {Proceedings of the 28th ACM International Conference on Information and Knowledge Management (CIKM)},
+  pages     = {2249--2252},
+  year      = {2019},
+  doi       = {10.1145/3357384.3358129},
+  note      = {verification: Crossref metadata; abstract via Semantic Scholar}
+}
+
+@article{liu2022picket,
+  author    = {Liu, Zifan and Zhou, Zhechun and Rekatsinas, Theodoros},
+  title     = {Picket: Guarding Against Corrupted Data in Tabular Data during Learning and Inference},
+  journal   = {The VLDB Journal},
+  volume    = {31},
+  number    = {5},
+  pages     = {927--955},
+  year      = {2022},
+  doi       = {10.1007/s00778-021-00699-w},
+  eprint    = {2006.04730},
+  archivePrefix = {arXiv},
+  note      = {verification: Crossref metadata (online 2021-10-12; volume 31 issue 5) and arXiv abstract; DBLP key journals/vldb/LiuZR22 via Semantic Scholar}
+}
+
+@techreport{pitclaudel2016dboost,
+  author      = {Pit-Claudel, Cl{\'e}ment and Mariet, Zelda and Harding, Rachael and Madden, Sam},
+  title       = {Outlier Detection in Heterogeneous Datasets using Automatic Tuple Expansion},
+  institution = {MIT Computer Science and Artificial Intelligence Laboratory},
+  number      = {MIT-CSAIL-TR-2016-002},
+  year        = {2016},
+  url         = {http://hdl.handle.net/1721.1/101150},
+  note        = {verification: MIT DSpace citation metadata (date 2016-02-08) and abstract; code github.com/cpitclaudel/dBoost}
+}
+
+@article{rekatsinas2017holoclean,
+  author    = {Rekatsinas, Theodoros and Chu, Xu and Ilyas, Ihab F. and R{\'e}, Christopher},
+  title     = {{HoloClean}: Holistic Data Repairs with Probabilistic Inference},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {10},
+  number    = {11},
+  pages     = {1190--1201},
+  year      = {2017},
+  doi       = {10.14778/3137628.3137631},
+  eprint    = {1702.00820},
+  archivePrefix = {arXiv},
+  note      = {verification: Crossref metadata and PDF (vldb.org) read in part}
+}
+
+@inproceedings{song2021autovalidate,
+  author    = {Song, Jie and He, Yeye},
+  title     = {Auto-Validate: Unsupervised Data Validation Using Data-Domain Patterns Inferred from Data Lakes},
+  booktitle = {Proceedings of the 2021 International Conference on Management of Data (SIGMOD)},
+  pages     = {1678--1691},
+  year      = {2021},
+  doi       = {10.1145/3448016.3457250},
+  eprint    = {2104.04659},
+  archivePrefix = {arXiv},
+  note      = {verification: Crossref metadata and arXiv abstract}
+}
+
+@inproceedings{tu2023avh,
+  author    = {Tu, Dezhan and He, Yeye and Cui, Weiwei and Ge, Song and Zhang, Haidong and Han, Shi and Zhang, Dongmei and Chaudhuri, Surajit},
+  title     = {Auto-Validate by-History: Auto-Program Data Quality Constraints to Validate Recurring Data Pipelines},
+  booktitle = {Proceedings of the 29th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)},
+  pages     = {4991--5003},
+  year      = {2023},
+  doi       = {10.1145/3580305.3599776},
+  eprint    = {2306.02421},
+  archivePrefix = {arXiv},
+  note      = {verification: Crossref metadata and arXiv abstract}
+}
+
+@article{chen2025autotest,
+  author    = {Chen, Qixu and He, Yeye and Wong, Raymond Chi-Wing and Cui, Weiwei and Ge, Song and Zhang, Haidong and Zhang, Dongmei and Chaudhuri, Surajit},
+  title     = {Auto-Test: Learning Semantic-Domain Constraints for Unsupervised Error Detection in Tables},
+  journal   = {Proceedings of the ACM on Management of Data},
+  volume    = {3},
+  number    = {3},
+  pages     = {1--27},
+  year      = {2025},
+  doi       = {10.1145/3725396},
+  eprint    = {2504.10762},
+  archivePrefix = {arXiv},
+  note      = {verification: Crossref metadata (SIGMOD 2025 / PACMMOD) and arXiv full PDF read in part}
+}
+
+@inproceedings{ni2025zeroed,
+  author    = {Ni, Wei and Zhang, Kaihang and Miao, Xiaoye and Zhao, Xiangyu and Wu, Yangyang and Wang, Yaoshu and Yin, Jianwei},
+  title     = {{ZeroED}: Hybrid Zero-Shot Error Detection Through Large Language Model Reasoning},
+  booktitle = {Proceedings of the 41st IEEE International Conference on Data Engineering (ICDE)},
+  pages     = {3126--3139},
+  year      = {2025},
+  doi       = {10.1109/ICDE65448.2025.00234},
+  eprint    = {2504.05345},
+  archivePrefix = {arXiv},
+  note      = {verification: Crossref metadata and arXiv full PDF read in part}
+}
+
+@inproceedings{wang2026forested,
+  author    = {Wang, Mengqi and Wang, Jianwei and Liu, Qing and Xu, Xiwei and Xing, Zhenchang and Zhu, Liming and Bain, Michael and Zhang, Wenjie},
+  title     = {Ensembling {LLM}-Induced Decision Trees for Explainable and Robust Error Detection},
+  booktitle = {Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)},
+  pages     = {4963--4974},
+  year      = {2026},
+  doi       = {10.1145/3770855.3817642},
+  eprint    = {2512.07246},
+  archivePrefix = {arXiv},
+  note      = {verification: Crossref metadata and arXiv abstract}
+}
+
+@article{ni2024repair,
+  author    = {Ni, Wei and Miao, Xiaoye and Zhao, Xiangyu and Wu, Yangyang and Liang, Shuwei and Yin, Jianwei},
+  title     = {Automatic Data Repair: Are We Ready to Deploy?},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {17},
+  number    = {10},
+  pages     = {2617--2630},
+  year      = {2024},
+  doi       = {10.14778/3675034.3675051},
+  eprint    = {2310.00711},
+  archivePrefix = {arXiv},
+  note      = {verification: Crossref metadata and arXiv abstract}
+}
+
+@misc{liu2025tableeg,
+  author    = {Liu, Xinyuan and Chen, Jiahui and Hu, Bocheng and Sun, Yu and Chen, Xinyang and Song, Shaoxu and Tong, Yongxin},
+  title     = {Towards Practical Benchmarking of Data Cleaning Techniques: On Generating Authentic Errors via Large Language Models},
+  year      = {2025},
+  eprint    = {2507.10934},
+  archivePrefix = {arXiv},
+  note      = {verification: arXiv API (v3 2026-03-09) abstract only}
+}
+
+@misc{bhadauria2026catalog,
+  author    = {Bhadauria, Divya and Harmouch, Hazar and Naumann, Felix and Srivastava, Divesh and Ehrlinger, Lisa},
+  title     = {A Catalog of Data Errors},
+  year      = {2026},
+  eprint    = {2604.09277},
+  archivePrefix = {arXiv},
+  note      = {verification: arXiv API abstract only}
+}
+
+@misc{jung2026dqmetrics,
+  author    = {Jung, Philipp and Becker, Katinka and Biessmann, Felix and Restat, Valerie and Seyferth, Martin and Schwabe, Daniel and Ehrlinger, Lisa},
+  title     = {Implementation Guidelines for Data Quality Metrics},
+  year      = {2026},
+  eprint    = {2610.10919},
+  archivePrefix = {arXiv},
+  note      = {verification: arXiv API abstract only (preprint, submitted to EDBT 2027)}
+}
+
+@misc{glock2026ledqer,
+  author    = {Glock, Anna-Christina and H{\"u}tter, Thomas and F{\"u}rnkranz, Johannes and W{\"o}{\ss}, Wolfram and Dominka-Kiss, Christine and Ehrlinger, Lisa},
+  title     = {Data Quality Rule Generation with {LLMs}},
+  year      = {2026},
+  eprint    = {2609.06053},
+  archivePrefix = {arXiv},
+  note      = {verification: arXiv API abstract only (preprint)}
+}
+
+@inproceedings{biessmann2018deep,
+  author    = {Biessmann, Felix and Salinas, David and Schelter, Sebastian and Schmidt, Philipp and Lange, Dustin},
+  title     = {"Deep" Learning for Missing Value Imputation in Tables with Non-Numerical Data},
+  booktitle = {Proceedings of the 27th ACM International Conference on Information and Knowledge Management (CIKM)},
+  pages     = {2017--2025},
+  year      = {2018},
+  doi       = {10.1145/3269206.3272005},
+  note      = {verification: Crossref metadata only}
+}
+
+@article{biessmann2019datawig,
+  author    = {Biessmann, Felix and Rukat, Tammo and Schmidt, Phillipp and Naidu, Prathik and Schelter, Sebastian and Taptunov, Andrey and Lange, Dustin and Salinas, David},
+  title     = {{DataWig}: Missing Value Imputation for Tables},
+  journal   = {Journal of Machine Learning Research},
+  volume    = {20},
+  number    = {175},
+  pages     = {1--6},
+  year      = {2019},
+  url       = {https://jmlr.org/papers/v20/18-753.html},
+  note      = {verification: JMLR paper page (authors, 20(175):1-6, 2019); repo awslabs/datawig archived 2026-01-14}
+}
+
+@inproceedings{schelter2021jenga,
+  author    = {Schelter, Sebastian and Rukat, Tammo and Biessmann, Felix},
+  title     = {{JENGA} -- A Framework to Study the Impact of Data Errors on the Predictions of Machine Learning Models},
+  booktitle = {Proceedings of the 24th International Conference on Extending Database Technology (EDBT)},
+  pages     = {529--534},
+  year      = {2021},
+  doi       = {10.5441/002/edbt.2021.63},
+  url       = {https://openproceedings.org/2021/conf/edbt/p134.pdf},
+  note      = {verification: DataCite DOI record and OpenProceedings PDF read (6 pages starting p. 529)}
+}
+
+@article{breck2019datavalidation,
+  author    = {Breck, Eric and Polyzotis, Neoklis and Roy, Sudip and Whang, Steven Euijong and Zinkevich, Martin},
+  title     = {Data Validation for Machine Learning},
+  journal   = {Proceedings of Machine Learning and Systems},
+  volume    = {1},
+  pages     = {334--347},
+  year      = {2019},
+  url       = {https://proceedings.mlsys.org/paper_files/paper/2019/hash/928f1160e52192e3e0017fb63ab65391-Abstract.html},
+  note      = {verification: MLSys proceedings citation metadata (vol 1, pp 334-347) and PDF first page (author order taken from PDF; web page lists Polyzotis first)}
+}
+
+@inproceedings{redyuk2021automating,
+  author    = {Redyuk, Sergey and Kaoudi, Zoi and Markl, Volker and Schelter, Sebastian},
+  title     = {Automating Data Quality Validation for Dynamic Data Ingestion},
+  booktitle = {Proceedings of the 24th International Conference on Extending Database Technology (EDBT)},
+  pages     = {61--72},
+  year      = {2021},
+  doi       = {10.5441/002/edbt.2021.07},
+  url       = {https://openproceedings.org/2021/conf/edbt/p79.pdf},
+  note      = {verification: DataCite DOI record and OpenProceedings PDF read (12 pages, pp. 61-72 from PDF)}
+}
+
+@inproceedings{shankar2023gate,
+  author    = {Shankar, Shreya and Fawaz, Labib and Gyllstrom, Karl and Parameswaran, Aditya},
+  title     = {Automatic and Precise Data Validation for Machine Learning},
+  booktitle = {Proceedings of the 32nd ACM International Conference on Information and Knowledge Management (CIKM)},
+  pages     = {2198--2207},
+  year      = {2023},
+  doi       = {10.1145/3583780.3614786},
+  note      = {verification: Crossref metadata; abstract via Semantic Scholar (full text not read)}
+}
+
+@inproceedings{visengeriyeva2018metadata,
+  author    = {Visengeriyeva, Larysa and Abedjan, Ziawasch},
+  title     = {Metadata-driven Error Detection},
+  booktitle = {Proceedings of the 30th International Conference on Scientific and Statistical Database Management (SSDBM)},
+  pages     = {1--12},
+  year      = {2018},
+  doi       = {10.1145/3221269.3223028},
+  note      = {verification: Crossref metadata only}
+}
+
+@article{arocena2015bart,
+  author    = {Arocena, Patricia C. and Glavic, Boris and Mecca, Giansalvatore and Miller, Ren{\'e}e J. and Papotti, Paolo and Santoro, Donatello},
+  title     = {Messing Up with {BART}: Error Generation for Evaluating Data-Cleaning Algorithms},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {9},
+  number    = {2},
+  pages     = {36--47},
+  year      = {2015},
+  doi       = {10.14778/2850578.2850579},
+  note      = {verification: Crossref metadata only}
+}
+
+@misc{wang2025forested,
+  author        = {Wang, Mengqi and Wang, Jianwei and Liu, Qing and Xu, Xiwei and Xing, Zhenchang and Zhu, Liming and Bain, Michael and Zhang, Wenjie},
+  title         = {Ensembling {LLM}-Induced Decision Trees for Explainable and Robust Error Detection},
+  year          = {2025},
+  eprint        = {2512.07246}, archivePrefix = {arXiv},
+  url           = {https://arxiv.org/abs/2512.07246},
+  note          = {Verified: ARX + ABS; arXiv comment states 'Accepted at KDD 2026' (proceedings entry not verified)}
+}
+
+@misc{ni2025zeroedb,
+  author = {Ni, Wei and Zhang, Kaihang and Miao, Xiaoye and Zhao, Xiangyu and Wu, Yangyang and Wang, Yaoshu and Yin, Jianwei},
+  title  = {{ZeroED}: Hybrid Zero-shot Error Detection through Large Language Model Reasoning},
+  year   = {2025},
+  eprint = {2504.05345}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/2504.05345},
+  note   = {Verified: ARX META (authors). ICDE 2025 publication reported by CityU repository via search -- proceedings entry NOT verified; content via search summary}
+}
+
+@article{ehrlinger2022survey,
+  author  = {Ehrlinger, Lisa and W{\"o}{\ss}, Wolfram},
+  title   = {A Survey of Data Quality Measurement and Monitoring Tools},
+  journal = {Frontiers in Big Data},
+  volume  = {5}, year = {2022},
+  doi     = {10.3389/fdata.2022.850611},
+  note    = {Verified: CR META only}
+}
+
+@article{zhang2023restore,
+  author  = {Zhang, Lei and Howard, Sean and Montpool, Tom and Moore, Jessica and Mahajan, Krittika and Miranskyy, Andriy},
+  title   = {Automated Data Validation: An Industrial Experience Report},
+  journal = {Journal of Systems and Software},
+  volume  = {197}, pages = {111573}, year = {2023},
+  doi     = {10.1016/j.jss.2022.111573},
+  note    = {Verified: CR + ABS (arXiv:1903.03676)}
+}
+
+@misc{panda2026finverbench,
+  author = {Panda, Silu},
+  title  = {{FinVerBench}: Benchmark Validity and Calibration in Large Language Model Financial Statement Verification},
+  year   = {2026},
+  eprint = {2605.29586}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/2605.29586},
+  note   = {Verified: ARX + FT (Sec. 5.1). Preprint, not peer-reviewed}
+}
+
+@misc{linkedin2020datasentinel,
+  author = {{LinkedIn Engineering}},
+  title  = {Data Sentinel: Automating Data Validation},
+  year   = {2020},
+  url    = {https://engineering.linkedin.com/blog/2020/data-sentinel-automating-data-validation},
+  note   = {Grey literature (blog). Existence verified via search; claims not independently verified}
+}
+
+@misc{uber_dqm_blog,
+  author = {{Uber Engineering}},
+  title  = {Monitoring Data Quality at Scale with Statistical Modeling},
+  url    = {https://www.uber.com/blog/monitoring-data-quality-at-scale/},
+  note   = {Grey literature (blog). Existence verified via search; publication year NOT verified}
+}
+
+%% ---------------- Q2: error models / types / mechanisms ----------------
+
+@misc{chandler2026curedb,
+  author = {Chandler, Nicholas and J{\"a}ger, Sebastian and Jung, Philipp and Bie{\ss}mann, Felix},
+  title  = {{CURED}: Creating, Understanding, and Repairing Errors Demonstrator},
+  year   = {2026},
+  eprint = {2607.20140}, archivePrefix = {arXiv},
+  doi    = {10.48550/arXiv.2607.20140},
+  note   = {Verified: ARX + FT. Demo preprint}
+}
+
+@inproceedings{han2022adbench,
+  author    = {Han, Songqiao and Hu, Xiyang and Huang, Hailiang and Jiang, Minqi and Zhao, Yue},
+  title     = {{ADBench}: Anomaly Detection Benchmark},
+  booktitle = {Advances in Neural Information Processing Systems 35 (NeurIPS 2022), Datasets and Benchmarks Track},
+  year      = {2022},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2022/hash/cf93972b116ca5268827d575f2cc226b-Abstract.html},
+  note      = {Verified: PUB + ARX (2206.09426) + FT (Sec. 4.3)}
+}
+
+@article{steinbuss2021benchmarking,
+  author  = {Steinbuss, Georg and B{\"o}hm, Klemens},
+  title   = {Benchmarking Unsupervised Outlier Detection with Realistic Synthetic Data},
+  journal = {ACM Transactions on Knowledge Discovery from Data},
+  volume  = {15}, number = {4}, pages = {1--20}, year = {2021},
+  doi     = {10.1145/3441453},
+  note    = {Verified: CR + ABS}
+}
+
+@inproceedings{emmott2013systematic,
+  author    = {Emmott, Andrew F. and Das, Shubhomoy and Dietterich, Thomas and Fern, Alan and Wong, Weng-Keen},
+  title     = {Systematic Construction of Anomaly Detection Benchmarks from Real Data},
+  booktitle = {Proceedings of the ACM SIGKDD Workshop on Outlier Detection and Description (ODD)},
+  pages     = {16--21}, year = {2013},
+  doi       = {10.1145/2500853.2500858},
+  note      = {Verified: CR META}
+}
+
+@misc{emmott2015meta,
+  author = {Emmott, Andrew and Das, Shubhomoy and Dietterich, Thomas and Fern, Alan and Wong, Weng-Keen},
+  title  = {A Meta-Analysis of the Anomaly Detection Problem},
+  year   = {2015},
+  eprint = {1503.01158}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/1503.01158},
+  note   = {Verified: ARX + FT (partial: abstract, factor definitions, mixed-effects analysis). Preprint}
+}
+
+@inproceedings{schelter2021jengab,
+  author    = {Schelter, Sebastian and Rukat, Tammo and Biessmann, Felix},
+  title     = {{JENGA} -- A Framework to Study the Impact of Data Errors on the Predictions of Machine Learning Models},
+  booktitle = {Proceedings of the 24th International Conference on Extending Database Technology (EDBT)},
+  pages     = {529--534}, year = {2021},
+  url       = {https://openproceedings.org/2021/conf/edbt/p134.pdf},
+  note      = {Verified: PUB listing (OpenProceedings) META; DOI not verified}
+}
+
+@inproceedings{yoon2026autoanoeval,
+  author    = {Yoon, Suhee and Yoon, Sanghyu and Sim, Ye Seul and Yoa, Seungdong and Kim, Dongmin and Lee, Soonyoung and Lee, Hankook and Lim, Woohyung},
+  title     = {{AutoAnoEval}: Semantic-Aware Model Selection via Tree-Guided {LLM} Reasoning for Tabular Anomaly Detection},
+  booktitle = {Findings of the Association for Computational Linguistics: EACL 2026},
+  pages     = {3546--3560}, year = {2026},
+  doi       = {10.18653/v1/2026.findings-eacl.183},
+  url       = {https://aclanthology.org/2026.findings-eacl.183/},
+  note      = {Verified: PUB (ACL Anthology) + FT (Sec. 4)}
+}
+
+@misc{ding2026macrodata,
+  author = {Ding, Xueying and Kl{\"u}ttermann, Simon and Wen, Haomin and Chen, Yilong and Akoglu, Leman},
+  title  = {{MacrOData}: New Benchmarks of Thousands of Datasets for Tabular Outlier Detection},
+  year   = {2026},
+  eprint = {2602.09329}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/2602.09329},
+  note   = {Verified: ARX + FT (partial). arXiv comment: KDD 2026 (proceedings entry not verified)}
+}
+
+%% ---------------- Q3: synthetic-to-real ----------------
+
+@article{wu2021tsad,
+  author  = {Wu, Renjie and Keogh, Eamonn},
+  title   = {Current Time Series Anomaly Detection Benchmarks are Flawed and are Creating the Illusion of Progress},
+  journal = {IEEE Transactions on Knowledge and Data Engineering},
+  year    = {2021},
+  doi     = {10.1109/TKDE.2021.3112126},
+  note    = {Verified: CR (early access 2021; final volume/issue not verified). Content of four flaws via secondary summary; arXiv:2009.13807}
+}
+
+@article{campos2016evaluation,
+  author  = {Campos, Guilherme O. and Zimek, Arthur and Sander, J{\"o}rg and Campello, Ricardo J. G. B. and Micenkov{\'a}, Barbora and Schubert, Erich and Assent, Ira and Houle, Michael E.},
+  title   = {On the Evaluation of Unsupervised Outlier Detection: Measures, Datasets, and an Empirical Study},
+  journal = {Data Mining and Knowledge Discovery},
+  volume  = {30}, number = {4}, pages = {891--927}, year = {2016},
+  doi     = {10.1007/s10618-015-0444-8},
+  note    = {Verified: CR META}
+}
+
+@misc{fung2023swsa,
+  author = {Fung, Clement and Qiu, Chen and Li, Aodong and Rudolph, Maja},
+  title  = {Model Selection of Anomaly Detectors in the Absence of Labeled Validation Data},
+  year   = {2023},
+  eprint = {2310.10461}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/2310.10461},
+  note   = {Verified: ARX + ABS. Journal version (IEEE Trans. Artificial Intelligence, doi 10.1109/TAI.2025.3562505) reported by OpenAlex only -- UNVERIFIED at publisher}
+}
+
+@misc{ahmadi2026cleanme,
+  author = {Ahmadi, Fatemeh and Bernhard, Tobias and Abdelmaksoud, Mohamed and Zecchini, Luca and Rabl, Tilmann and Abedjan, Ziawasch},
+  title  = {Clean Me If You Can: A Large Collection of Real-World Addresses for Data Cleaning Benchmarking},
+  year   = {2026},
+  eprint = {2606.31983}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/2606.31983},
+  note   = {Verified: ARX + ABS. Preprint}
+}
+
+@inproceedings{lew2021pclean,
+  author    = {Lew, Alexander K. and Agrawal, Monica and Sontag, David and Mansinghka, Vikash K.},
+  title     = {{PClean}: Bayesian Data Cleaning at Scale with Domain-Specific Probabilistic Programming},
+  booktitle = {Proceedings of The 24th International Conference on Artificial Intelligence and Statistics (AISTATS)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {130}, pages = {1927--1935}, year = {2021},
+  url       = {https://proceedings.mlr.press/v130/},
+  note      = {Verified: PUB (PMLR v130 listing) + ARX (2007.11838) + FT (Hospital description)}
+}
+
+%% ---------------- Q4: model selection / meta-learning / cleaning AutoML ----------------
+
+@inproceedings{zhao2021metaod,
+  author    = {Zhao, Yue and Rossi, Ryan A. and Akoglu, Leman},
+  title     = {Automatic Unsupervised Outlier Model Selection},
+  booktitle = {Advances in Neural Information Processing Systems 34 (NeurIPS 2021)},
+  year      = {2021},
+  url       = {https://papers.nips.cc/paper_files/paper/2021/file/23c894276a2c5a16470e6a31f4618d73-Paper.pdf},
+  note      = {Verified: PUB link via search + ARX preprint 2009.10606; content via abstract summary}
+}
+
+@article{ma2023need,
+  author  = {Ma, Martin Q. and Zhao, Yue and Zhang, Xiaorong and Akoglu, Leman},
+  title   = {The Need for Unsupervised Outlier Model Selection: A Review and Evaluation of Internal Evaluation Strategies},
+  journal = {ACM SIGKDD Explorations Newsletter},
+  volume  = {25}, number = {1}, pages = {19--35}, year = {2023},
+  doi     = {10.1145/3606274.3606277},
+  note    = {Verified: CR + ABS; preprint arXiv:2104.01422 ABS}
+}
+
+@inproceedings{mahdavi2019reds,
+  author    = {Mahdavi, Mohammad and Abedjan, Ziawasch},
+  title     = {{REDS}: Estimating the Performance of Error Detection Strategies Based on Dirtiness Profiles},
+  booktitle = {Proceedings of the 31st International Conference on Scientific and Statistical Database Management (SSDBM)},
+  pages     = {193--196}, year = {2019},
+  doi       = {10.1145/3335783.3335808},
+  note      = {Verified: CR META (title+subtitle); content NOT read}
+}
+
+@inproceedings{abdelaal2023autocure,
+  author    = {Abdelaal, Mohamed and Koparde, Rashmi and Schoening, Harald},
+  title     = {{AutoCure}: Automated Tabular Data Curation Technique for {ML} Pipelines},
+  booktitle = {Proceedings of the Sixth International Workshop on Exploiting Artificial Intelligence Techniques for Data Management (aiDM)},
+  pages     = {1--11}, year = {2023},
+  doi       = {10.1145/3593078.3593930},
+  note      = {Verified: CR META}
+}
+
+@inproceedings{bertiequille2019learn2clean,
+  author    = {Berti-{\'E}quille, Laure},
+  title     = {{Learn2Clean}: Optimizing the Sequence of Tasks for Web Data Preparation},
+  booktitle = {The World Wide Web Conference (WWW)},
+  pages     = {2580--2586}, year = {2019},
+  doi       = {10.1145/3308558.3313602},
+  note      = {Verified: CR META}
+}
+
+@inproceedings{li2021cleanml,
+  author    = {Li, Peng and Rao, Xi and Blase, Jennifer and Zhang, Yue and Chu, Xu and Zhang, Ce},
+  title     = {{CleanML}: A Study for Evaluating the Impact of Data Cleaning on {ML} Classification Tasks},
+  booktitle = {2021 IEEE 37th International Conference on Data Engineering (ICDE)},
+  pages     = {13--24}, year = {2021},
+  doi       = {10.1109/ICDE51399.2021.00009},
+  note      = {Verified: CR + ABS}
+}
+
+@incollection{rice1976algorithm,
+  author    = {Rice, John R.},
+  title     = {The Algorithm Selection Problem},
+  booktitle = {Advances in Computers},
+  pages     = {65--118}, year = {1976},
+  doi       = {10.1016/S0065-2458(08)60520-3},
+  volume    = {15},
+  note      = {Verified: CR META (container title 'Advances in Computers Volume 15')}
+}
+
+@article{kerschke2019automated,
+  author  = {Kerschke, Pascal and Hoos, Holger H. and Neumann, Frank and Trautmann, Heike},
+  title   = {Automated Algorithm Selection: Survey and Perspectives},
+  journal = {Evolutionary Computation},
+  volume  = {27}, number = {1}, pages = {3--45}, year = {2019},
+  doi     = {10.1162/evco_a_00242},
+  note    = {Verified: CR META}
+}
+
+@article{bischl2016aslib,
+  author  = {Bischl, Bernd and Kerschke, Pascal and Kotthoff, Lars and Lindauer, Marius and Malitsky, Yuri and Fr{\'e}chette, Alexandre and Hoos, Holger and Hutter, Frank and others},
+  title   = {{ASlib}: A Benchmark Library for Algorithm Selection},
+  journal = {Artificial Intelligence},
+  volume  = {237}, pages = {41--58}, year = {2016},
+  doi     = {10.1016/j.artint.2016.04.003},
+  note    = {Verified: CR META (first 8 authors shown by Crossref). SBS/VBS usage from general knowledge -- verify in text}
+}
+
+%% ---------------- Q5: mutation testing analogue ----------------
+
+@inproceedings{just2014mutants,
+  author    = {Just, Ren{\'e} and Jalali, Darioush and Inozemtseva, Laura and Ernst, Michael D. and Holmes, Reid and Fraser, Gordon},
+  title     = {Are Mutants a Valid Substitute for Real Faults in Software Testing?},
+  booktitle = {Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE)},
+  pages     = {654--665}, year = {2014},
+  doi       = {10.1145/2635868.2635929},
+  note      = {Verified: CR + FT (73%/27% coupling figures)}
+}
+
+@inproceedings{papadakis2018mutation,
+  author    = {Papadakis, Mike and Shin, Donghwan and Yoo, Shin and Bae, Doo-Hwan},
+  title     = {Are Mutation Scores Correlated with Real Fault Detection? A Large Scale Empirical Study on the Relationship Between Mutants and Real Faults},
+  booktitle = {Proceedings of the 40th International Conference on Software Engineering (ICSE)},
+  pages     = {537--548}, year = {2018},
+  doi       = {10.1145/3180155.3180183},
+  note      = {Verified: CR + ABS (via search summary of abstract)}
+}
+
+@inproceedings{andrews2005mutation,
+  author    = {Andrews, J. H. and Briand, L. C. and Labiche, Y.},
+  title     = {Is Mutation an Appropriate Tool for Testing Experiments?},
+  booktitle = {Proceedings of the 27th International Conference on Software Engineering (ICSE)},
+  pages     = {402--411}, year = {2005},
+  doi       = {10.1145/1062455.1062530},
+  note      = {Verified: CR META; content characterisation secondary}
+}
+
+@inproceedings{gopinath2014mutations,
+  author    = {Gopinath, Rahul and Jensen, Carlos and Groce, Alex},
+  title     = {Mutations: How Close are they to Real Faults?},
+  booktitle = {2014 IEEE 25th International Symposium on Software Reliability Engineering (ISSRE)},
+  pages     = {189--200}, year = {2014},
+  doi       = {10.1109/ISSRE.2014.40},
+  note      = {Verified: CR + ABS (via search)}
+}
+
+@inproceedings{laurent2022revisiting,
+  author    = {Laurent, Thomas and Gaffney, Stephen and Ventresque, Anthony},
+  title     = {Re-visiting the Coupling between Mutants and Real Faults with {Defects4J} 2.0},
+  booktitle = {2022 IEEE International Conference on Software Testing, Verification and Validation Workshops (ICSTW)},
+  pages     = {189--198}, year = {2022},
+  doi       = {10.1109/ICSTW55395.2022.00042},
+  note      = {Verified: CR META}
+}
+
+@article{jia2011analysis,
+  author  = {Jia, Yue and Harman, Mark},
+  title   = {An Analysis and Survey of the Development of Mutation Testing},
+  journal = {IEEE Transactions on Software Engineering},
+  volume  = {37}, number = {5}, pages = {649--678}, year = {2011},
+  doi     = {10.1109/TSE.2010.62},
+  note    = {Verified: CR META}
+}
+
+@incollection{papadakis2019advances,
+  author    = {Papadakis, Mike and Kintis, Marinos and Zhang, Jie and Jia, Yue and Le Traon, Yves and Harman, Mark},
+  title     = {Mutation Testing Advances: An Analysis and Survey},
+  booktitle = {Advances in Computers},
+  volume    = {112}, pages = {275--378}, year = {2019},
+  doi       = {10.1016/bs.adcom.2018.03.015},
+  note      = {Verified: CR (DOI, pages) + author list via UCL Discovery/uni.lu search result}
+}
+
+@article{mcminn2015effectiveness,
+  author  = {McMinn, Phil and Wright, Chris J. and Kapfhammer, Gregory M.},
+  title   = {The Effectiveness of Test Coverage Criteria for Relational Database Schema Integrity Constraints},
+  journal = {ACM Transactions on Software Engineering and Methodology},
+  volume  = {25}, number = {1}, pages = {1--49}, year = {2015},
+  doi     = {10.1145/2818639},
+  note    = {Verified: CR META + search summary}
+}
+
+@article{tuya2007mutating,
+  author  = {Tuya, Javier and Su{\'a}rez-Cabal, Ma Jos{\'e} and de la Riva, Claudio},
+  title   = {Mutating Database Queries},
+  journal = {Information and Software Technology},
+  volume  = {49}, number = {4}, pages = {398--417}, year = {2007},
+  doi     = {10.1016/j.infsof.2006.06.009},
+  note    = {Verified: CR META}
+}
+
+@misc{yao2025nbtest,
+  author = {Yao, Yingao (Elaine) and Nimje, Vedant and Viswanath, Varun and Dutta, Saikat},
+  title  = {Automated Assertion Generation and Regression Testing for Machine Learning Notebooks},
+  year   = {2025},
+  eprint = {2509.13656}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/2509.13656},
+  note   = {Verified: ARX abstract page (v2 Aug 2026). Venue UNVERIFIED (page lists related DOI 10.1145/3832783.3834390)}
+}
+
+%% ---------------- Q6: evaluation methodology ----------------
+
+@article{demsar2006statistical,
+  author  = {Dem{\v{s}}ar, Janez},
+  title   = {Statistical Comparisons of Classifiers over Multiple Data Sets},
+  journal = {Journal of Machine Learning Research},
+  volume  = {7}, pages = {1--30}, year = {2006},
+  url     = {https://www.jmlr.org/papers/v7/demsar06a.html},
+  note    = {Verified: PUB (JMLR page)}
+}
+
+@article{benavoli2016posthoc,
+  author  = {Benavoli, Alessio and Corani, Giorgio and Mangili, Francesca},
+  title   = {Should We Really Use Post-Hoc Tests Based on Mean-Ranks?},
+  journal = {Journal of Machine Learning Research},
+  volume  = {17}, number = {5}, pages = {1--10}, year = {2016},
+  url     = {https://www.jmlr.org/papers/v17/benavoli16a.html},
+  note    = {Verified: PUB (JMLR page)}
+}
+
+@article{benavoli2017time,
+  author  = {Benavoli, Alessio and Corani, Giorgio and Dem{\v{s}}ar, Janez and Zaffalon, Marco},
+  title   = {Time for a Change: a Tutorial for Comparing Multiple Classifiers Through {B}ayesian Analysis},
+  journal = {Journal of Machine Learning Research},
+  volume  = {18}, number = {77}, pages = {1--36}, year = {2017},
+  url     = {https://www.jmlr.org/papers/v18/16-305.html},
+  note    = {Verified: PUB (JMLR page)}
+}
+
+@article{corani2017hierarchical,
+  author  = {Corani, Giorgio and Benavoli, Alessio and Dem{\v{s}}ar, Janez and Mangili, Francesca and Zaffalon, Marco},
+  title   = {Statistical Comparison of Classifiers through {B}ayesian Hierarchical Modelling},
+  journal = {Machine Learning},
+  volume  = {106}, number = {11}, pages = {1817--1837}, year = {2017},
+  doi     = {10.1007/s10994-017-5641-9},
+  note    = {Verified: CR META}
+}
+
+@inproceedings{bouthillier2021accounting,
+  author    = {Bouthillier, Xavier and Delaunay, Pierre and Bronzi, Mirko and Trofimov, Assya and Nichyporuk, Brennan and Szeto, Justin and Sepah, Naz and Raff, Edward and Madan, Kanika and Voleti, Vikram and Kahou, Samira Ebrahimi and Michalski, Vincent and others},
+  title     = {Accounting for Variance in Machine Learning Benchmarks},
+  booktitle = {Proceedings of Machine Learning and Systems 3 (MLSys 2021)},
+  year      = {2021},
+  url       = {https://proceedings.mlsys.org/paper_files/paper/2021/hash/0184b0cd3cfb185989f858a1d9f5c1eb-Abstract.html},
+  note      = {Verified: PUB link + ARX (2103.03098) + ABS; full author list truncated in ARX output -- complete before citing}
+}
+
+@misc{bartzbeielstein2020benchmarking,
+  author = {Bartz-Beielstein, Thomas and Doerr, Carola and van den Berg, Daan and Bossek, Jakob and Chandrasekaran, Sowmya and Eftimov, Tome and Fischbach, Andreas and Kerschke, Pascal and La Cava, William and L{\'o}pez-Ib{\'a}{\~n}ez, Manuel and others},
+  title  = {Benchmarking in Optimization: Best Practice and Open Issues},
+  year   = {2020},
+  eprint = {2007.03488}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/2007.03488},
+  note   = {Verified: ARX META. Preprint}
+}
+
+@inproceedings{gulrajani2021search,
+  author    = {Gulrajani, Ishaan and Lopez-Paz, David},
+  title     = {In Search of Lost Domain Generalization},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2021},
+  eprint    = {2007.01434}, archivePrefix = {arXiv},
+  url       = {https://arxiv.org/abs/2007.01434},
+  note      = {Verified: ARX META; ICLR 2021 status via paper header (search result); OpenReview page not checked}
+}
+
+@article{dalpozzolo2018credit,
+  author  = {Dal Pozzolo, Andrea and Boracchi, Giacomo and Caelen, Olivier and Alippi, Cesare and Bontempi, Gianluca},
+  title   = {Credit Card Fraud Detection: A Realistic Modeling and a Novel Learning Strategy},
+  journal = {IEEE Transactions on Neural Networks and Learning Systems},
+  volume  = {29}, number = {8}, pages = {3784--3797}, year = {2018},
+  doi     = {10.1109/TNNLS.2017.2736643},
+  note    = {Verified: CR META; P@k attribution via Le Borgne et al. handbook}
+}
+
+@book{leborgne2022fraud,
+  author    = {Le Borgne, Yann-A{\"e}l and Siblini, Wissam and Lebichot, Bertrand and Bontempi, Gianluca},
+  title     = {Reproducible Machine Learning for Credit Card Fraud Detection -- Practical Handbook},
+  publisher = {Universit{\'e} Libre de Bruxelles},
+  year      = {2022},
+  url       = {https://fraud-detection-handbook.github.io/fraud-detection-handbook/},
+  note      = {Verified: PUB (handbook site, citation block and top-k metrics chapter read)}
+}
+
+@article{hand2009measuring,
+  author  = {Hand, David J.},
+  title   = {Measuring Classifier Performance: A Coherent Alternative to the Area under the {ROC} Curve},
+  journal = {Machine Learning},
+  volume  = {77}, number = {1}, pages = {103--123}, year = {2009},
+  doi     = {10.1007/s10994-009-5119-5},
+  note    = {Verified: CR META}
+}
+
+@article{saito2015precision,
+  author  = {Saito, Takaya and Rehmsmeier, Marc},
+  title   = {The Precision-Recall Plot Is More Informative than the {ROC} Plot When Evaluating Binary Classifiers on Imbalanced Datasets},
+  journal = {PLOS ONE},
+  volume  = {10}, number = {3}, pages = {e0118432}, year = {2015},
+  doi     = {10.1371/journal.pone.0118432},
+  note    = {Verified: CR META}
+}
+
+@article{vickers2006decision,
+  author  = {Vickers, Andrew J. and Elkin, Elena B.},
+  title   = {Decision Curve Analysis: A Novel Method for Evaluating Prediction Models},
+  journal = {Medical Decision Making},
+  volume  = {26}, number = {6}, pages = {565--574}, year = {2006},
+  doi     = {10.1177/0272989X06295361},
+  note    = {Verified: CR META}
+}
+
+@book{dewaal2011handbook,
+  author    = {de Waal, Ton and Pannekoek, Jeroen and Scholtus, Sander},
+  title     = {Handbook of Statistical Data Editing and Imputation},
+  publisher = {Wiley},
+  year      = {2011},
+  doi       = {10.1002/9780470904848},
+  note      = {Verified: CR META; selective-editing/score-function chapter per publisher TOC (search result)}
+}
+
+@article{pannekoek2013automated,
+  author  = {Pannekoek, Jeroen and Scholtus, Sander and van der Loo, Mark},
+  title   = {Automated and Manual Data Editing: A View on Process Design and Methodology},
+  journal = {Journal of Official Statistics},
+  volume  = {29}, number = {4}, pages = {511--537}, year = {2013},
+  doi     = {10.2478/jos-2013-0038},
+  note    = {Verified: CR META}
+}
+
+%% ---------------- Q7: banking / finance / central banks ----------------
+
+@techreport{bcbs2013principles,
+  author      = {{Basel Committee on Banking Supervision}},
+  title       = {Principles for Effective Risk Data Aggregation and Risk Reporting},
+  institution = {Bank for International Settlements},
+  number      = {BCBS 239},
+  year        = {2013},
+  month       = jan,
+  url         = {https://www.bis.org/publ/bcbs239.htm},
+  note        = {Verified: PUB landing page (9 Jan 2013). Principle wording via secondary source; primary PDF not accessible -- quote from PDF and have it checked by the responsible officer}
+}
+
+@techreport{romano2021discovering,
+  author      = {Romano, Stefania and Martinez-Heras, Jose and Natalini Raponi, Francesco and Guidi, Gregorio and Gottron, Thomas},
+  title       = {Discovering New Plausibility Checks for Supervisory Data: A Machine Learning Approach},
+  institution = {European Central Bank},
+  type        = {ECB Statistics Paper Series},
+  number      = {41},
+  year        = {2021},
+  month       = oct,
+  doi         = {10.2866/19338},
+  url         = {https://www.ecb.europa.eu/pub/pdf/scpsps/ecb.sps41~b3f9939b22.en.pdf},
+  note        = {Verified: PUB + FT (Sec. 4.1, 6)}
+}
+
+@misc{mougan2021desiderata,
+  author = {Mougan, Carlos and Kanellos, Georgios and Gottron, Thomas},
+  title  = {Desiderata for Explainable {AI} in Statistical Production Systems of the European Central Bank},
+  year   = {2021},
+  eprint = {2107.08045}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/2107.08045},
+  note   = {Verified: ARX + FT. arXiv comment: ECML PKDD 2nd Workshop on Bias and Fairness in AI}
+}
+
+@incollection{zambuto2021quality,
+  author    = {Zambuto, Fabio},
+  title     = {Quality Checks on Granular Banking Data: An Experimental Approach Based on Machine Learning},
+  booktitle = {IFC Bulletin No 53 (Micro Data for the Macro World)},
+  publisher = {Bank for International Settlements},
+  year      = {2021},
+  url       = {https://www.bis.org/ifc/publ/ifcb53_11.pdf},
+  note      = {Verified: RePEc record + ABS (RePEc:bis:bisifc:53-11); earlier version Bank of Italy QEF 547 (2020)}
+}
+
+@techreport{zambuto2021confirmation,
+  author      = {Zambuto, Fabio and Arcuti, Simona and Sabatini, Roberto and Zambuto, Daniele},
+  title       = {Application of Classification Algorithms for the Assessment of Confirmation to Quality Remarks},
+  institution = {Bank of Italy},
+  type        = {Questioni di Economia e Finanza (Occasional Papers)},
+  number      = {631},
+  year        = {2021},
+  url         = {https://ideas.repec.org/p/bdi/opques/qef_631_21.html},
+  note        = {Verified: RePEc record + ABS}
+}
+
+@article{cusano2022learning,
+  author  = {Cusano, Francesco and Marinelli, Giuseppe and Piermattei, Stefano},
+  title   = {Learning from Revisions: An Algorithm to Detect Errors in Banks' Balance Sheet Statistical Reporting},
+  journal = {Quality \& Quantity},
+  volume  = {56}, number = {6}, pages = {4025--4059}, year = {2022},
+  doi     = {10.1007/s11135-021-01313-5},
+  note    = {Verified: CR META; content via RePEc abstract of working-paper version (Bank of Italy QEF 611, 2021)}
+}
+
+@incollection{continanza2023stacking,
+  author    = {Continanza, Davide Nicola and del Monaco, Andrea and di Lucido, Marco and Figoli, Daniele and Maddaloni, Pasquale and Quarta, Filippo and Turturiello, Giuseppe},
+  title     = {Stacking Machine Learning Models for Anomaly Detection: Comparing {AnaCredit} to Other Banking Data Sets},
+  booktitle = {IFC Bulletin No 59 (Data Science in Central Banking: Applications and Tools)},
+  publisher = {Bank for International Settlements},
+  year      = {2023},
+  url       = {https://ideas.repec.org/h/bis/bisifc/59-34.html},
+  note      = {Verified: RePEc record + ABS; earlier version Bank of Italy Occasional Paper 689 (2022)}
+}
+
+@incollection{nguyen2022unsupervised,
+  author    = {Nguyen, Nhan-Tam},
+  title     = {Unsupervised Outlier Detection in Official Statistics},
+  booktitle = {IFC Bulletin No 57 (Machine Learning in Central Banking)},
+  publisher = {Bank for International Settlements},
+  year      = {2022},
+  url       = {https://ideas.repec.org/h/bis/bisifc/57-09.html},
+  note      = {Verified: RePEc META (title/author/volume). Content (Bundesbank/DFKI; MIR, MMSR, SHS-S, IFS) only via search snippet -- UNVERIFIED}
+}
+
+@incollection{burger2025error,
+  author    = {Burger, Csaba and Berndt, Mih{\'a}ly},
+  title     = {Error Spotting with Gradient Boosting: A Machine Learning-Based Application for Central Bank Data Quality},
+  booktitle = {IFC Bulletin No 64 (Data Science in Central Banking: Enhancing the Access to and Sharing of Data)},
+  publisher = {Bank for International Settlements},
+  year      = {2025},
+  url       = {https://ideas.repec.org/h/bis/bisifc/64-23.html},
+  note      = {Verified: RePEc META only; content and affiliation NOT verified}
+}
+
+@incollection{yodpinyanee2026scalable,
+  author    = {Yodpinyanee, Anak and Nimitsurachat, Peranut and Cheewaruangroj, Nontawit and Saengthong, Supachai},
+  title     = {A Scalable, Explainable Machine Learning Approach for Granular-Level Credit Dataset's Quality Assurance},
+  booktitle = {IFC Bulletin No 66 (Statistics and Beyond: New Data for Decision Making in Central Banks)},
+  publisher = {Bank for International Settlements},
+  year      = {2026},
+  url       = {https://ideas.repec.org/h/bis/bisifc/66-08.html},
+  note      = {Verified: RePEc META + FT (PDF via bis.org). Prepared for 12th IFC Conference, Aug 2024; Bank of Thailand}
+}
+
+@article{du2013xbrl,
+  author  = {Du, Hui and Vasarhelyi, Miklos A. and Zheng, Xiaochuan},
+  title   = {{XBRL} Mandate: Thousands of Filing Errors and So What?},
+  journal = {Journal of Information Systems},
+  volume  = {27}, number = {1}, pages = {61--78}, year = {2013},
+  doi     = {10.2308/isys-50399},
+  note    = {Verified: CR + ABS}
+}
+
+@article{bakumenko2022detecting,
+  author  = {Bakumenko, Alexander and Elragal, Ahmed},
+  title   = {Detecting Anomalies in Financial Data Using Machine Learning Algorithms},
+  journal = {Systems},
+  volume  = {10}, number = {5}, pages = {130}, year = {2022},
+  doi     = {10.3390/systems10050130},
+  note    = {Verified: CR + ABS}
+}
+
+@misc{schreyer2017detection,
+  author = {Schreyer, Marco and Sattarov, Timur and Borth, Damian and Dengel, Andreas and Reimer, Bernd},
+  title  = {Detection of Anomalies in Large Scale Accounting Data using Deep Autoencoder Networks},
+  year   = {2017},
+  eprint = {1709.05254}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/1709.05254},
+  note   = {Verified: arXiv listing via search (META). Preprint}
+}
+
+@mastersthesis{madaras2025ensemble,
+  author = {M{\u{a}}d{\u{a}}ras, Alexandru},
+  title  = {Implementing Ensemble Machine Learning Models for Anomaly Detection in Credit Risk Data Quality},
+  school = {University of Twente},
+  year   = {2025},
+  url    = {https://purl.utwente.nl/essays/105986},
+  note   = {Grey literature. Existence verified via UT assignment page; content NOT read}
+}
+
+%% ---------------- Q8: label quality ----------------
+
+@inproceedings{northcutt2021pervasive,
+  author    = {Northcutt, Curtis G. and Athalye, Anish and Mueller, Jonas},
+  title     = {Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks},
+  booktitle = {Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks (NeurIPS 2021)},
+  year      = {2021},
+  eprint    = {2103.14749}, archivePrefix = {arXiv},
+  url       = {https://arxiv.org/abs/2103.14749},
+  note      = {Verified: ARX (journal-ref NeurIPS 2021 D\&B) + ABS}
+}
+
+@misc{deng2026identical,
+  author = {Deng, Jie},
+  title  = {When Identical Rows Disagree: From Benchmark Identifiability to Replication-Robust Anomaly Detection},
+  year   = {2026},
+  eprint = {2609.29580}, archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/2609.29580},
+  note   = {Verified: ARX + ABS. Preprint}
+}
+
+@misc{yeh2009uci350,
+  author       = {Yeh, I-Cheng},
+  title        = {{Default of Credit Card Clients}},
+  year         = {2009},
+  howpublished = {UCI Machine Learning Repository},
+  doi          = {10.24432/C55S3H},
+  note         = {Licence CC BY 4.0. Verified via DataCite and the UCI page}
+}
+
+@article{yeh2009comparisons,
+  author  = {Yeh, I-Cheng and Lien, Che-hui},
+  title   = {The comparisons of data mining techniques for the predictive accuracy of probability of default of credit card clients},
+  journal = {Expert Systems with Applications},
+  volume  = {36},
+  number  = {2},
+  pages   = {2473--2480},
+  year    = {2009},
+  doi     = {10.1016/j.eswa.2007.12.020},
+  note    = {Verified via Crossref}
+}
+
+@misc{moro2014uci222,
+  author       = {Moro, S. and Rita, P. and Cortez, P.},
+  title        = {{Bank Marketing}},
+  year         = {2014},
+  howpublished = {UCI Machine Learning Repository},
+  doi          = {10.24432/C5K306},
+  note         = {Licence CC BY 4.0. Author list as on the UCI page; DataCite lists 'S. Moro, P. Rita'}
+}
+
+@article{moro2014datadriven,
+  author  = {Moro, S{\'e}rgio and Cortez, Paulo and Rita, Paulo},
+  title   = {A data-driven approach to predict the success of bank telemarketing},
+  journal = {Decision Support Systems},
+  volume  = {62},
+  pages   = {22--31},
+  year    = {2014},
+  doi     = {10.1016/j.dss.2014.03.001},
+  note    = {Verified via Crossref}
+}
+
+@misc{hofmann1994uci144,
+  author       = {Hofmann, Hans},
+  title        = {{Statlog (German Credit Data)}},
+  year         = {1994},
+  howpublished = {UCI Machine Learning Repository},
+  doi          = {10.24432/C5NC77},
+  note         = {Verified via DataCite}
+}
+
+@misc{tomczak2016uci365,
+  author       = {Tomczak, Sebastian},
+  title        = {{Polish Companies Bankruptcy}},
+  year         = {2016},
+  howpublished = {UCI Machine Learning Repository},
+  doi          = {10.24432/C5F600},
+  note         = {Verified via DataCite}
+}
+
+@article{li2012truthfinding,
+  author  = {Li, Xian and Dong, Xin Luna and Lyons, Kenneth and Meng, Weiyi and Srivastava, Divesh},
+  title   = {Truth Finding on the Deep Web: Is the Problem Solved?},
+  journal = {Proceedings of the VLDB Endowment},
+  volume  = {6},
+  number  = {2},
+  pages   = {97--108},
+  year    = {2012},
+  doi     = {10.14778/2535568.2448943},
+  note    = {Verified via Crossref and the publisher PDF (VLDB 2013 conference). Data: https://www.lunadong.com/fusionDataSets.htm}
+}
+
+@article{ouzzani2016rayyan,
+  author  = {Ouzzani, Mourad and Hammady, Hossam and Fedorowicz, Zbys and Elmagarmid, Ahmed},
+  title   = {Rayyan---a web and mobile app for systematic reviews},
+  journal = {Systematic Reviews},
+  volume  = {5},
+  number  = {1},
+  pages   = {210},
+  year    = {2016},
+  doi     = {10.1186/s13643-016-0384-4},
+  note    = {Verified via Crossref (article number 210 as cited in Baran)}
+}
+
+@article{peng2022garf,
+  author  = {Peng, Jinfeng and Shen, Derong and Tang, Nan and Liu, Tieying and Kou, Yue and Nie, Tiezheng and Cui, Hang and Yu, Ge},
+  title   = {Self-Supervised and Interpretable Data Cleaning with Sequence Generative Adversarial Networks},
+  journal = {Proceedings of the VLDB Endowment},
+  volume  = {16},
+  number  = {3},
+  pages   = {433--446},
+  year    = {2022},
+  doi     = {10.14778/3570690.3570694},
+  note    = {Verified via Crossref}
+}
+
+@misc{jesus2022baf,
+  author        = {Jesus, S{\'e}rgio and Pombal, Jos{\'e} and Alves, Duarte and Cruz, Andr{\'e} and Saleiro, Pedro and Ribeiro, Rita P. and Gama, Jo{\~a}o and Bizarro, Pedro},
+  title         = {Turning the Tables: Biased, Imbalanced, Dynamic Tabular Datasets for {ML} Evaluation},
+  year          = {2022},
+  eprint        = {2211.13358},
+  archivePrefix = {arXiv},
+  note          = {NeurIPS 2022 Datasets and Benchmarks track (per datasheet). Verified via the arXiv API}
+}
+
+@misc{abdelaal2023reinb,
+  author        = {Abdelaal, Mohamed and Hammacher, Christian and Schoening, Harald},
+  title         = {{REIN}: A Comprehensive Benchmark Framework for Data Cleaning Methods in {ML} Pipelines},
+  year          = {2023},
+  eprint        = {2302.04702},
+  archivePrefix = {arXiv},
+  note          = {Verified via the arXiv API; venue not verified here}
+}
+
+@misc{qin2023bclean,
+  author        = {Qin, Jianbin and Huang, Sifan and Wang, Yaoshu and Zhu, Jing and Zhang, Yifan and Miao, Yukai and Mao, Rui and Onizuka, Makoto and Xiao, Chuan},
+  title         = {{BClean}: A {B}ayesian Data Cleaning System},
+  year          = {2023},
+  eprint        = {2311.06517},
+  archivePrefix = {arXiv},
+  note          = {Verified via the arXiv API}
+}
+
+@misc{ahmadi2026addresstable,
+  author       = {Ahmadi, Fatemeh and Bernhard, Tobias and Abdelmaksoud, Mohamed and Zecchini, Luca and Rabl, Tilmann and Abedjan, Ziawasch},
+  title        = {{AddressTable}},
+  year         = {2026},
+  howpublished = {Zenodo},
+  version      = {v1.0-2026-06-26},
+  doi          = {10.5281/zenodo.20841898},
+  note         = {DataCite rights: cc-by-4.0; the repo README states that the OSM-derived ground truth is under ODbL 1.0. DataCite lists one creator as 'Mohamed, Abdelmaksoud'}
+}
+
+@misc{sec_fsds,
+  author       = {{U.S. Securities and Exchange Commission}},
+  title        = {Financial Statement Data Sets},
+  howpublished = {\url{https://www.sec.gov/files/financial-statement-data-sets.pdf}},
+  note         = {Documentation accessed 2026-10-19}
+}

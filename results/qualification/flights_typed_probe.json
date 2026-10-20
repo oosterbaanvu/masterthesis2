@@ -1,0 +1,57 @@
+{
+  "n_rows": 2376,
+  "published_error_cells": 4920,
+  "composition_after_typing": {
+    "missing_in_dirty": 2312,
+    "unparseable": 90,
+    "representation_only": 322,
+    "value_error": 2196,
+    "clean_unparseable": 0
+  },
+  "split": {
+    "reference_flights": 60,
+    "reference_rows": 1404,
+    "test_rows": 972,
+    "flights_in_both": 0
+  },
+  "cdc_compatibility": {
+    "verdict": "CONDITIONAL",
+    "reasons": [
+      "src: 16 of 37 labels expected to have too few calibration examples to ever be flagged",
+      "flight: 60 of 60 labels expected to have too few calibration examples to ever be flagged"
+    ],
+    "transformations": [
+      "categorical columns encoded as pandas categories fixed to reference levels"
+    ]
+  },
+  "cdc_on_real_value_errors": {
+    "sched_dep_time": {
+      "value_errors": 3,
+      "correct_cells": 671,
+      "auc_value_errors": 0.4900645802285147,
+      "recall_flag_value_errors": 0.0,
+      "flag_rate_on_correct_cells": 0.14157973174366617
+    },
+    "act_dep_time": {
+      "value_errors": 411,
+      "correct_cells": 392,
+      "auc_value_errors": 0.5173854213218134,
+      "recall_flag_value_errors": 0.17761557177615572,
+      "flag_rate_on_correct_cells": 0.08928571428571429
+    },
+    "sched_arr_time": {
+      "value_errors": 68,
+      "correct_cells": 614,
+      "auc_value_errors": 0.4958564859168423,
+      "recall_flag_value_errors": 0.11764705882352941,
+      "flag_rate_on_correct_cells": 0.0993485342019544
+    },
+    "act_arr_time": {
+      "value_errors": 346,
+      "correct_cells": 463,
+      "auc_value_errors": 0.524928525949138,
+      "recall_flag_value_errors": 0.057803468208092484,
+      "flag_rate_on_correct_cells": 0.04535637149028078
+    }
+  }
+}

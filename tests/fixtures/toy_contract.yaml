@@ -1,0 +1,28 @@
+# Minimal contract used by the test-suite (synthetic data, no download needed).
+dataset: toy
+table: toy_accounts
+description: Synthetic accounts table for tests.
+row_id: id
+columns:
+  - {name: limit_amt, type: numeric, semantic: money_amount}
+  - {name: balance, type: numeric, semantic: money_amount_signed}
+  - {name: status, type: categorical, semantic: code, documented_values: [A, B, C]}
+  - {name: segment, type: categorical, semantic: code, documented_values: [1, 2]}
+rules:
+  - {id: D_NOT_NULL, kind: not_null, columns: all, status: verified, evidence: test}
+  - {id: D_UNIQUE_ID, kind: unique, columns: [id], status: verified, evidence: test}
+  - {id: D_STATUS, kind: accepted_values, columns: [status], from_documented: true, status: verified, evidence: test}
+  - {id: D_LIMIT_POS, kind: range, columns: [limit_amt], min: 1, status: verified, evidence: test}
+  - {id: D_BAL_LE_2LIMIT, kind: expression, columns: [balance, limit_amt], expression: '"balance" <= 2 * "limit_amt"', status: provisional, evidence: test}
+  - {id: D_DISABLED, kind: range, columns: [balance], min: 0, status: unsupported, enabled: false, evidence: "negative balances are legitimate"}
+statistical_controls:
+  - id: "S_ENV_{i}"
+    kind: envelope
+    for_each: [limit_amt, balance]
+    columns: ["{i}"]
+    expression: '"{i}"'
+    lower_q: 0.001
+    upper_q: 0.999
+    status: provisional
+    evidence: test
+  - {id: S_RARE_status, kind: rare_category, columns: [status], expression: '"status"', min_share: 0.01, status: provisional, evidence: test}
