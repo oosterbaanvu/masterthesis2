@@ -100,7 +100,10 @@ Decision reliability (SQ3):
 
 - **Out-of-generator:** CDC on BART-generated errors in Raha Tax vs. our injected errors in the same columns
   (`scripts/probe_tax_bart.py`); reported per column as agreement of ranking quality, not as transfer to
-  real data.
+  real data. Qualification outcome: BART's value errors in state / marital_status / has_child are ranked
+  almost perfectly (AUC ≈ 1.00), as are our swaps (0.97–1.00) – a ceiling effect caused by deterministic
+  synthetic dependencies, so agreement here is weak evidence; BART's exemption errors are unparseable and
+  fall to format checks.
 - **Real errors:** Raha on Flights (real inter-source conflicts) only; CDC is incompatible with that error
   structure (chance-level AUC in the qualification probe).
 

@@ -1,12 +1,12 @@
 # Data-quality control evaluation: `uci_credit`
 > Exploratory evidence from controlled, synthetic error injection on public data. It shows which *injected* errors the configured controls catch; it does not estimate real error rates and alerts on untouched cells are not verified false positives.
 ## Run
-- Run id `demo_uci_credit-20261020T054950`, framework 0.1.0, started 2026-10-20T05:49:47+00:00, 1144.2 s.
+- Run id `demo_uci_credit-20261020T071605`, framework 0.1.0, started 2026-10-20T07:16:02+00:00, 351.1 s.
 - Split: random (seed 1); reference 18000 rows; evaluated partition `dev` with 5997 rows per scenario; 164 scenarios + 1 untouched copy.
 - Conventional controls: dbt Core (- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!), 20 deterministic and 39 statistical rule definitions; dbt test statuses {'warn': 41, 'pass': 40} (warn = failing rows found). Recorded but not enforced: D_EDUCATION_DOCUMENTED, D_BILL_OVER_LIMIT.
-- Learned detector: `cdc_hgb` (CONDITIONAL), config {"set_rule": "inclusive", "base_quantile": null, "confidence": 0.999, "calibration_rows": 1000, "max_iter": 100, "learning_rate": 0.1, "min_samples_leaf": 20, "seed": 0, "target_columns": null}, fit 847.648 s, score 235.699 s.
+- Learned detector: `cdc_hgb` (CONDITIONAL), config {"rank_score": "normalized_residual", "set_rule": "inclusive", "base_quantile": null, "confidence": 0.999, "calibration_rows": 1000, "max_iter": 100, "learning_rate": 0.1, "min_samples_leaf": 20, "seed": 0, "target_columns": null}, fit 42.54 s, score 247.62 s.
   - limitation: Assumes the reference partition is (mostly) error-free; errors in it widen intervals.
-  - limitation: Mondrian calibration: labels with few calibration examples get wide sets and are rarely flagged.
+  - limitation: Class-conditional (Mondrian) calibration: for labels with n < 1/(1-c) calibration examples the threshold is the calibration maximum, so genuine values of rare labels are alerted at about 1/(n+1) and swaps into them are rarely flagged.
   - limitation: Re-implementation with a different base learner than the published experiments.
 
 ## Alert burden on the untouched partition
@@ -49,34 +49,34 @@ Recall is the share of injected cells implicated by a control (`det` = determini
 | AGE | missing | soft_ecar | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | – |
 | AGE | missing | soft_enar | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | – |
 | AGE | missing | tab_err_enar | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | – |
-| AGE | plausible_substitution | soft_ear | primary | 0.000 | 0.000 | 0.033 | 0.033 | 0.033 | 0.033 | 0.609 |
-| AGE | plausible_substitution | soft_ecar | primary | 0.000 | 0.000 | 0.008 | 0.008 | 0.008 | 0.008 | 0.530 |
-| AGE | plausible_substitution | soft_enar | primary | 0.000 | 0.000 | 0.017 | 0.017 | 0.017 | 0.017 | 0.599 |
-| AGE | plausible_substitution | tab_err_enar | primary | 0.000 | 0.000 | 0.008 | 0.008 | 0.008 | 0.008 | 0.333 |
-| BILL_AMT1 | digit_transposition | soft_ear | primary | 0.000 | 0.042 | 0.042 | 0.000 | 0.000 | 0.000 | 0.447 |
-| BILL_AMT1 | digit_transposition | soft_ecar | primary | 0.000 | 0.050 | 0.025 | 0.000 | 0.000 | 0.000 | 0.482 |
-| BILL_AMT1 | digit_transposition | soft_enar | primary | 0.000 | 0.075 | 0.042 | 0.000 | 0.000 | 0.000 | 0.328 |
-| BILL_AMT1 | digit_transposition | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.689 |
-| BILL_AMT1 | outlier | soft_ear | sanity | 0.000 | 0.650 | 0.000 | 0.000 | 0.000 | 0.000 | 0.767 |
-| BILL_AMT1 | outlier | soft_ecar | sanity | 0.000 | 0.750 | 0.000 | 0.000 | 0.000 | 0.000 | 0.814 |
-| BILL_AMT1 | outlier | soft_enar | sanity | 0.000 | 0.333 | 0.000 | 0.000 | 0.000 | 0.000 | 0.573 |
-| BILL_AMT1 | outlier | tab_err_enar | sanity | 0.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | 1.000 |
-| BILL_AMT1 | period_shift | soft_ear | primary | 0.000 | 0.017 | 0.000 | 0.000 | 0.000 | 0.000 | 0.483 |
-| BILL_AMT1 | period_shift | soft_ecar | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.000 | 0.000 | 0.484 |
-| BILL_AMT1 | period_shift | soft_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.273 |
-| BILL_AMT1 | period_shift | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.685 |
-| BILL_AMT1 | plausible_substitution | soft_ear | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.000 | 0.000 | 0.565 |
-| BILL_AMT1 | plausible_substitution | soft_ecar | primary | 0.000 | 0.133 | 0.000 | 0.000 | 0.000 | 0.000 | 0.620 |
-| BILL_AMT1 | plausible_substitution | soft_enar | primary | 0.000 | 0.042 | 0.000 | 0.000 | 0.000 | 0.000 | 0.697 |
-| BILL_AMT1 | plausible_substitution | tab_err_enar | primary | 0.000 | 0.158 | 0.000 | 0.000 | 0.000 | 0.000 | 0.540 |
-| BILL_AMT1 | scale | soft_ear | primary | 0.000 | 0.225 | 0.204 | 0.008 | 0.008 | 0.008 | 0.821 |
-| BILL_AMT1 | scale | soft_ecar | primary | 0.000 | 0.342 | 0.221 | 0.000 | 0.000 | 0.000 | 0.893 |
-| BILL_AMT1 | scale | soft_enar | primary | 0.000 | 0.517 | 0.421 | 0.004 | 0.004 | 0.004 | 0.981 |
-| BILL_AMT1 | scale | tab_err_enar | primary | 0.000 | 0.158 | 0.000 | 0.000 | 0.000 | 0.000 | 0.691 |
-| BILL_AMT1 | sign_flip | soft_ear | primary | 0.000 | 0.758 | 0.183 | 0.000 | 0.000 | 0.000 | 0.989 |
-| BILL_AMT1 | sign_flip | soft_ecar | primary | 0.000 | 0.825 | 0.108 | 0.000 | 0.000 | 0.000 | 0.994 |
-| BILL_AMT1 | sign_flip | soft_enar | primary | 0.000 | 1.000 | 0.317 | 0.000 | 0.000 | 0.000 | 0.999 |
-| BILL_AMT1 | sign_flip | tab_err_enar | primary | 0.000 | 0.583 | 0.000 | 0.000 | 0.000 | 0.000 | 0.995 |
+| AGE | plausible_substitution | soft_ear | primary | 0.000 | 0.000 | 0.033 | 0.033 | 0.000 | 0.000 | 0.772 |
+| AGE | plausible_substitution | soft_ecar | primary | 0.000 | 0.000 | 0.008 | 0.008 | 0.000 | 0.008 | 0.737 |
+| AGE | plausible_substitution | soft_enar | primary | 0.000 | 0.000 | 0.017 | 0.017 | 0.000 | 0.008 | 0.699 |
+| AGE | plausible_substitution | tab_err_enar | primary | 0.000 | 0.000 | 0.008 | 0.008 | 0.000 | 0.017 | 0.736 |
+| BILL_AMT1 | digit_transposition | soft_ear | primary | 0.000 | 0.042 | 0.042 | 0.000 | 0.000 | 0.000 | 0.649 |
+| BILL_AMT1 | digit_transposition | soft_ecar | primary | 0.000 | 0.050 | 0.025 | 0.000 | 0.000 | 0.000 | 0.631 |
+| BILL_AMT1 | digit_transposition | soft_enar | primary | 0.000 | 0.075 | 0.042 | 0.000 | 0.000 | 0.000 | 0.727 |
+| BILL_AMT1 | digit_transposition | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.526 |
+| BILL_AMT1 | outlier | soft_ear | sanity | 0.000 | 0.650 | 0.000 | 0.000 | 0.000 | 0.000 | 0.993 |
+| BILL_AMT1 | outlier | soft_ecar | sanity | 0.000 | 0.750 | 0.000 | 0.000 | 0.000 | 0.000 | 0.996 |
+| BILL_AMT1 | outlier | soft_enar | sanity | 0.000 | 0.333 | 0.000 | 0.000 | 0.000 | 0.000 | 0.992 |
+| BILL_AMT1 | outlier | tab_err_enar | sanity | 0.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.997 |
+| BILL_AMT1 | period_shift | soft_ear | primary | 0.000 | 0.017 | 0.000 | 0.000 | 0.000 | 0.000 | 0.484 |
+| BILL_AMT1 | period_shift | soft_ecar | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.000 | 0.000 | 0.470 |
+| BILL_AMT1 | period_shift | soft_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.534 |
+| BILL_AMT1 | period_shift | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.524 |
+| BILL_AMT1 | plausible_substitution | soft_ear | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.008 | 0.008 | 0.900 |
+| BILL_AMT1 | plausible_substitution | soft_ecar | primary | 0.000 | 0.133 | 0.000 | 0.000 | 0.000 | 0.000 | 0.897 |
+| BILL_AMT1 | plausible_substitution | soft_enar | primary | 0.000 | 0.042 | 0.000 | 0.000 | 0.000 | 0.000 | 0.966 |
+| BILL_AMT1 | plausible_substitution | tab_err_enar | primary | 0.000 | 0.158 | 0.000 | 0.000 | 0.000 | 0.000 | 0.856 |
+| BILL_AMT1 | scale | soft_ear | primary | 0.000 | 0.225 | 0.204 | 0.008 | 0.000 | 0.000 | 0.859 |
+| BILL_AMT1 | scale | soft_ecar | primary | 0.000 | 0.342 | 0.221 | 0.000 | 0.004 | 0.004 | 0.897 |
+| BILL_AMT1 | scale | soft_enar | primary | 0.000 | 0.517 | 0.421 | 0.004 | 0.000 | 0.000 | 0.987 |
+| BILL_AMT1 | scale | tab_err_enar | primary | 0.000 | 0.158 | 0.000 | 0.000 | 0.000 | 0.000 | 0.859 |
+| BILL_AMT1 | sign_flip | soft_ear | primary | 0.000 | 0.758 | 0.183 | 0.000 | 0.000 | 0.000 | 0.873 |
+| BILL_AMT1 | sign_flip | soft_ecar | primary | 0.000 | 0.825 | 0.108 | 0.000 | 0.000 | 0.000 | 0.901 |
+| BILL_AMT1 | sign_flip | soft_enar | primary | 0.000 | 1.000 | 0.317 | 0.000 | 0.000 | 0.000 | 0.993 |
+| BILL_AMT1 | sign_flip | tab_err_enar | primary | 0.000 | 0.583 | 0.000 | 0.000 | 0.000 | 0.000 | 0.875 |
 | EDUCATION | category_swap | soft_ear | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.658 |
 | EDUCATION | category_swap | soft_ecar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.612 |
 | EDUCATION | category_swap | soft_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.700 |
@@ -85,12 +85,12 @@ Recall is the share of injected cells implicated by a control (`det` = determini
 | EDUCATION | invalid_code | soft_ecar | sanity | 1.000 | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 1.000 |
 | EDUCATION | invalid_code | soft_enar | sanity | 1.000 | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 1.000 |
 | EDUCATION | invalid_code | tab_err_enar | sanity | 1.000 | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 1.000 |
-| LIMIT_BAL | digit_transposition | soft_ecar | primary | 0.533 | 0.633 | 0.117 | 0.025 | 0.025 | 0.033 | 0.509 |
-| LIMIT_BAL | digit_transposition | soft_enar | primary | 0.517 | 0.675 | 0.158 | 0.008 | 0.008 | 0.058 | 0.495 |
-| LIMIT_BAL | digit_transposition | tab_err_enar | primary | 0.500 | 0.500 | 0.025 | 0.025 | 0.025 | 0.058 | 0.677 |
-| LIMIT_BAL | plausible_substitution | soft_ecar | primary | 0.000 | 0.142 | 0.000 | 0.000 | 0.000 | 0.008 | 0.524 |
-| LIMIT_BAL | plausible_substitution | soft_enar | primary | 0.000 | 0.167 | 0.000 | 0.000 | 0.000 | 0.008 | 0.525 |
-| LIMIT_BAL | plausible_substitution | tab_err_enar | primary | 0.000 | 0.058 | 0.008 | 0.008 | 0.008 | 0.008 | 0.438 |
+| LIMIT_BAL | digit_transposition | soft_ecar | primary | 0.533 | 0.633 | 0.117 | 0.025 | 0.000 | 0.025 | 0.715 |
+| LIMIT_BAL | digit_transposition | soft_enar | primary | 0.517 | 0.675 | 0.158 | 0.008 | 0.000 | 0.025 | 0.774 |
+| LIMIT_BAL | digit_transposition | tab_err_enar | primary | 0.500 | 0.500 | 0.025 | 0.025 | 0.000 | 0.075 | 0.808 |
+| LIMIT_BAL | plausible_substitution | soft_ecar | primary | 0.000 | 0.142 | 0.000 | 0.000 | 0.000 | 0.000 | 0.758 |
+| LIMIT_BAL | plausible_substitution | soft_enar | primary | 0.000 | 0.167 | 0.000 | 0.000 | 0.000 | 0.000 | 0.732 |
+| LIMIT_BAL | plausible_substitution | tab_err_enar | primary | 0.000 | 0.058 | 0.008 | 0.008 | 0.000 | 0.017 | 0.695 |
 | MARRIAGE | category_swap | soft_ear | primary | 0.000 | 0.000 | 0.033 | 0.033 | 0.000 | 0.000 | 0.808 |
 | MARRIAGE | category_swap | soft_ecar | primary | 0.000 | 0.000 | 0.033 | 0.033 | 0.000 | 0.000 | 0.803 |
 | MARRIAGE | category_swap | soft_enar | primary | 0.000 | 0.000 | 0.025 | 0.025 | 0.000 | 0.000 | 0.731 |
@@ -102,59 +102,60 @@ Recall is the share of injected cells implicated by a control (`det` = determini
 | PAY_0 | code_remap | soft_ear | primary | 0.000 | 0.050 | 0.000 | 0.000 | 0.000 | 0.000 | 0.829 |
 | PAY_0 | code_remap | soft_ecar | primary | 0.000 | 0.042 | 0.000 | 0.000 | 0.000 | 0.000 | 0.807 |
 | PAY_0 | code_remap | soft_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.781 |
-| PAY_0 | code_remap | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.806 |
+| PAY_0 | code_remap | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.807 |
 | PAY_0 | period_shift | soft_ear | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.608 |
 | PAY_0 | period_shift | soft_ecar | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.000 | 0.000 | 0.634 |
 | PAY_0 | period_shift | soft_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.634 |
 | PAY_0 | period_shift | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.665 |
-| PAY_AMT1 | digit_transposition | soft_ear | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.310 |
-| PAY_AMT1 | digit_transposition | soft_ecar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.356 |
-| PAY_AMT1 | digit_transposition | soft_enar | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.000 | 0.000 | 0.210 |
-| PAY_AMT1 | digit_transposition | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.501 |
-| PAY_AMT1 | rounding | soft_ear | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.316 |
-| PAY_AMT1 | rounding | soft_ecar | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.000 | 0.000 | 0.474 |
-| PAY_AMT1 | rounding | soft_enar | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.000 | 0.000 | 0.232 |
-| PAY_AMT1 | rounding | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.640 |
-| PAY_AMT1 | scale | soft_ear | primary | 0.000 | 0.117 | 0.050 | 0.000 | 0.000 | 0.000 | 0.345 |
-| PAY_AMT1 | scale | soft_ecar | primary | 0.000 | 0.075 | 0.017 | 0.000 | 0.000 | 0.000 | 0.209 |
-| PAY_AMT1 | scale | soft_enar | primary | 0.000 | 0.242 | 0.083 | 0.000 | 0.000 | 0.000 | 0.440 |
-| PAY_AMT1 | scale | tab_err_enar | primary | 0.000 | 0.033 | 0.000 | 0.000 | 0.000 | 0.000 | 0.046 |
-| PAY_AMT1 | sign_flip | soft_ear | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.999 |
-| PAY_AMT1 | sign_flip | soft_ecar | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.998 |
-| PAY_AMT1 | sign_flip | soft_enar | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.999 |
-| PAY_AMT1 | sign_flip | tab_err_enar | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.998 |
+| PAY_AMT1 | digit_transposition | soft_ear | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.712 |
+| PAY_AMT1 | digit_transposition | soft_ecar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.690 |
+| PAY_AMT1 | digit_transposition | soft_enar | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.000 | 0.000 | 0.787 |
+| PAY_AMT1 | digit_transposition | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.671 |
+| PAY_AMT1 | rounding | soft_ear | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.610 |
+| PAY_AMT1 | rounding | soft_ecar | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.000 | 0.000 | 0.597 |
+| PAY_AMT1 | rounding | soft_enar | primary | 0.000 | 0.008 | 0.000 | 0.000 | 0.000 | 0.000 | 0.628 |
+| PAY_AMT1 | rounding | tab_err_enar | primary | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.611 |
+| PAY_AMT1 | scale | soft_ear | primary | 0.000 | 0.117 | 0.050 | 0.000 | 0.008 | 0.008 | 0.965 |
+| PAY_AMT1 | scale | soft_ecar | primary | 0.000 | 0.075 | 0.017 | 0.000 | 0.017 | 0.017 | 0.979 |
+| PAY_AMT1 | scale | soft_enar | primary | 0.000 | 0.242 | 0.083 | 0.000 | 0.000 | 0.000 | 0.994 |
+| PAY_AMT1 | scale | tab_err_enar | primary | 0.000 | 0.033 | 0.000 | 0.000 | 0.000 | 0.000 | 0.991 |
+| PAY_AMT1 | sign_flip | soft_ear | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.932 |
+| PAY_AMT1 | sign_flip | soft_ecar | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.937 |
+| PAY_AMT1 | sign_flip | soft_enar | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.979 |
+| PAY_AMT1 | sign_flip | tab_err_enar | sanity | 1.000 | 1.000 | 0.000 | 0.000 | 0.000 | 0.000 | 0.945 |
 
 ### By mechanism class (mean over operations, columns and seeds)
 
-| mechanism_class | recall_B | incremental_recall_at_10_per_1k | auc_L_target |
-|---|---|---|---|
-| EAR | 0.268 | 0.003 | 0.677 |
-| ECAR | 0.303 | 0.002 | 0.672 |
-| ENAR | 0.291 | 0.004 | 0.663 |
+| mechanism_class | recall_B | row_recall_B | incremental_recall_at_10_per_1k | row_incremental_recall_at_10_per_1k | auc_L_target |
+|---|---|---|---|---|---|
+| EAR | 0.268 | 0.284 | 0.001 | 0.018 | 0.795 |
+| ECAR | 0.303 | 0.315 | 0.003 | 0.017 | 0.788 |
+| ENAR | 0.291 | 0.304 | 0.003 | 0.015 | 0.800 |
 
 ## Adoption indication under the pre-registered rule
-Rule: ADOPT if the lower 95% bootstrap bound of `incremental_recall_at_10_per_1k` ≥ 0.05 and the extra alert burden ≤ 10.0 per 1,000 rows; DO_NOT_ADOPT if the upper bound < 0.05 or the burden is exceeded; otherwise INSUFFICIENT_EVIDENCE. Computed per error case over seeds and mechanisms (n is small in a demonstration run; this is an indication, not a confirmatory result).
+Rule: ADOPT if the lower 95% bootstrap bound of `incremental_recall_at_10_per_1k` ≥ 0.05 and the extra review load ≤ 10.0 per 1,000 rows (for a budgeted metric the load equals the budget); DO_NOT_ADOPT if the upper bound < 0.05 or the load is exceeded; otherwise INSUFFICIENT_EVIDENCE. Computed per error case (column, operation, parameters) over seeds and mechanisms (n is small in a demonstration run; this is an indication, not a confirmatory result).
 
-| column | operation | n | ΔR@10 mean | CI low | CI high | decision |
-|---|---|---|---|---|---|---|
-| AGE | plausible_substitution | 8 | 0.017 | 0.008 | 0.025 | DO_NOT_ADOPT |
-| BILL_AMT1 | digit_transposition | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| BILL_AMT1 | period_shift | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| BILL_AMT1 | plausible_substitution | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| BILL_AMT1 | scale | 16 | 0.003 | 0.000 | 0.006 | DO_NOT_ADOPT |
-| BILL_AMT1 | sign_flip | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| EDUCATION | category_swap | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| LIMIT_BAL | digit_transposition | 6 | 0.050 | 0.022 | 0.081 | DO_NOT_ADOPT |
-| LIMIT_BAL | plausible_substitution | 6 | 0.008 | 0.003 | 0.014 | DO_NOT_ADOPT |
-| MARRIAGE | category_swap | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| PAY_0 | category_swap | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| PAY_0 | code_remap | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| PAY_0 | period_shift | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| PAY_AMT1 | digit_transposition | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| PAY_AMT1 | rounding | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
-| PAY_AMT1 | scale | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| column | operation | params | n | incremental_recall_at_10_per_1k mean | CI low | CI high | decision |
+|---|---|---|---|---|---|---|---|
+| AGE | plausible_substitution | {} | 8 | 0.008 | 0.002 | 0.017 | DO_NOT_ADOPT |
+| BILL_AMT1 | digit_transposition | {} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| BILL_AMT1 | period_shift | {"source_column": "BILL_AMT2"} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| BILL_AMT1 | plausible_substitution | {} | 8 | 0.002 | 0.000 | 0.006 | DO_NOT_ADOPT |
+| BILL_AMT1 | scale | {"factor": 0.001} | 8 | 0.002 | 0.000 | 0.006 | DO_NOT_ADOPT |
+| BILL_AMT1 | scale | {"factor": 10} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| BILL_AMT1 | sign_flip | {} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| EDUCATION | category_swap | {"weighing": "frequency"} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| LIMIT_BAL | digit_transposition | {} | 6 | 0.042 | 0.008 | 0.086 | INSUFFICIENT_EVIDENCE |
+| LIMIT_BAL | plausible_substitution | {} | 6 | 0.006 | 0.000 | 0.011 | DO_NOT_ADOPT |
+| MARRIAGE | category_swap | {"weighing": "frequency"} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| PAY_0 | category_swap | {"weighing": "frequency"} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| PAY_0 | code_remap | {} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| PAY_0 | period_shift | {"source_column": "PAY_2"} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| PAY_AMT1 | digit_transposition | {} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| PAY_AMT1 | rounding | {"unit": 1000} | 8 | 0.000 | 0.000 | 0.000 | DO_NOT_ADOPT |
+| PAY_AMT1 | scale | {"factor": 10} | 8 | 0.006 | 0.000 | 0.015 | DO_NOT_ADOPT |
 
-Pooled over primary cases: ΔR@10 = 0.004 [0.002, 0.007] (scenario-level bootstrap; scenarios share rows, so this interval is optimistic).
+Pooled over primary cases: incremental_recall_at_10_per_1k = 0.003 [0.001, 0.006] (scenario-level bootstrap; scenarios share rows, so this interval is optimistic).
 
 ## Caveats
 - Injected errors are synthetic; detection of these errors is not evidence about real error prevalence.

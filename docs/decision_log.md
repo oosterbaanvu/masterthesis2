@@ -76,13 +76,29 @@ copied.
   (`cdc_hgb`), contract-based typing, inclusive conformal sets, per-column calibration split, conformal
   p-values for ranking. The original implementation (AutoGluon 0.8.2, RF+XT, without FASTAI) is kept as a
   fidelity reference.
-- **Evidence:** same-batch comparison: ×10 on BILL_AMT1 recall 0.48 (re-impl.) vs 0.55 (original);
+- **Evidence:** same-batch comparison (`results/qualification/cdc_fidelity.json`): ×10 on BILL_AMT1 recall 0.45 (re-impl.) vs 0.55 (original);
   PAY_0 untouched-cell flag rate 0.0% vs 9.6%, explained by the original's strict `<` set rule (reproduced:
-  `strict_original` gives 12.4% untouched flags); original heuristic typing turns LIMIT_BAL and AGE into
+  `strict_original` gives 20.2% untouched flags); original heuristic typing turns LIMIT_BAL and AGE into
   categoricals. At c = 0.999 with ~1000 calibration rows the categorical thresholds equal the calibration
-  maximum: flag recall on PAY_0 swaps 0.00–0.09 across five seeds while ranking AUC is stable (0.88–0.93).
+  maximum: flag recall on PAY_0 swaps 0.00 for all five calibration seeds while ranking AUC is stable
+  (0.81–0.89; `results/qualification/cdc_seed_variance.json`).
 - **Consequence:** evaluate primarily at a fixed review budget (ranking), report own-threshold flags as
   secondary.
+- **Update 2026-10-20 (qualification, dev data only):**
+  - Ranking score changed to a normalised-residual conformal p-value (|y − median| / interval width): the CQR
+    edge distance is inverted for zero-inflated, multimodal amounts (PAY_AMT1 ×10 AUC 0.18 → 0.98; mean over 17
+    numeric cases 0.61 → 0.75). Flags still use CQR as in the original.
+  - Tie-breaker below the p-value resolution added (many cells share the minimal p-value 1/(n_cal+1)).
+  - Rare-label finding corrected: under Mondrian calibration with too few calibration examples, genuine rare
+    labels are alerted at ≈1/(n+1) (69% for `marital = unknown`), not "never flagged".
+  - Open: calibration size (≥ 1/(1−c) per label) or a lower confidence for flags; decide before freezing.
+
+### D-16 · Stored detector scores and recomputation — final
+- **Decision:** a run stores, per scenario, all flags, the target column and the top-k_max cells among cells
+  *not* alerted by the full baseline and by the deterministic baseline; analyses recompute budgeted gains only
+  for budgets ≤ the stored maximum and verify equality with the pipeline's own metrics (self-check).
+- **Evidence:** the first version ranked over all cells (including baseline-alerted ones); recomputed gains at
+  k = 50 were biased upwards (0.070 vs. 0.030). Caught by comparison and fixed; demos rerun.
 
 ### D-09 · Raha excluded from the controlled comparison — final for the controlled study
 - **Decision:** Raha is used only on Flights (real errors).

@@ -165,13 +165,24 @@ def run(cfg: RunConfig, out_root: Path | None = None) -> dict[str, Any]:
                 meta["mech_params"] = json.dumps(sc.mech_params)
             rows.append({**meta, **ev_metrics})
             if ds_ is not None:
-                # keep only what reports need: flags, the top-k_max cells, and the target column
+                # Keep what later analyses need: flags, the target column, and the top-k_max cells among
+                # the cells NOT already alerted by (a) the full baseline and (b) the deterministic rules only,
+                # so that budgeted increments can be recomputed exactly for both baseline variants.
                 d = ds_.copy()
-                d["rank"] = d["score"].rank(ascending=False, method="first")
-                keep = d["flag"] | (d["rank"] <= k_max) | (sid == UNTOUCHED)
-                if sc is not None and det.granularity == "cell":
-                    keep |= d["column"] == sc.column
-                kept_scores.append(d[keep].drop(columns="rank"))
+                keep = d["flag"].astype(bool) | (sid == UNTOUCHED)
+                if det.granularity == "cell":
+                    key = d["_row_id"].astype("int64").astype(str) + "\x1f" + d["column"].astype(str)
+                    bkey = bc["_row_id"].astype("int64").astype(str) + "\x1f" + bc["column"].astype(str)
+                    det_key = bkey[bc["tier"] == "deterministic"]
+                    for excluded in (set(bkey), set(det_key)):
+                        free = ~key.isin(excluded)
+                        rank = d["score"].where(free).rank(ascending=False, method="first")
+                        keep |= free & (rank <= k_max)
+                    if sc is not None:
+                        keep |= d["column"] == sc.column
+                else:
+                    keep |= d["score"].rank(ascending=False, method="first") <= k_max
+                kept_scores.append(d[keep])
     det_meta.update({"score_seconds": round(score_s, 3), "n_scored": n_scored, "n_flagged": n_flagged})
     res = pd.DataFrame(rows)
     scores = pd.concat(kept_scores, ignore_index=True) if kept_scores else None

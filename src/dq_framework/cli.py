@@ -6,6 +6,7 @@
   dqf controls check DATASET           run dbt controls on the untouched table, report failure rates
   dqf profile DATASET                  descriptive profile of the analysed table
   dqf run CONFIG.yaml [--report PATH]  end-to-end evaluation run (controls + injection + detector)
+  dqf report RUN_DIR [--out PATH]      re-render the Markdown report of a finished run
 """
 
 from __future__ import annotations
@@ -76,6 +77,16 @@ def _cmd_run(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_report(args: argparse.Namespace) -> int:
+    from dq_framework import reporting
+
+    run = reporting.load_run(Path(args.run_dir))
+    out = Path(args.out) if args.out else Path(args.run_dir) / "report.md"
+    reporting.write(run, out)
+    print(f"report: {out}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="dqf", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -95,6 +106,10 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("config")
     r.add_argument("--report")
     r.set_defaults(func=_cmd_run)
+    rp = sub.add_parser("report")
+    rp.add_argument("run_dir")
+    rp.add_argument("--out")
+    rp.set_defaults(func=_cmd_report)
     args = ap.parse_args(argv)
     return args.func(args)
 

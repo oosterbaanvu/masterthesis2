@@ -73,7 +73,8 @@ so the earlier results refer to the same bytes **[ours]**.
   reproducible, semantically correct, intended = realised count). Note: ×10 on BILL_AMT1 leaves 83% of
   injected values inside the reference 0.05–99.95% envelope; many realistic errors are *not* trivially
   out of range.
-- **Detector fit:** CDC PASS/CONDITIONAL (rare codes cannot be flagged at c = 0.999); Isolation Forest PASS
+- **Detector fit:** CDC CONDITIONAL (with ~1,000 calibration rows most categorical labels are below the 999
+  examples that c = 0.999 needs, so flags on categorical columns are unreliable; ranking works); Isolation Forest PASS
   (row level). See `method_compatibility.md`.
 - **Risks:** no time axis between rows (random splits only); a single 2005 snapshot; heavy-tailed amounts.
   Bias risk: scale errors favour statistical controls, code errors favour domain rules – the catalog
@@ -120,10 +121,11 @@ so the earlier results refer to the same bytes **[ours]**.
   checks), 322 are representation-only (same time, different notation) and **2,196 are real value
   conflicts**.
 - **Detector compatibility [ours]:** Raha **PASS** (P = 0.883, R = 0.681, F1 = 0.769, one seed, 20 labelled
-  tuples). CDC on the typed table with a leakage-free split by flight: **AUC 0.49–0.52 on real value
+  tuples). CDC on the typed table with a leakage-free split by flight: **AUC ≈ 0.5 on real value
   errors** (chance), because the errors are disagreements *between* rows for the same flight while CDC
   models dependencies *within* a row and cannot know unseen flights. A split that puts the same flight in
-  reference and test would leak the clean truth. **Verdict:** valid R2 benchmark for transductive,
+  reference and test would leak the clean truth. (Probe re-run with the final ranking score: AUC 0.47–0.55;
+  0.18 for `sched_dep_time`, which has only 3 value errors in the test flights.) **Verdict:** valid R2 benchmark for transductive,
   redundancy-exploiting detectors; **not** a valid external test of CDC.
 
 ## 6. Raha Tax (R3; out-of-generator probe)

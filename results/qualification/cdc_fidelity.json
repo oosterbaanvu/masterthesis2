@@ -1,0 +1,175 @@
+{
+  "setup": "uci_credit dev partition (split seed 1), 5% ECAR errors per scenario, targets BILL_AMT1 and PAY_0, confidence 0.999",
+  "cdc_hgb (inclusive sets)": {
+    "status": "ok",
+    "wall_seconds": 40.1,
+    "typing_used": null,
+    "metrics": {
+      "BILL_AMT1.scale|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.0,
+        "recall_flag": 0.44666666666666666,
+        "auc": 0.94752208764847
+      },
+      "BILL_AMT1.scale|PAY_0": {
+        "flag_rate_untouched_cells": 0.0
+      },
+      "PAY_0.category_swap|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.0
+      },
+      "PAY_0.category_swap|PAY_0": {
+        "flag_rate_untouched_cells": 0.0,
+        "recall_flag": 0.0,
+        "auc": 0.810850447604002
+      },
+      "untouched|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.0
+      },
+      "untouched|PAY_0": {
+        "flag_rate_untouched_cells": 0.0
+      }
+    },
+    "warnings": []
+  },
+  "cdc_hgb (strict_original sets)": {
+    "status": "ok",
+    "wall_seconds": 7.4,
+    "typing_used": null,
+    "metrics": {
+      "BILL_AMT1.scale|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.0,
+        "recall_flag": 0.44666666666666666,
+        "auc": 0.94752208764847
+      },
+      "BILL_AMT1.scale|PAY_0": {
+        "flag_rate_untouched_cells": 0.19909954977488745
+      },
+      "PAY_0.category_swap|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.0
+      },
+      "PAY_0.category_swap|PAY_0": {
+        "flag_rate_untouched_cells": 0.20221169036334913,
+        "recall_flag": 0.55,
+        "auc": 0.810850447604002
+      },
+      "untouched|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.0
+      },
+      "untouched|PAY_0": {
+        "flag_rate_untouched_cells": 0.2016008004002001
+      }
+    },
+    "warnings": []
+  },
+  "cdc_original (contract typing)": {
+    "status": "ok",
+    "wall_seconds": 73.5,
+    "typing_used": {
+      "categorical": [
+        "SEX",
+        "EDUCATION",
+        "MARRIAGE",
+        "PAY_0",
+        "PAY_2",
+        "PAY_3",
+        "PAY_4",
+        "PAY_5",
+        "PAY_6"
+      ],
+      "numerical": [
+        "LIMIT_BAL",
+        "AGE",
+        "BILL_AMT1",
+        "BILL_AMT2",
+        "BILL_AMT3",
+        "BILL_AMT4",
+        "BILL_AMT5",
+        "BILL_AMT6",
+        "PAY_AMT1",
+        "PAY_AMT2",
+        "PAY_AMT3",
+        "PAY_AMT4",
+        "PAY_AMT5",
+        "PAY_AMT6"
+      ]
+    },
+    "metrics": {
+      "BILL_AMT1.scale|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.000526592943654555,
+        "recall_flag": 0.5466666666666666
+      },
+      "BILL_AMT1.scale|PAY_0": {
+        "flag_rate_untouched_cells": 0.10155077538769385
+      },
+      "PAY_0.category_swap|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.0005002501250625312
+      },
+      "PAY_0.category_swap|PAY_0": {
+        "flag_rate_untouched_cells": 0.09548885378269265,
+        "recall_flag": 0.87
+      },
+      "untouched|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.0005002501250625312
+      },
+      "untouched|PAY_0": {
+        "flag_rate_untouched_cells": 0.0958812739703185
+      }
+    },
+    "warnings": []
+  },
+  "cdc_original (original heuristic typing)": {
+    "status": "ok",
+    "wall_seconds": 71.8,
+    "typing_used": {
+      "categorical": [
+        "LIMIT_BAL",
+        "SEX",
+        "EDUCATION",
+        "MARRIAGE",
+        "AGE",
+        "PAY_0",
+        "PAY_2",
+        "PAY_3",
+        "PAY_4",
+        "PAY_5",
+        "PAY_6"
+      ],
+      "numerical": [
+        "BILL_AMT1",
+        "BILL_AMT2",
+        "BILL_AMT3",
+        "BILL_AMT4",
+        "BILL_AMT5",
+        "BILL_AMT6",
+        "PAY_AMT1",
+        "PAY_AMT2",
+        "PAY_AMT3",
+        "PAY_AMT4",
+        "PAY_AMT5",
+        "PAY_AMT6"
+      ]
+    },
+    "metrics": {
+      "BILL_AMT1.scale|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.00035106196243637,
+        "recall_flag": 0.54
+      },
+      "BILL_AMT1.scale|PAY_0": {
+        "flag_rate_untouched_cells": 0.09187927296981824
+      },
+      "PAY_0.category_swap|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.0005002501250625312
+      },
+      "PAY_0.category_swap|PAY_0": {
+        "flag_rate_untouched_cells": 0.09215376513954714,
+        "recall_flag": 0.88
+      },
+      "untouched|BILL_AMT1": {
+        "flag_rate_untouched_cells": 0.00033350008337502084
+      },
+      "untouched|PAY_0": {
+        "flag_rate_untouched_cells": 0.09204602301150576
+      }
+    },
+    "warnings": []
+  }
+}

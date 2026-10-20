@@ -55,19 +55,30 @@ def main(argv: list[str] | None = None) -> int:
                 bc = bc[bc["tier"] == "deterministic"]
             ev = evaluate_scenario(lg, bc, sc, n_rows, 1, target_column=r["column"], budgets_per_1k=budgets).metrics
             for b in budgets:
-                rows.append({"column": r["column"], "operation": r["operation"], "mechanism": r["mechanism"],
+                rows.append({"column": r["column"], "operation": r["operation"], "op_params": r["op_params"],
+                             "mechanism": r["mechanism"],
                              "mechanism_class": r["mechanism_class"], "seed": r["seed"], "baseline": base, "budget": b,
                              "baseline_recall": ev["recall_B"], "gain": ev[f"incremental_recall_at_{b:g}_per_1k"],
                              "burden": b})  # with a fixed budget the extra review load is k by construction
     df = pd.DataFrame(rows)
+    # self-check: recomputed full-baseline gains must equal the pipeline's own metrics
+    chk = df[df["baseline"] == "full"].merge(
+        prim[["column", "operation", "op_params", "mechanism", "seed"] + [f"incremental_recall_at_{b:g}_per_1k" for b in budgets]],
+        on=["column", "operation", "op_params", "mechanism", "seed"])
+    worst = max(float(np.nanmax(np.abs(g["gain"] - g[f"incremental_recall_at_{b:g}_per_1k"])))
+                for b, g in chk.groupby("budget"))
+    if worst > 1e-9:
+        print(f"ERROR: recomputed gains differ from pipeline metrics by up to {worst:.4f}; stored scores incomplete")
+        return 1
+    print(f"self-check passed (max |difference| = {worst:.2e})")
     rule = DecisionRule(min_gain=0.05, max_extra_alerts_per_1k=np.inf)
     dec = []
-    for (col, op, base, b), g in df.groupby(["column", "operation", "baseline", "budget"]):
+    for (col, op, opp, base, b), g in df.groupby(["column", "operation", "op_params", "baseline", "budget"]):
         pooled = rule.decide(g["gain"].to_numpy(), g["burden"].to_numpy())["decision"]
         per = {mc: rule.decide(gm["gain"].to_numpy(), gm["burden"].to_numpy())["decision"]
                for mc, gm in g.groupby("mechanism_class")}
         ecar = per.get("ECAR")
-        dec.append({"column": col, "operation": op, "baseline": base, "budget": b,
+        dec.append({"column": col, "operation": op, "op_params": opp, "baseline": base, "budget": b,
                     "baseline_recall": g["baseline_recall"].mean(), "gain_mean": g["gain"].mean(),
                     "decision_pooled": pooled, **{f"decision_{k}": v for k, v in per.items()},
                     "ecar_agrees_with_EAR": (ecar == per.get("EAR")) if "EAR" in per else None,
@@ -84,7 +95,7 @@ def main(argv: list[str] | None = None) -> int:
     print(summary.round(3).to_string(index=False))
     flips = dd[(dd["ecar_agrees_with_EAR"] == False) | (dd["ecar_agrees_with_ENAR"] == False)]  # noqa: E712
     print(f"\n{len(flips)} case x baseline x budget combinations where the ECAR decision differs from a held-out mechanism:")
-    show = [c for c in ["column", "operation", "baseline", "budget", "decision_ECAR", "decision_EAR", "decision_ENAR", "gain_mean"] if c in flips]
+    show = [c for c in ["column", "operation", "op_params", "baseline", "budget", "decision_ECAR", "decision_EAR", "decision_ENAR", "gain_mean"] if c in flips]
     print(flips[show].round(3).to_string(index=False))
     if args.out:
         dd.to_csv(args.out, index=False)

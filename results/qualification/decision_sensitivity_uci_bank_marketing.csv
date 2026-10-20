@@ -1,0 +1,61 @@
+column,operation,op_params,baseline,budget,baseline_recall,gain_mean,decision_pooled,decision_EAR,decision_ECAR,decision_ENAR,ecar_agrees_with_EAR,ecar_agrees_with_ENAR
+age,plausible_substitution,{},deterministic,10.0,0.0,0.013719512195121953,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+age,plausible_substitution,{},deterministic,25.0,0.0,0.04268292682926829,INSUFFICIENT_EVIDENCE,DO_NOT_ADOPT,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,False,True
+age,plausible_substitution,{},deterministic,50.0,0.0,0.04725609756097561,INSUFFICIENT_EVIDENCE,DO_NOT_ADOPT,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,False,True
+age,plausible_substitution,{},full,10.0,0.0,0.035060975609756094,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,INSUFFICIENT_EVIDENCE,True,False
+age,plausible_substitution,{},full,25.0,0.0,0.04268292682926829,INSUFFICIENT_EVIDENCE,DO_NOT_ADOPT,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,False,True
+age,plausible_substitution,{},full,50.0,0.0,0.04725609756097561,INSUFFICIENT_EVIDENCE,DO_NOT_ADOPT,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,False,True
+campaign,plausible_substitution,{},deterministic,10.0,0.0,0.001524390243902439,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+campaign,plausible_substitution,{},deterministic,25.0,0.0,0.004573170731707318,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+campaign,plausible_substitution,{},deterministic,50.0,0.0,0.025914634146341466,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+campaign,plausible_substitution,{},full,10.0,0.0,0.001524390243902439,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+campaign,plausible_substitution,{},full,25.0,0.0,0.004573170731707318,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+campaign,plausible_substitution,{},full,50.0,0.0,0.028963414634146343,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,digit_transposition,{},deterministic,10.0,0.0,0.004573170731707318,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,digit_transposition,{},deterministic,25.0,0.0,0.007621951219512195,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,digit_transposition,{},deterministic,50.0,0.0,0.010670731707317072,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,digit_transposition,{},full,10.0,0.004573170731707318,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,digit_transposition,{},full,25.0,0.004573170731707318,0.003048780487804878,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,digit_transposition,{},full,50.0,0.004573170731707318,0.006097560975609756,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,scale,"{""factor"": 0.0166667}",deterministic,10.0,0.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,scale,"{""factor"": 0.0166667}",deterministic,25.0,0.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,scale,"{""factor"": 0.0166667}",deterministic,50.0,0.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,scale,"{""factor"": 0.0166667}",full,10.0,0.6554878048780488,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,scale,"{""factor"": 0.0166667}",full,25.0,0.6554878048780488,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+duration,scale,"{""factor"": 0.0166667}",full,50.0,0.6554878048780488,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+education,category_swap,"{""weighing"": ""frequency""}",deterministic,10.0,0.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+education,category_swap,"{""weighing"": ""frequency""}",deterministic,25.0,0.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+education,category_swap,"{""weighing"": ""frequency""}",deterministic,50.0,0.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+education,category_swap,"{""weighing"": ""frequency""}",full,10.0,0.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+education,category_swap,"{""weighing"": ""frequency""}",full,25.0,0.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+education,category_swap,"{""weighing"": ""frequency""}",full,50.0,0.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+euribor3m,scale,"{""factor"": 0.01}",deterministic,10.0,0.0,0.004573170731707318,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+euribor3m,scale,"{""factor"": 0.01}",deterministic,25.0,0.0,0.6402439024390244,ADOPT,ADOPT,ADOPT,INSUFFICIENT_EVIDENCE,True,False
+euribor3m,scale,"{""factor"": 0.01}",deterministic,50.0,0.0,0.6432926829268293,ADOPT,ADOPT,ADOPT,INSUFFICIENT_EVIDENCE,True,False
+euribor3m,scale,"{""factor"": 0.01}",full,10.0,1.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+euribor3m,scale,"{""factor"": 0.01}",full,25.0,1.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+euribor3m,scale,"{""factor"": 0.01}",full,50.0,1.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+housing,category_swap,"{""weighing"": ""frequency""}",deterministic,10.0,0.0,0.07164634146341463,ADOPT,ADOPT,ADOPT,INSUFFICIENT_EVIDENCE,True,False
+housing,category_swap,"{""weighing"": ""frequency""}",deterministic,25.0,0.0,0.07164634146341463,ADOPT,ADOPT,ADOPT,INSUFFICIENT_EVIDENCE,True,False
+housing,category_swap,"{""weighing"": ""frequency""}",deterministic,50.0,0.0,0.07469512195121951,ADOPT,ADOPT,ADOPT,ADOPT,True,True
+housing,category_swap,"{""weighing"": ""frequency""}",full,10.0,0.0,0.07164634146341463,ADOPT,ADOPT,ADOPT,INSUFFICIENT_EVIDENCE,True,False
+housing,category_swap,"{""weighing"": ""frequency""}",full,25.0,0.0,0.07164634146341463,ADOPT,ADOPT,ADOPT,INSUFFICIENT_EVIDENCE,True,False
+housing,category_swap,"{""weighing"": ""frequency""}",full,50.0,0.0,0.07469512195121951,ADOPT,ADOPT,ADOPT,ADOPT,True,True
+job,category_swap,"{""weighing"": ""frequency""}",deterministic,10.0,0.0,0.019817073170731708,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+job,category_swap,"{""weighing"": ""frequency""}",deterministic,25.0,0.0,0.04573170731707317,INSUFFICIENT_EVIDENCE,DO_NOT_ADOPT,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,False,True
+job,category_swap,"{""weighing"": ""frequency""}",deterministic,50.0,0.0,0.0625,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,True,True
+job,category_swap,"{""weighing"": ""frequency""}",full,10.0,0.0,0.019817073170731708,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+job,category_swap,"{""weighing"": ""frequency""}",full,25.0,0.0,0.04573170731707317,INSUFFICIENT_EVIDENCE,DO_NOT_ADOPT,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,False,True
+job,category_swap,"{""weighing"": ""frequency""}",full,50.0,0.0,0.0625,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,INSUFFICIENT_EVIDENCE,True,True
+job,code_remap,{},deterministic,10.0,0.0,0.010670731707317072,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+job,code_remap,{},deterministic,25.0,0.0,0.07317073170731707,INSUFFICIENT_EVIDENCE,ADOPT,ADOPT,INSUFFICIENT_EVIDENCE,True,False
+job,code_remap,{},deterministic,50.0,0.0,0.12652439024390244,INSUFFICIENT_EVIDENCE,ADOPT,ADOPT,INSUFFICIENT_EVIDENCE,True,False
+job,code_remap,{},full,10.0,0.0,0.010670731707317072,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+job,code_remap,{},full,25.0,0.0,0.08384146341463415,INSUFFICIENT_EVIDENCE,ADOPT,ADOPT,INSUFFICIENT_EVIDENCE,True,False
+job,code_remap,{},full,50.0,0.0,0.12652439024390244,INSUFFICIENT_EVIDENCE,ADOPT,ADOPT,INSUFFICIENT_EVIDENCE,True,False
+month,category_swap,"{""weighing"": ""frequency""}",deterministic,10.0,0.0,0.9542682926829268,ADOPT,ADOPT,ADOPT,ADOPT,True,True
+month,category_swap,"{""weighing"": ""frequency""}",deterministic,25.0,0.0,1.0,ADOPT,ADOPT,ADOPT,ADOPT,True,True
+month,category_swap,"{""weighing"": ""frequency""}",deterministic,50.0,0.0,1.0,ADOPT,ADOPT,ADOPT,ADOPT,True,True
+month,category_swap,"{""weighing"": ""frequency""}",full,10.0,1.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+month,category_swap,"{""weighing"": ""frequency""}",full,25.0,1.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True
+month,category_swap,"{""weighing"": ""frequency""}",full,50.0,1.0,0.0,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,DO_NOT_ADOPT,True,True

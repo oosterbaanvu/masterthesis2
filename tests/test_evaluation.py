@@ -29,3 +29,18 @@ def test_decision_rule():
 def test_bootstrap_ci_contains_mean():
     m, lo, hi = bootstrap_ci(np.array([0.1, 0.2, 0.3, 0.4]))
     assert lo <= m <= hi
+
+
+def test_row_level_metrics_aggregate_cells_without_inventing_cells():
+    from dq_framework.evaluation import evaluate_rows
+
+    log = pd.DataFrame({"_row_id": [1, 2], "column": ["a", "b"]})
+    base = pd.DataFrame({"_row_id": [1], "column": ["c"], "tier": ["statistical"]})  # other column, same record
+    det = pd.DataFrame({"_row_id": [2, 2, 5], "column": [None, None, None], "score": [0.9, 0.1, 0.8],
+                        "flag": [True, False, True]})
+    m = evaluate_rows(log, base, det, n_rows=1000, budgets_per_1k=(1.0,))
+    assert m["row_recall_B"] == 0.5          # record 1 alerted via another column
+    assert m["row_recall_L"] == 0.5          # record 2
+    assert m["row_incremental_recall"] == 0.5
+    assert m["row_extra_alerts_untouched_per_1k"] == 1.0  # record 5
+    assert m["row_incremental_recall_at_1_per_1k"] == 0.5  # top non-B record is record 2

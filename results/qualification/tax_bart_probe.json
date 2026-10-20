@@ -1,0 +1,62 @@
+{
+  "n_reference": 20000,
+  "n_test": 10000,
+  "per_column": {
+    "state": {
+      "bart_errors_in_test": 34,
+      "bart_errors_unparseable": 0,
+      "auc_bart": 0.9998553906812575,
+      "recall_flag_bart": 1.0,
+      "auc_ours_mean": 1.0,
+      "auc_ours_range": [
+        1.0,
+        1.0
+      ],
+      "our_operation": "category_swap"
+    },
+    "marital_status": {
+      "bart_errors_in_test": 10,
+      "bart_errors_unparseable": 0,
+      "auc_bart": 1.0,
+      "recall_flag_bart": 1.0,
+      "auc_ours_mean": 0.9695367003367004,
+      "auc_ours_range": [
+        0.9639166666666666,
+        0.9743318181818181
+      ],
+      "our_operation": "category_swap"
+    },
+    "has_child": {
+      "bart_errors_in_test": 10,
+      "bart_errors_unparseable": 0,
+      "auc_bart": 1.0,
+      "recall_flag_bart": 1.0,
+      "auc_ours_mean": 0.9694878787878789,
+      "auc_ours_range": [
+        0.963299494949495,
+        0.9728888888888889
+      ],
+      "our_operation": "category_swap"
+    },
+    "single_exemp": {
+      "bart_errors_in_test": 17,
+      "bart_errors_unparseable": 17,
+      "auc_ours_mean": 0.7063016835016835,
+      "auc_ours_range": [
+        0.6851757575757575,
+        0.728159595959596
+      ],
+      "our_operation": "plausible_substitution"
+    },
+    "child_exemp": {
+      "bart_errors_in_test": 5,
+      "bart_errors_unparseable": 5,
+      "auc_ours_mean": 0.693026430976431,
+      "auc_ours_range": [
+        0.6552984848484847,
+        0.7401434343434343
+      ],
+      "our_operation": "plausible_substitution"
+    }
+  }
+}

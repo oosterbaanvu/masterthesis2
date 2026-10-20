@@ -28,6 +28,14 @@ Deviations from the original (documented in docs/method_compatibility.md):
    standard split-conformal definition. The original uses s < q_hat; with tied
    tree-model probabilities this excludes labels whose score equals q_hat and
    inflates alerts on untouched cells (observed: 12-43% of PAY_x cells at c = 0.999).
+4b. Ranking score (default ``rank_score='normalized_residual'``): conformal p-value of
+   |y - median| / (q_hi - q_lo). The CQR score measures distance to the *interval edge*;
+   for zero-inflated or multimodal amounts the interval spans several modes and values in
+   its middle (often wrong) look more conforming than correct values on its edge
+   (observed: target-column AUC 0.26-0.44 for scaling/substitution errors in payment and
+   exemption columns). On dev scenarios the normalised residual raised the mean target-column
+   AUC from 0.61 to 0.75 (results/qualification/cdc_rank_score_comparison.csv); CQR remains
+   better for shrinking errors and sign flips. Flags always use the CQR interval as in the original.
 5. Empty prediction sets are treated as inliers, as in the original experiments
    (``empty_pred_sets_are_inliers=True`` in scripts/run_experiment.py).
 """
@@ -70,6 +78,11 @@ def _q_hat(scores: np.ndarray, confidence: float) -> float | None:
     return float(np.quantile(scores, q, method="higher"))
 
 
+def _norm_residual(pred: np.ndarray, y: np.ndarray) -> np.ndarray:
+    """|y - predicted median| / predicted interval width (a normalised-residual nonconformity score)."""
+    return np.abs(y - pred[:, 1]) / np.maximum(pred[:, 2] - pred[:, 0], 1e-9)
+
+
 def _p_values(cal_sorted: np.ndarray, s: np.ndarray) -> np.ndarray:
     """Conformal p-value p = (1 + #{cal >= s}) / (n + 1) for each test score s."""
     n = len(cal_sorted)
@@ -83,7 +96,9 @@ class ConformalDataCleaningHGB(Detector):
     supervision = "reference_data"
     limitations = [
         "Assumes the reference partition is (mostly) error-free; errors in it widen intervals.",
-        "Mondrian calibration: labels with few calibration examples get wide sets and are rarely flagged.",
+        "Class-conditional (Mondrian) calibration: for labels with n < 1/(1-c) calibration examples the threshold is the "
+        "calibration maximum, so genuine values of rare labels are alerted at about 1/(n+1) and swaps into them are rarely "
+        "flagged.",
         "Re-implementation with a different base learner than the published experiments.",
     ]
 
@@ -98,10 +113,14 @@ class ConformalDataCleaningHGB(Detector):
         target_columns: list[str] | None = None,
         base_quantile: float | None = None,
         set_rule: str = "inclusive",
+        rank_score: str = "normalized_residual",
     ) -> None:
+        if rank_score not in ("cqr", "normalized_residual"):
+            raise ValueError("rank_score must be 'cqr' or 'normalized_residual'")
         if set_rule not in ("inclusive", "strict_original"):
             raise ValueError("set_rule must be 'inclusive' or 'strict_original'")
         super().__init__(
+            rank_score=rank_score,
             set_rule=set_rule,
             base_quantile=base_quantile,
             confidence=confidence,
@@ -123,15 +142,20 @@ class ConformalDataCleaningHGB(Detector):
         if len(contract.columns) < 2:
             return Compatibility(INCOMPATIBLE, ["needs >= 2 columns to predict a column from the others"])
         verdict = PASS
+        need = int(np.ceil(1 / (1 - self.config["confidence"]))) - 1  # per-label calibration size for the nominal level
         for c in contract.categorical_columns:
             vc = reference[c].value_counts()
             k = len(vc)
             if k > 200:
                 return Compatibility(INCOMPATIBLE, [f"{c}: {k} categories (too many for per-class calibration)"])
             exp_cal = vc / n * cal
-            rare = int((exp_cal < 1 / (1 - self.config["confidence"]) / 10).sum())
-            if rare:
-                reasons.append(f"{c}: {rare} of {k} labels expected to have too few calibration examples to ever be flagged")
+            small = exp_cal[exp_cal < need]
+            if len(small):
+                worst = small.idxmin()
+                reasons.append(
+                    f"{c}: {len(small)} of {k} labels have fewer than {need} expected calibration examples; for them the "
+                    f"alert rate on genuine values degrades to about 1/(n+1) (e.g. '{worst}': n≈{small.min():.0f})"
+                )
                 verdict = CONDITIONAL
         miss = reference[contract.column_names].isna().mean()
         if (miss > 0).any():
@@ -202,7 +226,8 @@ class ConformalDataCleaningHGB(Detector):
                     pred = np.column_stack([r.predict(Xcal) for r in regs])
                     ycal = cal[target].astype("float64").to_numpy()
                     s = np.maximum(pred[:, 0] - ycal, ycal - pred[:, 2])
-                    self.models_[target] = {"kind": "num", "models": regs, "cal": np.sort(s),
+                    r_norm = _norm_residual(pred, ycal)
+                    self.models_[target] = {"kind": "num", "models": regs, "cal": np.sort(s), "cal_resid": np.sort(r_norm),
                                             "qhat": _q_hat(s, cfg["confidence"])}
         self.fit_seconds_ = time.perf_counter() - t0
         return self
@@ -221,10 +246,14 @@ class ConformalDataCleaningHGB(Detector):
                 pred = np.column_stack([r.predict(X) for r in m["models"]])
                 yv = y.astype("float64").to_numpy()
                 s = np.maximum(pred[:, 0] - yv, yv - pred[:, 2])
-                p = _p_values(m["cal"], s)
-                # tie-break among equal p-values by the nonconformity relative to the predicted interval width
                 width = np.maximum(pred[:, 2] - pred[:, 0], 1e-9)
-                score = 1.0 - p + TIE_EPS * (1.0 - np.exp(-np.maximum(s / width, 0.0)))
+                if self.config["rank_score"] == "cqr":
+                    p = _p_values(m["cal"], s)
+                    # tie-break among equal p-values by the nonconformity relative to the predicted interval width
+                    score = 1.0 - p + TIE_EPS * (1.0 - np.exp(-np.maximum(s / width, 0.0)))
+                else:
+                    r_norm = _norm_residual(pred, yv)
+                    score = 1.0 - _p_values(m["cal_resid"], r_norm) + TIE_EPS * (1.0 - np.exp(-r_norm))
                 flag = (yv < pred[:, 0] - m["qhat"]) | (yv > pred[:, 2] + m["qhat"])
             else:
                 proba = m["model"].predict_proba(X)

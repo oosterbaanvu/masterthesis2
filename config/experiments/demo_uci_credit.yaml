@@ -12,5 +12,5 @@ scenarios:
   mechanisms: [soft_ecar, soft_ear, soft_enar, tab_err_enar]
 detector:
   name: cdc_hgb
-  params: {confidence: 0.999, max_iter: 100, seed: 0}
+  params: {confidence: 0.999, max_iter: 100, seed: 0, rank_score: normalized_residual}
 budgets_per_1k: [5, 10, 25, 50]

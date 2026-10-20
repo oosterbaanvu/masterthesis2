@@ -110,16 +110,22 @@ def render(run: dict[str, Any], rule: DecisionRule | None = None, title: str | N
     out.append(_table(bym))
     out.append("\n## Adoption indication under the pre-registered rule\n")
     out.append(
-        f"Rule: ADOPT if the lower 95% bootstrap bound of `{rule.metric}` ≥ {rule.min_gain} and the extra alert burden "
-        f"≤ {rule.max_extra_alerts_per_1k} per 1,000 rows; DO_NOT_ADOPT if the upper bound < {rule.min_gain} or the burden "
-        f"is exceeded; otherwise INSUFFICIENT_EVIDENCE. Computed per error case over seeds and mechanisms "
+        f"Rule: ADOPT if the lower 95% bootstrap bound of `{rule.metric}` ≥ {rule.min_gain} and the extra review load "
+        f"≤ {rule.max_extra_alerts_per_1k} per 1,000 rows (for a budgeted metric the load equals the budget); DO_NOT_ADOPT "
+        f"if the upper bound < {rule.min_gain} or the load is exceeded; otherwise INSUFFICIENT_EVIDENCE. Computed per error "
+        f"case (column, operation, parameters) over seeds and mechanisms "
         f"(n is small in a demonstration run; this is an indication, not a confirmatory result).\n\n"
     )
     rows = []
     prim = sc[sc["tag"] == "primary"]
-    for (col, op), g in prim.groupby(["column", "operation"]):
-        d = rule.decide(g[rule.metric].to_numpy(), g[burden_col].to_numpy() if burden_col in g else np.array([]))
-        rows.append({"column": col, "operation": op, "n": d["n"], f"{rule.metric} mean": d["gain_mean"],
+    for (col, op, opp), g in prim.groupby(["column", "operation", "op_params"]):
+        if "_at_" in rule.metric:  # fixed review budget: the extra review load is k by construction
+            k = float(rule.metric.split("_at_")[1].split("_per_1k")[0])
+            burdens = np.full(len(g), k)
+        else:
+            burdens = g[burden_col].to_numpy() if burden_col in g else np.array([])
+        d = rule.decide(g[rule.metric].to_numpy(), burdens)
+        rows.append({"column": col, "operation": op, "params": opp, "n": d["n"], f"{rule.metric} mean": d["gain_mean"],
                      "CI low": d["gain_ci"][0], "CI high": d["gain_ci"][1], "decision": d["decision"]})
     out.append(_table(pd.DataFrame(rows)))
     if len(prim):
@@ -140,3 +146,16 @@ def write(run: dict[str, Any], path: Path, **kw: Any) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(render(run, **kw), encoding="utf-8")
     return path
+
+
+def load_run(out_dir: Path) -> dict[str, Any]:
+    """Load a finished run directory into the structure ``render`` expects."""
+    out_dir = Path(out_dir)
+    det_burden = out_dir / "untouched_detector_burden.csv"
+    return {
+        "out_dir": out_dir,
+        "manifest": json.loads((out_dir / "manifest.json").read_text()),
+        "metrics": pd.read_csv(out_dir / "scenario_metrics.csv"),
+        "burden_rules": pd.read_csv(out_dir / "untouched_rule_burden.csv"),
+        "burden_detector": pd.read_csv(det_burden) if det_burden.exists() else None,
+    }

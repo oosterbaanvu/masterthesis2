@@ -43,8 +43,18 @@ python scripts/validate_injection.py uci_credit          # validate every scenar
 dqf run config/experiments/demo_uci_credit.yaml --report reports/demo_uci_credit.md
 dqf run config/experiments/demo_uci_bank_marketing.yaml --report reports/demo_uci_bank_marketing.md
 
+dqf report results/runs/<run_dir> --out reports/x.md     # re-render a report from a finished run
+
+python scripts/qualify_detectors.py                      # detector fidelity, seed variance, compatibility matrix
+python scripts/compare_rank_scores.py                    # CDC ranking-score comparison (dev data)
+python scripts/probe_flights_typed.py                    # R2 probe: CDC on real Flights errors
+python scripts/probe_tax_bart.py                         # out-of-generator probe on BART errors (Tax)
+python scripts/analyse_decision_sensitivity.py results/runs/<run_dir>   # decisions vs baseline/budget/mechanism
+
 python -m pytest -q                     # unit + dbt integration tests (+ data tests when data is present)
 ```
+
+Set `OMP_NUM_THREADS` when running several scoring jobs at the same time.
 
 Isolated environments for the *original* detector implementations (only needed for fidelity checks):
 

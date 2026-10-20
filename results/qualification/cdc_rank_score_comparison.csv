@@ -1,0 +1,103 @@
+dataset,column,operation,params,seed,rank_score,auc
+uci_credit,BILL_AMT1,scale,{'factor': 10},101,cqr,0.7546614451743304
+uci_credit,BILL_AMT1,scale,{'factor': 10},101,normalized_residual,0.9583515804839705
+uci_credit,BILL_AMT1,scale,{'factor': 10},202,cqr,0.8587614395598225
+uci_credit,BILL_AMT1,scale,{'factor': 10},202,normalized_residual,0.9469316714389984
+uci_credit,BILL_AMT1,scale,{'factor': 10},303,cqr,0.8071486721688844
+uci_credit,BILL_AMT1,scale,{'factor': 10},303,normalized_residual,0.949298186513952
+uci_credit,BILL_AMT1,scale,{'factor': 0.001},101,cqr,0.9744427600920779
+uci_credit,BILL_AMT1,scale,{'factor': 0.001},101,normalized_residual,0.8268850710235247
+uci_credit,BILL_AMT1,scale,{'factor': 0.001},202,cqr,0.9819297063612374
+uci_credit,BILL_AMT1,scale,{'factor': 0.001},202,normalized_residual,0.8566616136095672
+uci_credit,BILL_AMT1,scale,{'factor': 0.001},303,cqr,0.9799323451799451
+uci_credit,BILL_AMT1,scale,{'factor': 0.001},303,normalized_residual,0.8351945426983325
+uci_credit,PAY_AMT1,scale,{'factor': 10},101,cqr,0.20870389085396662
+uci_credit,PAY_AMT1,scale,{'factor': 10},101,normalized_residual,0.9639885464039077
+uci_credit,PAY_AMT1,scale,{'factor': 10},202,cqr,0.2102324406265791
+uci_credit,PAY_AMT1,scale,{'factor': 10},202,normalized_residual,0.9931222278367301
+uci_credit,PAY_AMT1,scale,{'factor': 10},303,cqr,0.13020464881253158
+uci_credit,PAY_AMT1,scale,{'factor': 10},303,normalized_residual,0.970725955869968
+uci_credit,BILL_AMT1,sign_flip,{},101,cqr,0.9916694739206109
+uci_credit,BILL_AMT1,sign_flip,{},101,normalized_residual,0.9021475492673068
+uci_credit,BILL_AMT1,sign_flip,{},202,cqr,0.9968011341305933
+uci_credit,BILL_AMT1,sign_flip,{},202,normalized_residual,0.9000224580315536
+uci_credit,BILL_AMT1,sign_flip,{},303,cqr,0.9928302734265342
+uci_credit,BILL_AMT1,sign_flip,{},303,normalized_residual,0.894994666217506
+uci_credit,BILL_AMT1,digit_transposition,{},101,cqr,0.511196732356409
+uci_credit,BILL_AMT1,digit_transposition,{},101,normalized_residual,0.6486665543765089
+uci_credit,BILL_AMT1,digit_transposition,{},202,cqr,0.45260513166020994
+uci_credit,BILL_AMT1,digit_transposition,{},202,normalized_residual,0.6124108696872719
+uci_credit,BILL_AMT1,digit_transposition,{},303,cqr,0.45399191510864073
+uci_credit,BILL_AMT1,digit_transposition,{},303,normalized_residual,0.5722671382853293
+uci_credit,PAY_AMT1,digit_transposition,{},101,cqr,0.343164336645893
+uci_credit,PAY_AMT1,digit_transposition,{},101,normalized_residual,0.6667059682218854
+uci_credit,PAY_AMT1,digit_transposition,{},202,cqr,0.3678976475211948
+uci_credit,PAY_AMT1,digit_transposition,{},202,normalized_residual,0.7128179215091797
+uci_credit,PAY_AMT1,digit_transposition,{},303,cqr,0.4369392510246477
+uci_credit,PAY_AMT1,digit_transposition,{},303,normalized_residual,0.6517769917466734
+uci_credit,LIMIT_BAL,digit_transposition,{},101,cqr,0.4652433889169615
+uci_credit,LIMIT_BAL,digit_transposition,{},101,normalized_residual,0.7299674358542474
+uci_credit,LIMIT_BAL,digit_transposition,{},202,cqr,0.5529069114592107
+uci_credit,LIMIT_BAL,digit_transposition,{},202,normalized_residual,0.6999326259053394
+uci_credit,LIMIT_BAL,digit_transposition,{},303,cqr,0.44933046993431025
+uci_credit,LIMIT_BAL,digit_transposition,{},303,normalized_residual,0.6708017517264613
+uci_credit,BILL_AMT1,period_shift,{'source_column': 'BILL_AMT2'},101,cqr,0.5015552186850822
+uci_credit,BILL_AMT1,period_shift,{'source_column': 'BILL_AMT2'},101,normalized_residual,0.47489192072314856
+uci_credit,BILL_AMT1,period_shift,{'source_column': 'BILL_AMT2'},202,cqr,0.46718460501937004
+uci_credit,BILL_AMT1,period_shift,{'source_column': 'BILL_AMT2'},202,normalized_residual,0.46582168322946493
+uci_credit,BILL_AMT1,period_shift,{'source_column': 'BILL_AMT2'},303,cqr,0.4080413789231374
+uci_credit,BILL_AMT1,period_shift,{'source_column': 'BILL_AMT2'},303,normalized_residual,0.4816124866655438
+uci_credit,PAY_AMT1,rounding,{'unit': 1000},101,cqr,0.4698009656953568
+uci_credit,PAY_AMT1,rounding,{'unit': 1000},101,normalized_residual,0.6094885183313682
+uci_credit,PAY_AMT1,rounding,{'unit': 1000},202,cqr,0.47800937622817363
+uci_credit,PAY_AMT1,rounding,{'unit': 1000},202,normalized_residual,0.5843299084835214
+uci_credit,PAY_AMT1,rounding,{'unit': 1000},303,cqr,0.41252035259109543
+uci_credit,PAY_AMT1,rounding,{'unit': 1000},303,normalized_residual,0.5497192746055808
+uci_credit,LIMIT_BAL,plausible_substitution,{},101,cqr,0.5259151647858065
+uci_credit,LIMIT_BAL,plausible_substitution,{},101,normalized_residual,0.7782634327101231
+uci_credit,LIMIT_BAL,plausible_substitution,{},202,cqr,0.5227654258604233
+uci_credit,LIMIT_BAL,plausible_substitution,{},202,normalized_residual,0.737308404918309
+uci_credit,LIMIT_BAL,plausible_substitution,{},303,cqr,0.5394629723204761
+uci_credit,LIMIT_BAL,plausible_substitution,{},303,normalized_residual,0.7409129189826512
+uci_credit,AGE,plausible_substitution,{},101,cqr,0.5732103756105777
+uci_credit,AGE,plausible_substitution,{},101,normalized_residual,0.7388327438100051
+uci_credit,AGE,plausible_substitution,{},202,cqr,0.4869982033574757
+uci_credit,AGE,plausible_substitution,{},202,normalized_residual,0.7348745157486946
+uci_credit,AGE,plausible_substitution,{},303,cqr,0.544247936668351
+uci_credit,AGE,plausible_substitution,{},303,normalized_residual,0.7848239851776991
+uci_credit,BILL_AMT1,plausible_substitution,{},101,cqr,0.5817093369266184
+uci_credit,BILL_AMT1,plausible_substitution,{},101,normalized_residual,0.9130761888720453
+uci_credit,BILL_AMT1,plausible_substitution,{},202,cqr,0.6578406602661278
+uci_credit,BILL_AMT1,plausible_substitution,{},202,normalized_residual,0.8808741788782213
+uci_credit,BILL_AMT1,plausible_substitution,{},303,cqr,0.6344478131491775
+uci_credit,BILL_AMT1,plausible_substitution,{},303,normalized_residual,0.9161332884172702
+uci_bank_marketing,euribor3m,scale,{'factor': 0.01},101,cqr,0.999883343204293
+uci_bank_marketing,euribor3m,scale,{'factor': 0.01},101,normalized_residual,0.9989515844385817
+uci_bank_marketing,euribor3m,scale,{'factor': 0.01},202,cqr,0.9998803520044031
+uci_bank_marketing,euribor3m,scale,{'factor': 0.01},202,normalized_residual,0.9993568920236664
+uci_bank_marketing,euribor3m,scale,{'factor': 0.01},303,cqr,0.9998773608045131
+uci_bank_marketing,euribor3m,scale,{'factor': 0.01},303,normalized_residual,0.99921331442895
+uci_bank_marketing,duration,scale,{'factor': 0.0166667},101,cqr,0.9946420131971738
+uci_bank_marketing,duration,scale,{'factor': 0.0166667},101,normalized_residual,0.7509182983662066
+uci_bank_marketing,duration,scale,{'factor': 0.0166667},202,cqr,0.9952238015757642
+uci_bank_marketing,duration,scale,{'factor': 0.0166667},202,normalized_residual,0.7374758460608888
+uci_bank_marketing,duration,scale,{'factor': 0.0166667},303,cqr,0.9946322917975317
+uci_bank_marketing,duration,scale,{'factor': 0.0166667},303,normalized_residual,0.7475517028900973
+uci_bank_marketing,duration,digit_transposition,{},101,cqr,0.39666226960282847
+uci_bank_marketing,duration,digit_transposition,{},101,normalized_residual,0.6338098314757982
+uci_bank_marketing,duration,digit_transposition,{},202,cqr,0.40527692528580916
+uci_bank_marketing,duration,digit_transposition,{},202,normalized_residual,0.6058017313064963
+uci_bank_marketing,duration,digit_transposition,{},303,cqr,0.4269788282871791
+uci_bank_marketing,duration,digit_transposition,{},303,normalized_residual,0.5771385583613011
+uci_bank_marketing,age,plausible_substitution,{},101,cqr,0.5576643514779519
+uci_bank_marketing,age,plausible_substitution,{},101,normalized_residual,0.7977904006413132
+uci_bank_marketing,age,plausible_substitution,{},202,cqr,0.5499919237602973
+uci_bank_marketing,age,plausible_substitution,{},202,normalized_residual,0.777375461392583
+uci_bank_marketing,age,plausible_substitution,{},303,cqr,0.6215459119271105
+uci_bank_marketing,age,plausible_substitution,{},303,normalized_residual,0.7993503113839084
+uci_bank_marketing,campaign,plausible_substitution,{},101,cqr,0.467164103208361
+uci_bank_marketing,campaign,plausible_substitution,{},101,normalized_residual,0.5581444390602847
+uci_bank_marketing,campaign,plausible_substitution,{},202,cqr,0.4279404990517896
+uci_bank_marketing,campaign,plausible_substitution,{},202,normalized_residual,0.5566406133156254
+uci_bank_marketing,campaign,plausible_substitution,{},303,cqr,0.46904332453920566
+uci_bank_marketing,campaign,plausible_substitution,{},303,normalized_residual,0.5828539935509731
