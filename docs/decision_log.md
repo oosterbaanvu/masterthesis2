@@ -151,3 +151,61 @@ copied.
   `baf.validation.json`).
 - **Risk:** licence NC-ND (datasheet) vs NC-SA (Kaggle) unresolved; under ND, injected copies may not be
   shared. Kaggle may re-compress the zip, so only the CSV hash is pinned.
+
+### D-17 · Working branch for the comprehensive pilot — final
+- **Decision:** `claude/exciting-ritchie-w1e31t` already contained the default branch
+  `claude/eager-davinci-u8fn78` plus one commit (BAF/Kaggle), so it is the newest relevant code; the pilot is
+  developed on it (the session's designated branch). Nothing is merged into the default branch.
+- **Evidence:** `git log origin/claude/eager-davinci-u8fn78..HEAD` = 1 commit, reverse = 0.
+
+### D-18 · Additional cell-level candidates — provisional
+- **Decision:** qualify dBoost (re-implemented clean-room; GPL original run only as a child process for
+  fidelity), LUCARIO's numerical/categorical constraints (partial clean-room re-implementation; the replication
+  code has no licence and the paper text could not be read), and REIN's SD/IQR detectors (textbook rules; REIN
+  code is "All Rights Reserved"). ZeroED is blocked (no licence, missing module, LLM requirement). Raha stays a
+  separate few-label track.
+- **Evidence:** `docs/detector_comparison.md`, `docs/sources/detector_benchmark_research_notes.md`; dBoost
+  re-implementation agrees 100 % cell-by-cell with the original on Credit samples.
+- **Risk:** LUCARIO-core is partial and unvalidated against the original; claims about LUCARIO are therefore
+  limited to "LUCARIO-style numerical/categorical constraints".
+
+### D-19 · Metrics for binary detectors — final
+- **Decision:** no ranking score is constructed for binary-only methods. At a fixed review budget they are
+  evaluated by the *expected* incremental recall of reviewing their extra flags in random order
+  (hits × min(1, k / n_extra_flags)); scored methods additionally get ranked dR@k. Selection utility = ranked
+  dR@k for scored, flag dR@k for binary methods.
+
+### D-20 · Pilot partitions — provisional (supervisor review)
+- **Decision:** the split-seed-1 test partition (20 %) is a reserved hold-out that the pilot never reads. The
+  remaining design pool is re-split per pilot seed (11–15) into reference 50 % / selection 25 % / test 25 %
+  (group-aware); Bank Marketing additionally gets one temporal split by `_period` (reference = periods 1–3,
+  selection 4–9, test 10–26 within the pool).
+- **Why:** the brief asks for separate reference / selection / test data and several independent splits;
+  CLAUDE.md reserves test partitions and new split seeds for the confirmatory study. The nested design pool
+  satisfies the first without consuming the seed-1 hold-out. Pilot seeds 11–15 are *nested re-splits of the
+  design pool*, not confirmatory split seeds.
+- **Risk:** confirmatory split seeds 2–5 over the full data will overlap the design pool; the confirmatory
+  study should evaluate on the seed-1 hold-out (or a fresh seed scheme decided with supervisors).
+
+### D-21 · Injection strategies — provisional
+- **Decision:** strategy A (ECAR) and B (rotation over ECAR + contextual + realistic batch-block mechanisms)
+  share cases, rates, rows and scenario counts; a held-out family of cases and mechanism settings is used by
+  neither (`docs/injection_strategies.md`).
+
+### D-22 · Detector configurations — final for the pilot
+- **Decision:** published defaults / suggested values only, fixed before any pilot result
+  (`docs/detector_comparison.md` §3). No tuning on pilot results.
+
+### D-23 · Decision rule — provisional
+- **Decision:** ADOPT if the lower 95 % cluster-bootstrap bound (over error cases) of the selected detector's
+  utility on the selection scenarios ≥ 0.05; DO_NOT_ADOPT if the upper bound < 0.05; otherwise
+  INSUFFICIENT_EVIDENCE. The same rule on the test sets gives the "target decision" for agreement.
+
+### D-24 · Untouched-data alerts — final
+- **Decision:** alerts on untouched cells are reported as alert burden per 1,000 rows; precision w.r.t. injected
+  cells is labelled a lower bound and never called false-positive rate.
+
+### D-25 · BAF excluded from the pilot — provisional (licence)
+- **Decision:** BAF acquisition is verified (Kaggle token available on 2026-10-20) but BAF is excluded from all
+  pilot results: contradictory non-commercial licences (NC-SA vs NC-ND), commercial internship context,
+  CTGAN-synthetic data without DQ labels (`docs/dataset_overview.md`).

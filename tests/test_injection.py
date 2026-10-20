@@ -116,3 +116,47 @@ def test_frequency_weighted_swap_prefers_common_codes(toy_contract, toy_data):
     r_u = inject(batch, Scenario("toy", "status", "category_swap", "soft_ecar", 0.3, 4, {"weighing": "uniform"}),
                  toy_contract, ref)
     assert share_rare < (r_u.log["injected"].astype(str) == rare).mean()
+
+
+def test_ordinal_shift_changes_to_an_observed_neighbour():
+    from dq_framework.injection.operations import OpContext, make_operation
+
+    s = pd.Series(["mar", "may", "jun", "dec", "may"], index=range(5), dtype=object)
+    ctx = OpContext("categorical", pd.Series(["mar", "apr", "may", "jun", "dec"]), pd.DataFrame({"m": s}),
+                    domain=["apr", "dec", "jun", "mar", "may"])
+    op = make_operation("ordinal_shift", order=["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep",
+                                                "oct", "nov", "dec"], step=-1)
+    elig = op.eligible(s, ctx)
+    # mar -> feb (never observed) and dec -> nov (never observed) are not eligible
+    assert elig.tolist() == [False, True, True, False, True]
+    out = op.apply(s, s.index[elig], ctx, seed=0)
+    assert out.tolist() == ["apr", "may", "apr"]
+
+
+@pytest.mark.parametrize("mech,mp", [("tab_err_ear", {"condition_column": "id"}),
+                                     ("soft_ear", {"condition_column": "segment", "segment_values": [2], "strength": 4.0})])
+def test_pilot_block_and_segment_mechanisms_log_only_changed_cells(toy_contract, toy_data, mech, mp):
+    """Realistic pilot mechanisms: a contiguous record block (one upstream file segment) and a segment."""
+    ref, batch = toy_data
+    sc = Scenario("toy", "balance", "scale", mech, 0.05, 3, {"factor": 10}, mp)
+    v = validate(batch, sc, toy_contract, ref)
+    assert v["real_change_all"] and v["no_side_effects"] and v["realised_errors"] == 50
+    r = inject(batch, sc, toy_contract, ref)
+    ids = np.sort(r.log["_row_id"].to_numpy())
+    if mech == "tab_err_ear":
+        # one contiguous window of the sorted id (eligible rows only; here every row is eligible)
+        assert ids[-1] - ids[0] == len(ids) - 1
+    else:
+        seg = batch.set_index("_row_id").loc[ids, "segment"]
+        assert (seg == 2).mean() > 0.8
+
+
+def test_injection_log_counts_only_changed_cells_when_operation_is_a_no_op(toy_contract, toy_data):
+    """plausible_substitution can fail to find a material change; such cells must not be logged."""
+    ref, batch = toy_data
+    b = batch.copy()
+    b["balance"] = 5000.0  # constant column: reference draws within 20 % of 5000 do not count
+    sc = Scenario("toy", "balance", "plausible_substitution", "soft_ecar", 0.05, 1, {"min_rel_diff": 50.0}, {})
+    r = inject(b, sc, toy_contract, ref)
+    assert r.realised == len(r.log) <= r.intended
+    assert (pd.to_numeric(r.log["original"]) != pd.to_numeric(r.log["injected"])).all()

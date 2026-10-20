@@ -81,6 +81,7 @@ detectors:
   cdc: {name: cdc_hgb, params: {confidence: 0.999, max_iter: 100, seed: 0, rank_score: normalized_residual}}
   dboost_gaussian: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5}}
   dboost_histogram: {name: dboost, params: {model: histogram, params: [0.8, 0.2], corr_threshold: 0.5}}
+  dboost_gaussian_text: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5, type_mode: text}}
   dboost_gaussian_batch: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5, fit_on: batch}}
   lucario_core: {name: lucario_core, params: {fit_on: batch}}
   sd_outlier: {name: sd_outlier, params: {n_sd: 3.0, fit_on: batch}}

@@ -1,0 +1,81 @@
+# Feasibility pilot, UCI Bank Marketing (bank-additional-full). NOT the confirmatory protocol.
+# Reserved hold-out: split-seed-1 test partition (never read). The design pool is re-split per pilot seed
+# (random, group-aware) and, as a separate temporal demonstration, by delivery period (_period):
+# earliest periods -> reference, then selection, latest -> test. The temporal split is deterministic, so it is
+# run once (its pilot seed only changes scenario seeds). Fixed before any pilot result was seen (D-20..D-24).
+dataset: uci_bank_marketing
+holdout_seed: 1
+pilot_seeds: [11, 12, 13, 14, 15]
+schemes: [random, temporal]
+temporal_seeds: [11]
+fractions: [0.5, 0.25, 0.25]
+rates: [0.01, 0.02]
+seeds_per_cell: 3
+budgets_per_1k: [10, 25, 50]
+overlap_budget: 25
+
+mechanisms:
+  ecar: {mechanism: soft_ecar, rationale: "errors independent of the data"}
+  ear_telephone: {mechanism: soft_ear, params: {condition_column: contact, segment_values: [telephone], strength: 4.0},
+                  rationale: "errors concentrated in records captured via the telephone-channel system"}
+  enar_high: {mechanism: soft_enar, params: {direction: high, strength: 4.0},
+              categorical_segments: {job: [admin.], education: [university.degree], housing: ["yes"], month: [may]},
+              rationale: "value-dependent errors: long calls / one code mis-mapped"}
+  window_ear_age: {mechanism: tab_err_ear, params: {condition_column: age},
+                   rationale: "tab_err EAR: contiguous window of the sorted client age"}
+  window_enar: {mechanism: tab_err_enar, rationale: "tab_err ENAR: contiguous window of the sorted own value"}
+  period_block: {mechanism: tab_err_ear, params: {condition_column: _period},
+                 rationale: "realistic batch error: one contiguous block of deliveries (one or two monthly files)"}
+  # held-out settings (used by neither strategy)
+  enar_low: {mechanism: soft_enar, params: {direction: low, strength: 4.0},
+             categorical_segments: {marital: [single], loan: ["no"], day_of_week: [mon], contact: [cellular], education: [high.school]},
+             rationale: "held out: value dependence in the other direction / other segments"}
+  ear_previous: {mechanism: soft_ear, params: {condition_column: previous, direction: high, strength: 4.0},
+                 rationale: "held out: errors in previously contacted clients (legacy CRM records)"}
+
+strategies:
+  simple: {mechanisms: [ecar]}
+  diverse: {mechanisms: [ecar, ear_telephone, enar_high, window_ear_age, window_enar, period_block]}
+
+cases:
+  - {id: dur_min, column: duration, operation: scale, params: {factor: 0.0166667}, family: scale}
+  - {id: euribor_frac, column: euribor3m, operation: scale, params: {factor: 0.01}, family: scale}
+  - {id: dur_transp, column: duration, operation: digit_transposition, family: keying}
+  - {id: age_subst, column: age, operation: plausible_substitution, family: substitution}
+  - {id: campaign_subst, column: campaign, operation: plausible_substitution, family: substitution}
+  - {id: job_swap, column: job, operation: category_swap, params: {weighing: frequency}, family: valid_category}
+  - {id: edu_swap, column: education, operation: category_swap, params: {weighing: frequency}, family: valid_category}
+  - {id: housing_swap, column: housing, operation: category_swap, params: {weighing: frequency}, family: valid_category}
+  - {id: month_swap, column: month, operation: category_swap, params: {weighing: frequency}, family: valid_category}
+  - {id: job_remap, column: job, operation: code_remap, family: valid_category}
+  - {id: month_prev, column: month, operation: ordinal_shift,
+     params: {order: [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec], step: -1}, family: shift}
+  - {id: age_missing, column: age, operation: missing, family: sanity, role: sanity}
+  - {id: job_invalid, column: job, operation: invalid_code, params: {code: "n/a"}, family: sanity, role: sanity}
+
+heldout:
+  mechanisms: [ecar, enar_low, ear_previous]
+  cases:
+    - {id: h_marital_swap, column: marital, operation: category_swap, params: {weighing: frequency}, family: valid_category}
+    - {id: h_loan_swap, column: loan, operation: category_swap, params: {weighing: frequency}, family: valid_category}
+    - {id: h_contact_swap, column: contact, operation: category_swap, params: {weighing: frequency}, family: valid_category}
+    - {id: h_edu_remap, column: education, operation: code_remap, family: valid_category}
+    - {id: h_dow_next, column: day_of_week, operation: ordinal_shift, params: {order: [mon, tue, wed, thu, fri], step: 1}, family: shift}
+    - {id: h_age_months, column: age, operation: scale, params: {factor: 12}, family: scale}
+    - {id: h_campaign_x10, column: campaign, operation: scale, params: {factor: 10}, family: scale}
+    - {id: h_dur_round, column: duration, operation: rounding, params: {unit: 60}, family: precision}
+    - {id: h_cci_subst, column: cons.conf.idx, operation: plausible_substitution, family: substitution}
+    - {id: h_previous_subst, column: previous, operation: plausible_substitution, family: substitution}
+
+detectors:
+  cdc: {name: cdc_hgb, params: {confidence: 0.999, max_iter: 100, seed: 0, rank_score: normalized_residual}}
+  dboost_gaussian: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5}}
+  dboost_gaussian_text: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5, type_mode: text}}
+  dboost_histogram: {name: dboost, params: {model: histogram, params: [0.8, 0.2], corr_threshold: 0.5}}
+  dboost_gaussian_batch: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5, fit_on: batch}}
+  lucario_core: {name: lucario_core, params: {fit_on: batch}}
+  sd_outlier: {name: sd_outlier, params: {n_sd: 3.0, fit_on: batch}}
+  iqr_outlier: {name: iqr_outlier, params: {k: 1.5, fit_on: batch}}
+  iforest: {name: iforest_row, params: {n_estimators: 300, max_samples: 1024, reference_alert_rate: 0.01, seed: 0}}
+
+decision: {min_gain: 0.05, n_boot: 2000}

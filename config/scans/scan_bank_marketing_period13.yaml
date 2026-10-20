@@ -1,0 +1,18 @@
+# Operational demonstration: onboard Bank Marketing and analyse a NEW monthly delivery (period 13) as received.
+# No errors are injected; there is no ground truth. History = deliveries 1-9 (May 2008 - early 2009).
+# Rows of the confirmatory hold-out (split seed 1, test) are excluded so the demo never touches them.
+name: scan_bank_marketing_period13
+dataset: uci_bank_marketing
+history: {select: periods, periods: [1, 2, 3, 4, 5, 6, 7, 8, 9]}
+batch: {select: periods, periods: [13]}
+baseline: full
+budget_per_1k: 25
+detectors:
+  cdc: {name: cdc_hgb, params: {confidence: 0.999, max_iter: 100, seed: 0, rank_score: normalized_residual}}
+  dboost_gaussian_text: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5, type_mode: text}}
+  lucario_core: {name: lucario_core, params: {fit_on: batch}}
+  iforest: {name: iforest_row, params: {n_estimators: 300, max_samples: 1024, reference_alert_rate: 0.01, seed: 0}}
+# Offline evidence (produced by scripts/analyse_pilot.py from the pilot replications).
+evidence: results/pilot/detector_evidence.csv
+evidence_scheme: temporal
+decision: {min_gain: 0.05, max_extra_alerts_per_1k: 50, max_shift_ratio: 3.0}

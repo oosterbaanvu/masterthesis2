@@ -109,7 +109,8 @@ def row_metrics(inj: np.ndarray, base: np.ndarray, row_flags: np.ndarray, row_sc
                 budgets_per_1k: tuple[float, ...]) -> dict[str, Any]:
     """Record level: a row is erroneous if it has an injected cell, alerted if the baseline implicates any cell."""
     n_rows = inj.shape[0]
-    ir, br = inj.any(1), base.any(1)
+    ir = inj.any(1)
+    br = base.any(1) if base.ndim == 2 else base.astype(bool)
     n = int(ir.sum())
     m = {"row_n_injected": n, "row_recall_B": float((ir & br).sum() / n) if n else np.nan,
          "row_recall_L": float((ir & row_flags).sum() / n) if n else np.nan,

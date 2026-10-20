@@ -302,3 +302,36 @@ class ConformalDataCleaningHGB(Detector):
             limitations=list(self.limitations),
             environment=environment_info(),
         )
+
+    # ------------------------------------------------------------------ explanation (operational reports)
+    def explain_cells(self, batch: pd.DataFrame, cells: pd.DataFrame) -> pd.Series:
+        """Human-readable reason for selected cells (``_row_id``, ``column``): the model's expectation.
+
+        Numeric: predicted median and the conformal interval used for flags; categorical: the most likely label
+        and the probability of the observed one. Returns a Series aligned with ``cells``.
+        """
+        out = pd.Series(index=cells.index, dtype=object)
+        conf = self.config["confidence"]
+        for target, idx in cells.groupby("column").groups.items():
+            m = self.models_.get(target)
+            if m is None:
+                continue
+            rows = batch.set_index("_row_id").loc[cells.loc[idx, "_row_id"].to_numpy()].reset_index()
+            X = self._features(rows, target)
+            if m["kind"] == "num":
+                pred = np.column_stack([r.predict(X) for r in m["models"]])
+                q = m["qhat"]
+                out.loc[idx] = [f"CDC: predicted median {p[1]:.4g}; conformal interval [{p[0] - q:.4g}, {p[2] + q:.4g}] "
+                                f"(c={conf})" for p in pred]
+            else:
+                proba = m["model"].predict_proba(X)
+                cls = m["classes"]
+                obs = rows[target].astype(object).map(lambda v: str(v) if pd.notna(v) else None)
+                txt = []
+                for pr, o in zip(proba, obs, strict=True):
+                    j = int(np.argmax(pr))
+                    po = pr[cls.index(o)] if o in cls else 0.0
+                    txt.append(f"CDC: most likely '{cls[j]}' (p={pr[j]:.2f}); observed value has p={po:.3f}")
+                out.loc[idx] = txt
+        return out
+

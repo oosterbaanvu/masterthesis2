@@ -1,0 +1,17 @@
+# Operational demonstration: UCI Credit. History = client records with ID <= 15,000; new batch = ID > 25,000
+# (as if a later extract of new accounts arrived). No injection, no ground truth; the confirmatory hold-out
+# rows are excluded.
+name: scan_uci_credit_new_clients
+dataset: uci_credit
+history: {select: row_range, start: 1, end: 15000}
+batch: {select: row_range, start: 25001, end: 30000}
+baseline: full
+budget_per_1k: 25
+detectors:
+  cdc: {name: cdc_hgb, params: {confidence: 0.999, max_iter: 100, seed: 0, rank_score: normalized_residual}}
+  dboost_gaussian_text: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5, type_mode: text}}
+  lucario_core: {name: lucario_core, params: {fit_on: batch}}
+  iforest: {name: iforest_row, params: {n_estimators: 300, max_samples: 1024, reference_alert_rate: 0.01, seed: 0}}
+evidence: results/pilot/detector_evidence.csv
+evidence_scheme: random
+decision: {min_gain: 0.05, max_extra_alerts_per_1k: 50, max_shift_ratio: 3.0}

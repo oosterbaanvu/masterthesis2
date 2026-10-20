@@ -215,3 +215,28 @@ def seed_sensitivity(data: dict[str, pd.DataFrame], budget: float) -> pd.DataFra
     between = (rep_means.groupby(["dataset", "baseline", "detector", "set", "case_id"]).std()
                .groupby(["dataset", "baseline", "detector", "set"]).mean().rename("sd_between_replications"))
     return pd.concat([within, between], axis=1).reset_index()
+
+
+def detector_evidence(data: dict[str, pd.DataFrame], budgets: list[float]) -> pd.DataFrame:
+    """Utility of every cell detector on every set, per replication (case-mean), then mean/CI over replications.
+
+    This is the offline evidence the operational scan uses for its recommendation (test sets only)."""
+    met = data["metrics"]
+    met = met[met["role"].fillna("primary") == "primary"]
+    rows = []
+    for budget in budgets:
+        u = _utility_frame(met, data["detectors"], budget)
+        cm = case_means(u, ["replication", "dataset", "scheme", "baseline", "set", "detector"])
+        rep = cm.groupby(["replication", "dataset", "scheme", "baseline", "set", "detector"])["utility"].mean().reset_index()
+        for key, g in rep.groupby(["dataset", "scheme", "baseline", "set", "detector"]):
+            m, lo, hi = boot_ci(g["utility"].to_numpy())
+            rows.append({**dict(zip(["dataset", "scheme", "baseline", "test_set", "detector"], key, strict=True)),
+                         "budget": budget, "utility": m, "utility_lo": lo, "utility_hi": hi, "n_replications": len(g)})
+    return pd.DataFrame(rows)
+
+
+def statistical_alert_rate(data: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Baseline alert rate on the untouched evaluation partitions (reference value for the scan's shift check)."""
+    b = data["burden"]
+    b = b[b["detector"] == "<baseline>"]
+    return b.groupby(["dataset", "scheme", "partition", "baseline"])["alerts_per_1k"].mean().reset_index()

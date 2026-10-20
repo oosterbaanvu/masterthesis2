@@ -8,6 +8,8 @@
   dqf profile DATASET                  descriptive profile of the analysed table
   dqf run CONFIG.yaml [--report PATH]  end-to-end evaluation run (controls + injection + detector)
   dqf report RUN_DIR [--out PATH]      re-render the Markdown report of a finished run
+  dqf scan CONFIG.yaml [--out DIR]     operational scan of a new batch: controls + detectors + recommendation
+  dqf feedback SCAN_DIR                summarise engineer annotations in SCAN_DIR/feedback.csv
 """
 
 from __future__ import annotations
@@ -88,6 +90,25 @@ def _cmd_report(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_scan(args: argparse.Namespace) -> int:
+    from dq_framework.service.scan import run_scan
+
+    out = run_scan(args.config, Path(args.out) if args.out else None)
+    summ = json.loads((out / "scan_summary.json").read_text())
+    print(f"scan {summ['scan']}: {summ['batch']['rows']} rows, {summ['findings']['total']} findings")
+    for r in summ["recommendations"]:
+        print(f"  {r['detector']:<24} {r['recommendation']}")
+    print(f"report: {out / 'scan_report.md'}")
+    return 0
+
+
+def _cmd_feedback(args: argparse.Namespace) -> int:
+    from dq_framework.service.scan import summarise_feedback
+
+    print(summarise_feedback(Path(args.scan_dir)).to_string(index=False))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="dqf", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -111,6 +132,13 @@ def main(argv: list[str] | None = None) -> int:
     rp.add_argument("run_dir")
     rp.add_argument("--out")
     rp.set_defaults(func=_cmd_report)
+    sc = sub.add_parser("scan")
+    sc.add_argument("config")
+    sc.add_argument("--out")
+    sc.set_defaults(func=_cmd_scan)
+    fb = sub.add_parser("feedback")
+    fb.add_argument("scan_dir")
+    fb.set_defaults(func=_cmd_feedback)
     args = ap.parse_args(argv)
     return args.func(args)
 
