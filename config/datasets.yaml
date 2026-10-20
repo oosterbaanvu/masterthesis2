@@ -200,3 +200,34 @@ datasets:
         bank_months_count: -1
         session_length_in_minutes: -1
         device_distinct_emails_8w: -1
+
+  gmsc:
+    title: "Give Me Some Credit (Kaggle competition, 2011): consumer credit histories, training file"
+    landing_page: https://www.kaggle.com/competitions/GiveMeSomeCredit
+    licence: "UNRESOLVED: Kaggle competition rules must be accepted per account; no open data licence is shown by the API (checked 2026-10-20)"
+    citation: "Kaggle competition 'Give Me Some Credit' (2011), https://www.kaggle.com/competitions/GiveMeSomeCredit (take the exact citation text from the competition page)"
+    version: "Kaggle competition GiveMeSomeCredit; cs-training.csv 7,564,965 bytes per API file listing (2026-10-20)"
+    roles: [controlled_financial]
+    cell_error_ground_truth: false
+    optional: true
+    # Not yet downloadable from this account (HTTP 403 until the competition rules are accepted), so the hash
+    # cannot be pinned yet: the first download reports the observed SHA-256 (status UNPINNED) for a human to pin.
+    pin_pending: true
+    status: "BLOCKED (2026-10-20): competition rules not accepted for the Kaggle account; see docs/dataset_overview.md"
+    acquisition:
+      source: kaggle
+      kaggle_competition: GiveMeSomeCredit
+      instructions: >-
+        Accept the rules at https://www.kaggle.com/competitions/GiveMeSomeCredit/rules with the account of your
+        KAGGLE_API_TOKEN, then run `python scripts/download_datasets.py gmsc` (needs `uv sync --extra kaggle`).
+      files:
+        - name: cs-training.csv
+          url: https://www.kaggle.com/competitions/GiveMeSomeCredit/data
+          path: cs-training.csv
+          sha256: null
+    table:
+      file: cs-training.csv
+      format: csv
+      expected_rows: 150000
+      # column names are verified at first download (contract: config/contracts/gmsc.yaml is a draft until then)
+      target: SeriousDlqin2yrs

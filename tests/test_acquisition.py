@@ -57,8 +57,8 @@ def test_unpinned_hash_is_reported_not_verified(tmp_path, monkeypatch):
 def test_registry_pins_every_automatic_file():
     reg = acquisition.load_registry()
     for key, spec in reg.items():
-        if spec.manual:
-            continue
+        if spec.manual or spec.raw.get("pin_pending"):
+            continue  # pin_pending: never downloaded yet (e.g. blocked); the first download reports the hash to pin
         for f in spec.files:
             assert f.sha256, f"{key}/{f.name} has no pinned archive hash"
             for e in f.extract:
@@ -124,7 +124,23 @@ def test_kaggle_client_error_is_reported_with_cause(tmp_path, monkeypatch):
         acquire_kaggle(_kaggle_spec(), api=Failing())
 
 
-def test_baf_is_optional_and_never_a_required_dataset():
+def test_kaggle_datasets_are_optional_and_never_required():
     reg = acquisition.load_registry()
     assert reg["baf"].optional and reg["baf"].source == "kaggle"
-    assert all(not s.optional for k, s in reg.items() if k != "baf")
+    assert reg["gmsc"].optional and reg["gmsc"].raw["acquisition"]["kaggle_competition"] == "GiveMeSomeCredit"
+    assert all(not s.optional for k, s in reg.items() if k not in ("baf", "gmsc"))
+    assert all(s.source != "kaggle" or s.optional for s in reg.values()), "a login-only source must stay optional"
+
+
+def test_kaggle_competition_403_explains_the_rules_step(tmp_path, monkeypatch):
+    from dq_framework.acquisition.kaggle import acquire_kaggle
+
+    class Forbidden:
+        def competition_download_file(self, *a, **k):
+            raise RuntimeError("403 Client Error: Forbidden for url: https://api.kaggle.com/...DownloadDataFile")
+
+    monkeypatch.setattr(paths, "RAW_DIR", tmp_path / "raw")
+    raw = {"optional": True, "acquisition": {"source": "kaggle", "kaggle_competition": "SomeComp"}}
+    spec = DatasetSpec("cdemo", "cdemo", [FileSpec("train.csv", "https://example.org", path="train.csv")], raw)
+    with pytest.raises(AcquisitionError, match="competitions/SomeComp/rules"):
+        acquire_kaggle(spec, api=Forbidden())

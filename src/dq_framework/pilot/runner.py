@@ -36,7 +36,7 @@ from dq_framework.detectors.registry import make_detector
 from dq_framework.injection import inject
 from dq_framework.pilot import metrics as M
 from dq_framework.pilot.scenarios import PilotScenario, build_all
-from dq_framework.pilot.splits import pilot_split
+from dq_framework.pilot.splits import delivery_split, pilot_split
 
 UNTOUCHED = {"selection": "untouched:selection", "test": "untouched:test"}
 BASELINES = ("deterministic", "full")
@@ -103,12 +103,16 @@ def run_replication(cfg: dict[str, Any], pilot_seed: int, scheme: str = "random"
     contract = load_contract(ds)
     cols = contract.column_names
     df = load_contract_table(ds, contract)
-    part = pilot_split(df, contract, pilot_seed, scheme=scheme, fractions=tuple(cfg.get("fractions", (0.5, 0.25, 0.25))),
-                       holdout_seed=int(cfg.get("holdout_seed", 1)))
+    if scheme == "delivery":  # consecutive deliveries; pilot_seed indexes cfg["deliveries"] (1-based)
+        delivery = cfg["deliveries"][pilot_seed - 1]
+        part = delivery_split(df, contract, delivery, holdout_seed=int(cfg.get("holdout_seed", 1)))
+    else:
+        part = pilot_split(df, contract, pilot_seed, scheme=scheme, fractions=tuple(cfg.get("fractions", (0.5, 0.25, 0.25))),
+                           holdout_seed=int(cfg.get("holdout_seed", 1)), pool_max_rows=cfg.get("pool_max_rows"))
     frames = {p: df[part == p].reset_index(drop=True) for p in ("reference", "selection", "test")}
     ref = frames["reference"]
     grids = {p: _Grid(frames[p], cols) for p in ("selection", "test")}
-    name = f"{ds}-{scheme}-s{pilot_seed}"
+    name = f"{ds}-{scheme}-{'d' if scheme == 'delivery' else 's'}{pilot_seed}"
     out_dir = (out_root or paths.RESULTS_DIR / "runs" / "pilot") / name
     out_dir.mkdir(parents=True, exist_ok=True)
     budgets = tuple(float(b) for b in cfg["budgets_per_1k"])
@@ -299,7 +303,9 @@ def run_replication(cfg: dict[str, Any], pilot_seed: int, scheme: str = "random"
         "replication": name, "dataset": ds, "pilot_seed": pilot_seed, "scheme": scheme, "config": cfg["_path"],
         "framework_version": __version__, "started_utc": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
         "elapsed_s": round(time.perf_counter() - t_start, 1), "injection_seconds": round(inj_seconds, 1),
-        "partitions": {p: len(frames[p]) for p in frames} | {"holdout_excluded": int((part == "holdout").sum())},
+        "partitions": {p: len(frames[p]) for p in frames} | {"holdout_excluded": int((part == "holdout").sum()),
+                                                              "unused": int((part == "unused").sum())},
+        "delivery": cfg["deliveries"][pilot_seed - 1] if scheme == "delivery" else None,
         "n_scenarios": len(live), "n_failed_scenarios": len(failures), "budgets_per_1k": list(budgets),
         "dbt": {"version": ctl.dbt_version, "elapsed_s": round(ctl.elapsed_s, 1),
                 "tests": ctl.tests["status"].value_counts().to_dict()},

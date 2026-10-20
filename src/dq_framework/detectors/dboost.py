@@ -29,7 +29,10 @@ Method (as implemented by the original at the pinned commit)
    is "peaked" if it has 2-16 classes and the largest ratio between consecutive sorted counts exceeds ``jmp``
    with the upper part holding more than ``peak_s`` of the mass; b is flagged if its class holds less than
    ``outlier_s`` of the rows with that value of a. Both fields of the pair are implicated.
-4. *Output:* flagged fields per row - **binary, no score**. No ranking score is constructed here.
+4. *Output:* flagged fields per row - binary in the original. For the Gaussian model this module also returns
+   the model's own test statistic max_f |x_f - mean_f| / sd_f as ``score`` (flag <=> score > t, verified in
+   tests), so it can be evaluated at a review budget like CDC (decision D-27: an extension, not part of the
+   published method). The histogram models have no such statistic and stay binary (``score`` NaN).
 
 Behaviour reproduced on purpose (it changes what dBoost can detect): test rows whose values do not parse with
 the inferred field types (e.g. a non-integer or empty value in an integer field) are skipped by the original
@@ -193,7 +196,7 @@ class DBoost(Detector):
 
     def __init__(self, model: str = "gaussian", params: list[float] | None = None, corr_threshold: float = 0.8,
                  fit_on: str = "reference", skip_unparseable: bool = True, max_fit_rows: int | None = None,
-                 seed: int = 0, explain: bool = False, type_mode: str = "inferred") -> None:
+                 seed: int = 0, explain: bool = False, type_mode: str = "inferred", score: bool = True) -> None:
         if type_mode not in ("inferred", "text"):
             raise ValueError("type_mode must be 'inferred' or 'text'")
         defaults = {"gaussian": [3.0], "histogram": [0.8, 0.2], "partitioned": [5.0, 0.8, 0.2]}
@@ -203,8 +206,12 @@ class DBoost(Detector):
             raise ValueError("fit_on must be 'reference' or 'batch'")
         super().__init__(model=model, params=list(params or defaults[model]), corr_threshold=corr_threshold,
                          fit_on=fit_on, skip_unparseable=skip_unparseable, max_fit_rows=max_fit_rows, seed=seed,
-                         explain=explain, type_mode=type_mode)
+                         explain=explain, type_mode=type_mode, score=score)
         self.fit_scope = fit_on
+        # Gaussian model: score = max over the field's expanded features of |x - mean| / sd, the statistic the
+        # model thresholds (flag <=> score > t, tested). Ranking by it is an extension (decision D-27); the
+        # histogram models have no such statistic and stay binary.
+        self.provides_scores = bool(score and model == "gaussian")
 
     @property
     def label(self) -> str:
@@ -333,12 +340,19 @@ class DBoost(Detector):
             if why:
                 why[c][new] = text
 
+        zmax = {c: np.zeros(n) for c in self._cols} if model == "gaussian" else {}
         if model == "gaussian":
             t = float(self.config["params"][0])
             for (c, j), (mu, sd) in self._stats.items():
                 a = ex[c][1][j]
-                mark(c, np.abs(a - mu) > t * sd, f"dBoost gaussian: '{ex[c][0][j]}' outside mean ± {t:g} sd "
+                dev = np.abs(a - mu)
+                mark(c, dev > t * sd, f"dBoost gaussian: '{ex[c][0][j]}' outside mean ± {t:g} sd "
                      f"[{mu - t * sd:.4g}, {mu + t * sd:.4g}]")
+                # the model's own test statistic; a constant training feature (sd = 0) flags any deviation, so its
+                # z is "infinite" and is represented as 1e6 + deviation to keep an order among such cells
+                with np.errstate(divide="ignore", invalid="ignore"):
+                    z = np.where(sd > 0, dev / sd, np.where(dev > 0, 1e6 + dev, 0.0))
+                zmax[c] = np.maximum(zmax[c], z)
         elif model == "histogram":
             outlier_s = float(self.config["params"][1])
             for (c, j), cnt in self._hist.items():
@@ -370,8 +384,9 @@ class DBoost(Detector):
         frames = []
         sid = sub["_scenario_id"].to_numpy() if "_scenario_id" in sub else np.full(n, "", dtype=object)
         for c in self._cols:
+            col_score = zmax[c] if (zmax and self.provides_scores) else np.nan
             f = pd.DataFrame({"_scenario_id": sid, "_row_id": sub["_row_id"].to_numpy(), "column": c,
-                              "score": np.nan, "flag": flags[c]})
+                              "score": col_score, "flag": flags[c]})
             if why:
                 f["explanation"] = why[c]
             frames.append(f)

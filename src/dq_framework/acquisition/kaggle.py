@@ -107,7 +107,9 @@ def _extract_hashed(downloaded: Path, member: str, dest_part: Path) -> tuple[str
 
 def acquire_kaggle(spec: DatasetSpec, force: bool = False, api: Any = None) -> dict[str, Any]:
     """Download the registry's files of one Kaggle dataset into ``data/raw/<key>/`` (read-only)."""
-    dataset = spec.raw["acquisition"]["kaggle_dataset"]
+    acq = spec.raw["acquisition"]
+    competition = acq.get("kaggle_competition")
+    dataset = competition or acq["kaggle_dataset"]
     todo = [f for f in spec.files if force or not (spec.raw_dir / (f.path or f.name)).exists()]
     records: list[dict[str, Any]] = []
     unpinned: list[str] = []
@@ -119,11 +121,17 @@ def acquire_kaggle(spec: DatasetSpec, force: bool = False, api: Any = None) -> d
         try:
             for f in todo:
                 try:
-                    api.dataset_download_file(dataset, f.name, path=str(staging), force=True, quiet=False)
+                    if competition:
+                        api.competition_download_file(competition, f.name, path=str(staging), force=True, quiet=False)
+                    else:
+                        api.dataset_download_file(dataset, f.name, path=str(staging), force=True, quiet=False)
                 except (Exception, SystemExit) as exc:
+                    cause = likely_cause(exc)
+                    if competition and ("403" in str(exc) or "Forbidden" in str(exc)):
+                        cause = (f"the competition rules are not accepted for this account: log in on kaggle.com, open "
+                                 f"https://www.kaggle.com/competitions/{competition}/rules and accept them, then retry")
                     raise AcquisitionError(
-                        f"Kaggle download of {dataset}/{f.name} failed: {type(exc).__name__}: {exc}. "
-                        f"Likely cause: {likely_cause(exc)}"
+                        f"Kaggle download of {dataset}/{f.name} failed: {type(exc).__name__}: {exc}. Likely cause: {cause}"
                     ) from exc
                 got = sorted(p for p in staging.iterdir() if p.name in (f.name, f.name + ".zip"))
                 if not got:
@@ -142,7 +150,7 @@ def acquire_kaggle(spec: DatasetSpec, force: bool = False, api: Any = None) -> d
                 _make_read_only(dest)
                 records.append({
                     "file": f.name,
-                    "url": f"kaggle://{dataset}/{f.name}",
+                    "url": f"kaggle://{'competitions/' if competition else ''}{dataset}/{f.name}",
                     "archive": downloaded.name if zipfile.is_zipfile(downloaded) else None,
                     "archive_sha256": sha256_file(downloaded),
                     "archive_bytes": downloaded.stat().st_size,

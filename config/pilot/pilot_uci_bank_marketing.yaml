@@ -1,13 +1,19 @@
 # Feasibility pilot, UCI Bank Marketing (bank-additional-full). NOT the confirmatory protocol.
 # Reserved hold-out: split-seed-1 test partition (never read). The design pool is re-split per pilot seed
-# (random, group-aware) and, as a separate temporal demonstration, by delivery period (_period):
-# earliest periods -> reference, then selection, latest -> test. The temporal split is deterministic, so it is
-# run once (its pilot seed only changes scenario seeds). Fixed before any pilot result was seen (D-20..D-24).
+# (random, group-aware) and, separately, cut into consecutive monthly deliveries (scheme "delivery").
 dataset: uci_bank_marketing
 holdout_seed: 1
 pilot_seeds: [11, 12, 13, 14, 15]
-schemes: [random, temporal]
-temporal_seeds: [11]
+schemes: [random, delivery]
+# Consecutive monthly deliveries (periods = _period, 1 = May 2008): history -> next delivery (selection) ->
+# later delivery (test). delivery_seeds index this list. Sets 3 and 4 share periods 11-15 (test of 3 =
+# selection of 4): rolling designs overlap, so delivery sets are not fully independent replications.
+deliveries:
+  - {reference: [1, 2], selection: [3], test: [4]}
+  - {reference: [3, 4], selection: [5, 6], test: [8, 9]}
+  - {reference: [6, 8, 9], selection: [10], test: [11, 12, 13, 14, 15]}
+  - {reference: [9, 10], selection: [11, 12, 13, 14, 15], test: [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]}
+delivery_seeds: [1, 2, 3, 4]
 fractions: [0.5, 0.25, 0.25]
 rates: [0.01, 0.02]
 seeds_per_cell: 3
@@ -67,12 +73,14 @@ heldout:
     - {id: h_cci_subst, column: cons.conf.idx, operation: plausible_substitution, family: substitution}
     - {id: h_previous_subst, column: previous, operation: plausible_substitution, family: substitution}
 
+# Primary analysis (decision D-28): label-free, cell-level detectors that publish a score. dBoost's score is its
+# Gaussian test statistic (D-27). Everything else is secondary.
+primary_detectors: [cdc, dboost_gaussian, dboost_gaussian_text]
 detectors:
   cdc: {name: cdc_hgb, params: {confidence: 0.999, max_iter: 100, seed: 0, rank_score: normalized_residual}}
   dboost_gaussian: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5}}
   dboost_gaussian_text: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5, type_mode: text}}
   dboost_histogram: {name: dboost, params: {model: histogram, params: [0.8, 0.2], corr_threshold: 0.5}}
-  dboost_gaussian_batch: {name: dboost, params: {model: gaussian, params: [3.0], corr_threshold: 0.5, fit_on: batch}}
   lucario_core: {name: lucario_core, params: {fit_on: batch}}
   sd_outlier: {name: sd_outlier, params: {n_sd: 3.0, fit_on: batch}}
   iqr_outlier: {name: iqr_outlier, params: {k: 1.5, fit_on: batch}}

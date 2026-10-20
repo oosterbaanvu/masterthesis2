@@ -31,7 +31,8 @@ def test_unparseable_rows_are_skipped_like_the_original(toy_contract, toy_data):
     out = D.DBoost(model="gaussian").fit(ref, toy_contract).score(b)
     assert set(b["_row_id"].iloc[:4]).isdisjoint(set(out.scores["_row_id"]))
     assert "4 rows not analysed" in out.warnings[0]
-    assert out.scores["score"].isna().all(), "binary detector: no score is constructed"
+    hist = D.DBoost(model="histogram").fit(ref, toy_contract).score(b)
+    assert hist.scores["score"].isna().all(), "histogram model: no score is constructed"
 
 
 def test_gaussian_flags_scaled_values_and_text_mode_types_everything_as_strings(toy_contract, toy_data):
@@ -86,3 +87,16 @@ def test_lucario_categorical_constraint_and_numeric_switch_off(toy_contract, toy
     det = LucarioCore().fit(ref, toy_contract)
     s2 = det.score(b2).scores
     assert not s2[(s2["column"] == "balance")]["explanation"].fillna("").str.contains("MAD").any()
+
+
+@pytest.mark.parametrize("type_mode", ["inferred", "text"])
+def test_gaussian_score_reproduces_the_published_flag_exactly(toy_contract, toy_data, type_mode):
+    ref, batch = toy_data
+    b = batch.assign(_scenario_id="x")
+    b.loc[b.index[:30], "balance"] *= 7
+    for t in (2.0, 3.0, 5.0):
+        det = D.DBoost(model="gaussian", params=[t], type_mode=type_mode).fit(ref, toy_contract)
+        assert det.provides_scores
+        s = det.score(b).scores
+        assert ((s["score"] > t) == s["flag"]).all()
+    assert not D.DBoost(model="gaussian", score=False).fit(ref, toy_contract).provides_scores
