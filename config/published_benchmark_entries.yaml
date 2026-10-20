@@ -1,0 +1,90 @@
+# Extensions to config/datasets.yaml; apply once with
+# python scripts/register_published_benchmarks.py
+# Raw files are fetched from the exact published Git commits and never stored in Git.
+datasets:
+  raha_rayyan:
+    title: "Rayyan bibliographic records (Raha SIGMOD 2019 benchmark)"
+    landing_page: https://github.com/BigDaMa/raha/tree/master/datasets/rayyan
+    licence: "Raha repository Apache-2.0; upstream dataset-specific redistribution terms not independently confirmed"
+    citation: "Mahdavi et al. (2019), Raha: A Configuration-Free Error Detection System, SIGMOD, doi:10.1145/3299869.3324956"
+    version: "BigDaMa/raha commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c"
+    roles: [existing_error_benchmark, engineering_demo]
+    cell_error_ground_truth: true
+    ground_truth_status: "Published owner-corrected reference; strict cell differences are candidate errors, not independently re-adjudicated. Date/format differences need inspection."
+    acquisition:
+      files:
+        - name: dirty.csv
+          path: dirty.csv
+          url: https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/rayyan/dirty.csv
+          sha256: 7e25e6db262b0c72ca2d9735d5959599cf5a582e1c705459507c7b45d0d1d174
+        - name: clean.csv
+          path: clean.csv
+          url: https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/rayyan/clean.csv
+          sha256: 23159f43c0706782388ed8957ad0c74eb7b88bc98f34d65bd49296e186d4673f
+    pair: {dirty: dirty.csv, clean: clean.csv, read_as_string: true, alignment_columns: [id]}
+    table:
+      file: dirty.csv
+      format: csv
+      read_options: {dtype: str, keep_default_na: false}
+      expected_rows: 1000
+      expected_columns: [id, article_title, article_language, journal_title, jounral_abbreviation, journal_issn, article_jvolumn, article_jissue, article_jcreated_at, article_pagination, author_list]
+
+  jung_restaurant:
+    title: "Restaurant (Jung et al. JDIQ 2025 error-model experiment)"
+    landing_page: https://github.com/calgo-lab/error-paper/tree/main/data/restaurant
+    licence: "Repository source openly accessible; verify original data and code reuse rights before redistribution; raw files kept outside Git"
+    citation: "Jung, Jaeger, Chandler, Biessmann (2025), Towards Realistic Error Models for Tabular Data, Journal of Data and Information Quality, doi:10.1145/3774914"
+    version: "calgo-lab/error-paper commit b8950a91ba0d1488c4e3b053fdccde154644ddd6; released restaurant_3_1 variant"
+    roles: [existing_error_benchmark, engineering_demo]
+    cell_error_ground_truth: true
+    ground_truth_status: "Published synthetic corruptions relative to provided clean.csv, not independent naturally occurring error labels"
+    acquisition:
+      files:
+        - name: dirty.csv
+          path: dirty.csv
+          url: https://raw.githubusercontent.com/calgo-lab/error-paper/b8950a91ba0d1488c4e3b053fdccde154644ddd6/data/restaurant/restaurant_3_1.csv
+          sha256: 13285f246daed35bffa7f1abf5cfcdc1069a4d73b196af017ffe2d3822191760
+        - name: clean.csv
+          path: clean.csv
+          url: https://raw.githubusercontent.com/calgo-lab/error-paper/b8950a91ba0d1488c4e3b053fdccde154644ddd6/data/restaurant/clean.csv
+          sha256: 4273d92fb4246732fabdc13b449786458d97995cd179780b6f7c6a756351d953
+    pair: {dirty: dirty.csv, clean: clean.csv, read_as_string: true, alignment_columns: [name, addr]}
+    table:
+      file: dirty.csv
+      format: csv
+      read_options: {dtype: str, keep_default_na: false}
+      expected_rows: 864
+      expected_columns: [name, addr, city, phone, type, class]
+
+  jung_cars:
+    title: "Cars (Jung et al. JDIQ 2025 error-model experiment; format caveat)"
+    landing_page: https://github.com/calgo-lab/error-paper/tree/main/data/cars
+    licence: "Repository source openly accessible; verify original data and code reuse rights before redistribution; raw files kept outside Git"
+    citation: "Jung, Jaeger, Chandler, Biessmann (2025), Towards Realistic Error Models for Tabular Data, Journal of Data and Information Quality, doi:10.1145/3774914"
+    version: "calgo-lab/error-paper commit b8950a91ba0d1488c4e3b053fdccde154644ddd6; released cars_3_1 variant"
+    roles: [existing_error_benchmark]
+    optional: true
+    cell_error_ground_truth: true
+    ground_truth_status: "Published synthetic pair; many strict string differences are numerically identical (e.g. 3504. vs 3504.0); exclude formatting-only differences for numerical-value detection"
+    acquisition:
+      files:
+        - name: dirty.csv
+          path: dirty.csv
+          url: https://raw.githubusercontent.com/calgo-lab/error-paper/b8950a91ba0d1488c4e3b053fdccde154644ddd6/data/cars/cars_3_1.csv
+          sha256: c803f870e22539a69250ee36c79e91364217f32c07bbb53f289952d8e9be9ff7
+        - name: clean.csv
+          path: clean.csv
+          url: https://raw.githubusercontent.com/calgo-lab/error-paper/b8950a91ba0d1488c4e3b053fdccde154644ddd6/data/cars/clean.csv
+          sha256: 29d0feff7af38acaea5a96d225fa4a213a057ed8f03614881be6abd42d1b553b
+    pair:
+      dirty: dirty.csv
+      clean: clean.csv
+      read_as_string: true
+      alignment_columns: [Car, MPG]
+      numeric_compare_columns: [MPG, Cylinders, Displacement, Horsepower, Weight, Acceleration, Model]
+    table:
+      file: dirty.csv
+      format: csv
+      read_options: {dtype: str, keep_default_na: false}
+      expected_rows: 406
+      expected_columns: [Car, MPG, Cylinders, Displacement, Horsepower, Weight, Acceleration, Model, Origin]

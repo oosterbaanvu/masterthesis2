@@ -45,4 +45,5 @@ access_token
 *.key
 envs/*/install.log
 data/local_manifest.json
+data/local_pair_audit.json
 envs/dboost/src/

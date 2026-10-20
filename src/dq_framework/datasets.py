@@ -53,11 +53,12 @@ def load_pair(spec: DatasetSpec) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 
 def check_table_shape(spec: DatasetSpec) -> dict[str, Any]:
-    """Verify the primary table (or dirty/clean pair) has the declared shape."""
+    """Verify every declared table and pair, including source-specific row anchors."""
+    problems = []
+    summaries = []
     if "table" in spec.raw:
         df = load_raw_table(spec)
         t = spec.raw["table"]
-        problems = []
         if t.get("expected_rows") is not None and len(df) != t["expected_rows"]:
             problems.append(f"rows {len(df)} != expected {t['expected_rows']}")
         exp_cols = t.get("expected_columns")
@@ -65,20 +66,20 @@ def check_table_shape(spec: DatasetSpec) -> dict[str, Any]:
             missing = sorted(set(exp_cols) - set(df.columns))
             extra = sorted(set(df.columns) - set(exp_cols))
             problems.append(f"column mismatch: missing={missing} extra={extra}")
-        return {"ok": not problems, "problems": problems, "summary": f"{len(df)} rows x {df.shape[1]} cols"}
+        summaries.append(f"{len(df)} rows x {df.shape[1]} cols")
     if "pair" in spec.raw:
         dirty, clean = load_pair(spec)
-        problems = []
         if dirty.shape != clean.shape:
             problems.append(f"dirty {dirty.shape} != clean {clean.shape}")
         if list(dirty.columns) != list(clean.columns):
             problems.append("dirty/clean column names differ (declare align_columns: positional if intended)")
-        return {
-            "ok": not problems,
-            "problems": problems,
-            "summary": f"dirty {dirty.shape}, clean {clean.shape}",
-        }
-    return {"ok": True, "problems": [], "summary": "no table declared"}
+        for col in spec.raw["pair"].get("alignment_columns", []):
+            if col not in dirty or col not in clean:
+                problems.append(f"alignment column missing: {col}")
+            elif not dirty[col].equals(clean[col]):
+                problems.append(f"dirty/clean row alignment differs in {col}")
+        summaries.append(f"dirty {dirty.shape}, clean {clean.shape}")
+    return {"ok": not problems, "problems": problems, "summary": "; ".join(summaries) or "no table declared"}
 
 
 def raw_path(key: str, rel: str) -> str:
