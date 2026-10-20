@@ -1,7 +1,13 @@
 # Dataset overview and reproducible acquisition
 
-Status: 2026-10-20. All seven registered datasets were downloaded in a fresh container with the commands below
-and verified (SHA-256 of every file + table shape) — **[ours]**. Licence notes record what the sources state;
+Status: 2026-10-20. The historical pilot verified seven datasets (GMSC remained blocked). The published
+benchmark extension below additionally downloaded and verified Rayyan, Restaurant and optional Cars in the
+current cloud environment; full audit: [`published_benchmark_datasets.md`](published_benchmark_datasets.md).
+The subsequent dirty-only service evaluation is in [`real_error_benchmark_report.md`](real_error_benchmark_report.md):
+all three sources run, but the synthetic missingness variants show zero detector increment over completeness
+controls and Rayyan labels remain uncertain. The rows below retain acquisition-stage suitability notes.
+The status listing below records the earlier pilot container, not current-machine availability.
+Licence notes record what the sources state;
 they are **not legal advice** and must be confirmed by the supervisor / responsible officer before
 publication. Detailed qualification evidence: `docs/dataset_qualification.md`.
 
@@ -9,7 +15,8 @@ publication. Detailed qualification evidence: `docs/dataset_qualification.md`.
 
 ```bash
 uv sync --frozen --extra dev                 # pinned environment
-python scripts/download_datasets.py          # 6 public datasets: UCI (2) + Raha benchmark copies (4)
+python scripts/download_datasets.py          # 8 required public datasets: UCI (2), Raha (5), Restaurant (1)
+python scripts/download_datasets.py jung_cars # optional numeric-format / missing-value benchmark
 python scripts/dataset_status.py             # what is present / verified; writes data/local_manifest.json (git-ignored)
 dqf datasets status                          # same, via the CLI
 # optional, only with a Kaggle account and after accepting the dataset terms on kaggle.com:
@@ -49,6 +56,9 @@ value; no raw data, secrets or large files are tracked in git.
 | Raha Hospital (`raha_hospital`) | BigDaMa/raha copy | repository Apache-2.0 | raw GitHub | dirty `dbc5575b…25ac`, clean `ea3ee449…248b4b` | 1,000 × 20 | no | no: 508/509 errors synthetic `x` substitutions | sanity only | synthetic | — | typo/pattern detectors only |
 | Give Me Some Credit, training file (`gmsc`) — **optional, BLOCKED** | Kaggle competition `GiveMeSomeCredit` (2011), https://www.kaggle.com/competitions/GiveMeSomeCredit | **unresolved**: Kaggle competition rules (must be accepted per account); no open data licence shown by the API | Kaggle login **and accepted competition rules**; the API lists `cs-training.csv` (7,564,965 bytes) but returns HTTP 403 on download for the current account (2026-10-20) | not yet pinned (`pin_pending: true`; first download reports the hash to pin) | 150,000 × 12 expected (index, target, 10 attributes) – UNVERIFIED until download | intended (R1, third financial table) | no | no | none | known from the CleanML copy (not used): MonthlyIncome missing in 19.8 %, NumberOfDependents 2.6 %; extreme DebtRatio / utilisation values | not evaluated (no data) |
 | Feedzai BAF Base (`baf`) — **optional** | Kaggle `sgpjesus/bank-account-fraud-dataset-neurips-2022`; Jesus et al., NeurIPS Datasets & Benchmarks 2022 (arXiv 2211.13358) | **unresolved and restrictive**: Kaggle metadata CC BY-NC-SA 4.0 (re-checked 2026-10-20 via API); publisher datasheet (A44) CC BY-NC-ND 4.0; non-commercial in both | Kaggle login + accepted terms; `KAGGLE_API_TOKEN` | `Base.csv` `7bf10a37…f9b809` (extracted file; Kaggle zip not stable) | 1,000,000 × 32 | technically yes, **not used** | no (CTGAN-generated synthetic data, fraud label ≠ DQ label) | possible (scale, monthly `month`) | none | negative sentinels for missing values (71 % in `prev_address_months_count`) | not evaluated |
+| Raha Rayyan (`raha_rayyan`) | BigDaMa/raha @7be1334b; Mahdavi et al., SIGMOD 2019 | repository Apache-2.0; upstream data terms unconfirmed | public, downloaded and verified | dirty `7e25e6db…1d174`, clean `23159f43…4673f` | 1,000 × 11 | not run | conditional: reference/date/encoding adjudication needed | acquisition only | published owner-corrected reference, not independently adjudicated | 948 candidate cell differences, including 722 dates and 70 empty-to-`-1` sentinel changes | not evaluated; text-heavy |
+| Jung Restaurant (`jung_restaurant`) | calgo-lab/error-paper @b8950a91, restaurant_3_1; Jung et al., DOI 10.1145/3774914 | no top-level data licence; upstream rights unconfirmed | public, downloaded and verified | dirty `13285f24…91760`, clean `4273d92f…1d953` | 864 × 6 | published variant only | synthetic `tab_err`, not a natural-error holdout | acquisition only | 155 dirty `?` candidates; 30 affect the entity label `class` | missing values in city/phone/type/class; exclude class from detector features | not evaluated |
+| Jung Cars (`jung_cars`) — **optional** | calgo-lab/error-paper @b8950a91, cars_3_1; Jung et al. | no top-level data licence; upstream rights unconfirmed | public, downloaded and verified | dirty `c803f870…9ff7`, clean `29d0feff…553b` | 406 × 9 | published variant only | synthetic missing values; numeric-format caveat | format stress test only | 820 raw differences, 710 numeric equivalents, 110 missing-value candidates | raw-string labels inflate numerical errors | not evaluated |
 
 **Give Me Some Credit — what is needed.** Log in on kaggle.com with the account behind `KAGGLE_API_TOKEN`,
 accept the rules at https://www.kaggle.com/competitions/GiveMeSomeCredit/rules, then run

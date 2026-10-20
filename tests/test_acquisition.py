@@ -128,7 +128,8 @@ def test_kaggle_datasets_are_optional_and_never_required():
     reg = acquisition.load_registry()
     assert reg["baf"].optional and reg["baf"].source == "kaggle"
     assert reg["gmsc"].optional and reg["gmsc"].raw["acquisition"]["kaggle_competition"] == "GiveMeSomeCredit"
-    assert all(not s.optional for k, s in reg.items() if k not in ("baf", "gmsc"))
+    assert reg["jung_cars"].optional  # Public but optional because of numeric-format label artefacts.
+    assert all(not s.optional for k, s in reg.items() if k not in ("baf", "gmsc", "jung_cars"))
     assert all(s.source != "kaggle" or s.optional for s in reg.values()), "a login-only source must stay optional"
 
 

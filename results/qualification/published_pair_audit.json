@@ -1,0 +1,145 @@
+{
+  "raha_rayyan": {
+    "status": "PAIRED",
+    "label_provenance": "Published owner-corrected reference; strict cell differences are candidate errors, not independently re-adjudicated. Date/format differences need inspection.",
+    "files": [
+      {
+        "path": "dirty.csv",
+        "sha256": "7e25e6db262b0c72ca2d9735d5959599cf5a582e1c705459507c7b45d0d1d174",
+        "bytes": 273084,
+        "writable": false
+      },
+      {
+        "path": "clean.csv",
+        "sha256": "23159f43c0706782388ed8957ad0c74eb7b88bc98f34d65bd49296e186d4673f",
+        "bytes": 272785,
+        "writable": false
+      }
+    ],
+    "rows": 1000,
+    "columns": 11,
+    "cells": 11000,
+    "raw_differences": 948,
+    "raw_difference_fraction": 0.08618181818181818,
+    "rows_with_difference": 774,
+    "numeric_format_only": 0,
+    "remaining_candidate_differences": 948,
+    "by_column_raw": {
+      "article_jvolumn": 22,
+      "article_jissue": 53,
+      "article_jcreated_at": 722,
+      "author_list": 84,
+      "article_pagination": 32,
+      "journal_issn": 12,
+      "article_title": 14,
+      "journal_title": 9
+    },
+    "by_column_numeric_format_only": {},
+    "alignment_columns": [
+      "id"
+    ],
+    "interpretation": "Differences are candidates, not automatically verified errors. No date/semantic normalisation or manual adjudication was performed.",
+    "source_version": "BigDaMa/raha commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c",
+    "source_urls": [
+      "https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/rayyan/dirty.csv",
+      "https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/rayyan/clean.csv"
+    ],
+    "dirty_question_marks_on_changed_cells": 0
+  },
+  "jung_restaurant": {
+    "status": "PAIRED",
+    "label_provenance": "Published synthetic corruptions relative to provided clean.csv, not independent naturally occurring error labels",
+    "files": [
+      {
+        "path": "dirty.csv",
+        "sha256": "13285f246daed35bffa7f1abf5cfcdc1069a4d73b196af017ffe2d3822191760",
+        "bytes": 62251,
+        "writable": false
+      },
+      {
+        "path": "clean.csv",
+        "sha256": "4273d92fb4246732fabdc13b449786458d97995cd179780b6f7c6a756351d953",
+        "bytes": 63454,
+        "writable": false
+      }
+    ],
+    "rows": 864,
+    "columns": 6,
+    "cells": 5184,
+    "raw_differences": 155,
+    "raw_difference_fraction": 0.029899691358024692,
+    "rows_with_difference": 147,
+    "numeric_format_only": 0,
+    "remaining_candidate_differences": 155,
+    "by_column_raw": {
+      "class": 30,
+      "phone": 39,
+      "city": 32,
+      "type": 54
+    },
+    "by_column_numeric_format_only": {},
+    "alignment_columns": [
+      "name",
+      "addr"
+    ],
+    "interpretation": "Differences are candidates, not automatically verified errors. No date/semantic normalisation or manual adjudication was performed.",
+    "source_version": "calgo-lab/error-paper commit b8950a91ba0d1488c4e3b053fdccde154644ddd6; released restaurant_3_1 variant",
+    "source_urls": [
+      "https://raw.githubusercontent.com/calgo-lab/error-paper/b8950a91ba0d1488c4e3b053fdccde154644ddd6/data/restaurant/restaurant_3_1.csv",
+      "https://raw.githubusercontent.com/calgo-lab/error-paper/b8950a91ba0d1488c4e3b053fdccde154644ddd6/data/restaurant/clean.csv"
+    ],
+    "dirty_question_marks_on_changed_cells": 155
+  },
+  "jung_cars": {
+    "status": "PAIRED",
+    "label_provenance": "Published synthetic pair; many strict string differences are numerically identical (e.g. 3504. vs 3504.0); exclude formatting-only differences for numerical-value detection",
+    "files": [
+      {
+        "path": "dirty.csv",
+        "sha256": "c803f870e22539a69250ee36c79e91364217f32c07bbb53f289952d8e9be9ff7",
+        "bytes": 21936,
+        "writable": false
+      },
+      {
+        "path": "clean.csv",
+        "sha256": "29d0feff7af38acaea5a96d225fa4a213a057ed8f03614881be6abd42d1b553b",
+        "bytes": 22312,
+        "writable": false
+      }
+    ],
+    "rows": 406,
+    "columns": 9,
+    "cells": 3654,
+    "raw_differences": 820,
+    "raw_difference_fraction": 0.22441160372194854,
+    "rows_with_difference": 406,
+    "numeric_format_only": 710,
+    "remaining_candidate_differences": 110,
+    "by_column_raw": {
+      "Weight": 406,
+      "Acceleration": 13,
+      "Horsepower": 240,
+      "Model": 16,
+      "Origin": 17,
+      "Cylinders": 16,
+      "Displacement": 112
+    },
+    "by_column_numeric_format_only": {
+      "Weight": 391,
+      "Horsepower": 222,
+      "Displacement": 96,
+      "Acceleration": 1
+    },
+    "alignment_columns": [
+      "Car",
+      "MPG"
+    ],
+    "interpretation": "Differences are candidates, not automatically verified errors. No date/semantic normalisation or manual adjudication was performed.",
+    "source_version": "calgo-lab/error-paper commit b8950a91ba0d1488c4e3b053fdccde154644ddd6; released cars_3_1 variant",
+    "source_urls": [
+      "https://raw.githubusercontent.com/calgo-lab/error-paper/b8950a91ba0d1488c4e3b053fdccde154644ddd6/data/cars/cars_3_1.csv",
+      "https://raw.githubusercontent.com/calgo-lab/error-paper/b8950a91ba0d1488c4e3b053fdccde154644ddd6/data/cars/clean.csv"
+    ],
+    "dirty_question_marks_on_changed_cells": 110
+  }
+}

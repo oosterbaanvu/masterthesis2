@@ -1,0 +1,371 @@
+{
+  "protocol": {
+    "version": 1,
+    "scope": "design_pool_only",
+    "seeds": [
+      11,
+      22,
+      33
+    ],
+    "history_fraction": 0.6,
+    "primary_budget_per_1k": 25,
+    "budgets_per_1k": [
+      10,
+      25,
+      50
+    ],
+    "review_seed": 0,
+    "label_policy": "conservative_v1",
+    "datasets": {
+      "raha_rayyan": {
+        "group_columns": [
+          "article_title"
+        ]
+      },
+      "jung_restaurant": {
+        "group_columns": [
+          "name",
+          "class"
+        ]
+      },
+      "jung_cars": {
+        "group_columns": [
+          "Car"
+        ]
+      }
+    },
+    "detectors": {
+      "cdc": {
+        "name": "cdc_hgb",
+        "params": {
+          "confidence": 0.999,
+          "calibration_rows": 32,
+          "max_iter": 100,
+          "seed": 0,
+          "rank_score": "normalized_residual"
+        }
+      },
+      "dboost_text": {
+        "name": "dboost",
+        "params": {
+          "model": "gaussian",
+          "params": [
+            3.0
+          ],
+          "type_mode": "text",
+          "fit_on": "reference"
+        }
+      },
+      "lucario_core": {
+        "name": "lucario_core",
+        "params": {
+          "fit_on": "reference"
+        }
+      }
+    },
+    "numeric_detectors": {
+      "dboost_typed": {
+        "name": "dboost",
+        "params": {
+          "model": "gaussian",
+          "params": [
+            3.0
+          ],
+          "type_mode": "inferred",
+          "fit_on": "reference"
+        }
+      },
+      "sd": {
+        "name": "sd_outlier",
+        "params": {
+          "n_sd": 3.0,
+          "fit_on": "reference"
+        }
+      },
+      "iqr": {
+        "name": "iqr_outlier",
+        "params": {
+          "k": 1.5,
+          "fit_on": "reference"
+        }
+      }
+    }
+  },
+  "fingerprints": {
+    "config/benchmarks/published_errors.yaml": "c6bfb8d1c505ce5bd152645d4f95e3f1b4de58277e0cee19c210dafd0eaa5cfc",
+    "config/contracts/jung_cars.yaml": "e7fed04ebd5d29e8ad2cdc7d9b72c821fcf61810209da871ab36547098d682be",
+    "config/contracts/jung_restaurant.yaml": "259c81c22108cbd7335f1b05507a2d871c7efde22968f58722d22796bdd4f7be",
+    "config/contracts/raha_rayyan.yaml": "5017a34702ab09f4178679611135e961c15cf27dbe347eb245b91cbfcb4b57b0",
+    "config/contracts/uci_bank_marketing.yaml": "1e011985f715f6e4956adf0db6ef07402ae8106a00b28bdf91e7b65083ce4981",
+    "config/contracts/uci_credit.yaml": "f778c089dc6c99d8cc28cee2874b5984ce53051207a2daf1e92483e456b001ab",
+    "config/datasets.yaml": "aea38f04f504d2c672dc6dc1c3317182683d4a5110d61cbd01443623d200cebe",
+    "dbt/dbt_project.yml": "ac51d50ca070e0c33fc6646fabda38776aace786949c59c6233e4b7e9531ee28",
+    "dbt/macros/dq_tests.sql": "985a7f2d00e8b0f2219914a1db436da7f80def401c33f1e1af93b03316ccbd96",
+    "dbt/models/generated/jung_cars.yml": "67e4bf5a07b78656083bc9c1b09e69cd8267b2c26724a5a0ea06e562129122dd",
+    "dbt/models/generated/jung_restaurant.yml": "5f69c8e747de99d1fa5ad10d1e0c74ee7802d6cdea237d7d6c26ec74cbe7a19f",
+    "dbt/models/generated/raha_rayyan.yml": "141dbc7c7d4a99caf57e2a33fb59569376eb541665d2225a8d553d573f7ff5c9",
+    "dbt/models/generated/stg_jung_cars.sql": "00e1c761d7331d9cf9062b6edf0d6f3a94757aad129e9258da1f9fabc7b9dafc",
+    "dbt/models/generated/stg_jung_restaurant.sql": "fce704ecd7de777ab42ed62e599930334cf1c2a5c28b260786d4c7d1d3dfad00",
+    "dbt/models/generated/stg_raha_rayyan.sql": "dacded32da42d01bb991b1596a701bab1afa85c8ae2211d6894cdbbf4b507a3e",
+    "dbt/models/generated/stg_uci_bank_marketing.sql": "faf2b89b8a71ba158a6dea941ad79a8107db584464c71f759282e7301058e0e1",
+    "dbt/models/generated/stg_uci_credit.sql": "5b5b64adfb2623b4ce527f817b1d010f83c68f74898db00b8ffe4e13fee81057",
+    "dbt/models/generated/uci_bank_marketing.yml": "fa756f5bf934fe187e4f975cb7a2147905846315dcee227d8cd2750e31527c05",
+    "dbt/models/generated/uci_credit.yml": "ba93ae5d04cb2f3a9087a2b7cc8adb29f3032829fd2387914fceea7bf2bad473",
+    "dbt/models/meta/sources.yml": "d4174300cf2f51621ba6a3a3a2f6c705be7e4c66444e2188a617f9fa3feb6d96",
+    "dbt/profiles.yml": "221b9b37130df82a05c265911514a19b41ae04b3d85f2c17c45331a469c19e5f",
+    "src/dq_framework/__init__.py": "c4a9447c9703a157cfc560b1bdd18df251b366a39578c6cffa405b14c28c223f",
+    "src/dq_framework/acquisition/__init__.py": "0b38778ecf94c0a94a96421355194bd9a5c38f7c501df6b083e42e546c4c5735",
+    "src/dq_framework/acquisition/kaggle.py": "b6379f4d076cdb0a78d0dec79cdebe6446435d932443d85350aef4288e649fde",
+    "src/dq_framework/acquisition/status.py": "17353f3af218542d26552248c55cb17595560ebd0c743ef3e2cbaa6ad541bc9b",
+    "src/dq_framework/cli.py": "71ba36600cf2da311ecc5ef39d951fbd2f364685aa0230881c6aafadc08e81d2",
+    "src/dq_framework/contracts/__init__.py": "9ea98eeb8ca3fb366eb05e1f0ff611bd9963d595fffc146f508fa0bf2dfa9385",
+    "src/dq_framework/controls/__init__.py": "fe4c1e7e4e72a5fe7718eaa96fab08ab829e180536035e2a8c40afff8437e82c",
+    "src/dq_framework/controls/dbt_gen.py": "1f3e55dd42e0fb25768e822d53736a35cb94d39937996a701061f925b8028a8d",
+    "src/dq_framework/datasets.py": "60fe608bf54f1ffd33e525d101b36e119561c3c7cb36fd2453de7e610b38a312",
+    "src/dq_framework/detectors/base.py": "4980abd054653d17c601538c4658a29faf8220274f91bb6d4898aa39d22f1c41",
+    "src/dq_framework/detectors/cdc.py": "4fe26f6bb9450923cc3b619a2d83e718fe74145e33342aebed9068d6953e6a61",
+    "src/dq_framework/detectors/dboost.py": "aa9a70d6540b1d0e325a70ea14604c2bd163612abbc3e5e303c07263dfb84c78",
+    "src/dq_framework/detectors/iforest.py": "01bc8f2a831cf9634478da84096c625e7e48be0513faa496bbbb0a39ffa8a718",
+    "src/dq_framework/detectors/registry.py": "a3f76d297e98822a4e79d825e59bd2b477e3f61f02f26ea5638972bf783ddd29",
+    "src/dq_framework/detectors/subprocess_adapter.py": "dc95ed8044e1b29d59d2978d2c8a4377ce7c6dd36c309c39d4faa32e36eab021",
+    "src/dq_framework/detectors/univariate.py": "4243e0f9a7a39fc62441e15636b6a8002583a3cb1e09807a6a7a48b0dbad241b",
+    "src/dq_framework/evaluation/__init__.py": "fb7d58a59aba98a6e6bff090353ac7e8a6a303d31afb4a50212fbb2a4d7b79a9",
+    "src/dq_framework/evaluation/published.py": "37d0bbb9b4ac95a40aa640160f4047f7d5fa11b89d24d2382ba921614b5d09e3",
+    "src/dq_framework/injection/__init__.py": "25a3919432751cbd98cb82fad16c70cab11552d17e4a088a4abea385155b13b0",
+    "src/dq_framework/injection/catalog.py": "ed78c0d825bb9dfc57b0084ea10b4bf9ddac465c3775c3d47a8762d2be2bd552",
+    "src/dq_framework/injection/mechanisms.py": "3937b48e15e696120ccae619b4ea1608d78248313af72de24a16891ac56f6f33",
+    "src/dq_framework/injection/operations.py": "44cd367641b7e3a77d9a87375b1fb9cc92d9e7322749a36263310ad43149f7a6",
+    "src/dq_framework/injection/validation.py": "59272e846e4658e35c2bf502a4c2801d2980af9e6535138436d5cd76dcc89649",
+    "src/dq_framework/paths.py": "a0d36ba7da6c52882f22b2775cf91d74fa660030d8a76f0c0587a7a34bef0d27",
+    "src/dq_framework/pilot/__init__.py": "9679cf829e7fc07d6277017eb58432f05c9e2a7bd591964f72215650aa31bbab",
+    "src/dq_framework/pilot/analysis.py": "f495a545691f40e445a28ebf55de78729f7aa55fd2d075c7972115cf2bb9bace",
+    "src/dq_framework/pilot/metrics.py": "01f1bd0696c05ae071d5284289916cbb0ea5ee5c7018640c33d8d487c0f64856",
+    "src/dq_framework/pilot/primary.py": "58604037a306d0099beb467cc0ec6779d1cf96dcc3665a74a076433dc657acba",
+    "src/dq_framework/pilot/runner.py": "31a066a7370b0e84007e8e58668f11f77642083374b19e7940e65dbd0d43710d",
+    "src/dq_framework/pilot/scenarios.py": "457cd725ae60b4efc39feff7f9b87a45a2ae310246d1b3648a5edeb1e92907b7",
+    "src/dq_framework/pilot/splits.py": "43e84ee4fb04b0bb77590dc432c069f5f492f31eedec7bb6f4d4395bdb3cfd3b",
+    "src/dq_framework/pipeline.py": "3dde85af8c14e8c10f5fbefa7d38bdfb47f5462a959bd52375413597c54add07",
+    "src/dq_framework/profiling/__init__.py": "a3a7379bf7a85c8e2e912c5411221dd0bd2c3f36e4c1f00767f9b2b7befb5d57",
+    "src/dq_framework/reporting/__init__.py": "de604164ab900ea80b1fa334af22d37c2450bbde93a069ebd224f0a25dc0407b",
+    "src/dq_framework/service/__init__.py": "25ac1c0ea7a62134f8960c8f92ae2ed85d96bc18c43d1b21bc529c7a58d3d855",
+    "src/dq_framework/service/partitioning.py": "4734755a19a35ff3ec44f1391e19e8681d60a082211d33c7533af47f6e7249e1",
+    "src/dq_framework/service/review.py": "08e3cea25e5f0d28f2de40aa933186ac8cc052edf33bed924495507ce1f0b9f1",
+    "src/dq_framework/service/scan.py": "a56efc898027cd436e10ef0b21c0b2288a102e467429a428ebe84fe9129a962d",
+    "uv.lock": "6313bd70fa3687f6b3f9f101979dec35ca62eebdf7d09140389bc2b813359b46"
+  },
+  "jobs": [
+    {
+      "dataset": "raha_rayyan",
+      "seed": 11,
+      "directory": "raha_rayyan_11",
+      "partitions": {
+        "history": 448,
+        "batch": 352,
+        "holdout": 200
+      },
+      "groups": {
+        "batch": 352,
+        "history": 448,
+        "holdout": 200
+      },
+      "output_sha256": {
+        "scan.yaml": "e6a92743d87fe7a0b4cb05f6c4b1f549929461ae086f97db41228727a97e262f",
+        "partitions.csv": "23b30266912141bfab66327931576c3df294f6c5c41f48856086dd5c0e79776d",
+        "control_cells.parquet": "c95149f9c0f5f78b1c276aa3c9186411f67a38a0d12f71ced15c143deeda604e",
+        "detector_scores.parquet": "bda40461d2136ae7a987e951c8c1e04a8b03269ead9163d6012f13b13662bb54",
+        "scan_summary.json": "4db7714f829e9bad3775681ba87b5d390bbea82442d7a8a753fe09782ca4dfe6",
+        "findings.csv": "58a557af21b2b2e14f821beb0cbba058ea0377fe80b53a34d343373b01901ff0"
+      }
+    },
+    {
+      "dataset": "raha_rayyan",
+      "seed": 22,
+      "directory": "raha_rayyan_22",
+      "partitions": {
+        "history": 478,
+        "batch": 322,
+        "holdout": 200
+      },
+      "groups": {
+        "batch": 322,
+        "history": 478,
+        "holdout": 200
+      },
+      "output_sha256": {
+        "scan.yaml": "9b9efe4cb53a11dc11f1c14be1d5f30f041f9a42ba1813870901830d2dc0905c",
+        "partitions.csv": "6d51e8055b7b5454f932e96b4c5014f9a5ea5151f8c7440975aff4a525377108",
+        "control_cells.parquet": "14386ef0b8d4080815fb63366d3c9f1a99b07b33ade3fef5f6a0a0ae6104e879",
+        "detector_scores.parquet": "c6d4cd71cdcbe8ad5023f864bb7b4f1e08b1c5edcef855a7a5519db5a1ea4ff3",
+        "scan_summary.json": "af51c489cedce49c5b81a6306f9c3d96c6edd67e838db71453325f801eb1a3af",
+        "findings.csv": "2284f2ece017d122fab846112d38193524bdfc281cefeaeb40e995959d64ecd6"
+      }
+    },
+    {
+      "dataset": "raha_rayyan",
+      "seed": 33,
+      "directory": "raha_rayyan_33",
+      "partitions": {
+        "history": 478,
+        "batch": 322,
+        "holdout": 200
+      },
+      "groups": {
+        "batch": 322,
+        "history": 478,
+        "holdout": 200
+      },
+      "output_sha256": {
+        "scan.yaml": "b4f6999b9a18e1b96d3d112f03a231d3d759c982864cad8c5c7a71653cb053b6",
+        "partitions.csv": "0475bc2a06f40f792902647613366f6fafd7831fadbb104acf164f1f0f77e264",
+        "control_cells.parquet": "3adc7f8edd5f257680998364586f8df8b5a826ff253f5a6b1784c6bdbe04ad7f",
+        "detector_scores.parquet": "6598202c28cdd152cab192bdf164ceda6fd30ac331f50d3742b54c996457280b",
+        "scan_summary.json": "c8ec0b1b0a75a5c2309f93c6343f96f82e2c85b58359371272d447ace22ab481",
+        "findings.csv": "281264bee6e64657a8b0555995b2fcb186ccb5f4f10981f6d04c664ff361997e"
+      }
+    },
+    {
+      "dataset": "jung_restaurant",
+      "seed": 11,
+      "directory": "jung_restaurant_11",
+      "partitions": {
+        "history": 362,
+        "batch": 290,
+        "holdout": 212
+      },
+      "groups": {
+        "batch": 254,
+        "history": 324,
+        "holdout": 168
+      },
+      "output_sha256": {
+        "scan.yaml": "5731fcf1ba0576dd7821acbfc103a329da67c9f68c5445aee261a320a9588967",
+        "partitions.csv": "b7c74d5c40681e0af0b306f304a3e0799d1a4286a52aa2b420b0f7164aa02720",
+        "control_cells.parquet": "ff23aeb743392a5ccdc1c1c720d118022921c4d90055b152777433e0a4dfa390",
+        "detector_scores.parquet": "e1b844e81b369d224148fefa251af1db6bf477e1e45a3e9c2ee43ce0096c0bcf",
+        "scan_summary.json": "98f95ab2cc323009e9a4774dc72adf2a99a15a937276ff56f580585e13cf83ba",
+        "findings.csv": "40f3432d7f499c5e7fac2b8746f28f7673095f467311f86231aac42de8672943"
+      }
+    },
+    {
+      "dataset": "jung_restaurant",
+      "seed": 22,
+      "directory": "jung_restaurant_22",
+      "partitions": {
+        "history": 391,
+        "batch": 261,
+        "holdout": 212
+      },
+      "groups": {
+        "batch": 238,
+        "history": 340,
+        "holdout": 168
+      },
+      "output_sha256": {
+        "scan.yaml": "80f1b2e4b7a262cdeb50f6ec6407c7a9efd3c020f957f34caefe5d955f11c829",
+        "partitions.csv": "02f3f2d25808292e888c1c614268e728f7dde7b89eb23fd219b68dd313a1a9c3",
+        "control_cells.parquet": "2081c062275b3fd522f28d92ffe6028ce22ffbbe5c4c03e7fbe77b16370d53ef",
+        "detector_scores.parquet": "2e5334cba0d9fda6d1dc28fdc8fe843922c64b83ae613b943ea050251b8209ad",
+        "scan_summary.json": "6ef1035ab1788bb808c7d151717d63a67b9773f440561e99e759f0b2d5f24522",
+        "findings.csv": "9d7acdb11230769373362ad92ff1734a456e8ba0e06954d0eb31a8d2539352ee"
+      }
+    },
+    {
+      "dataset": "jung_restaurant",
+      "seed": 33,
+      "directory": "jung_restaurant_33",
+      "partitions": {
+        "history": 386,
+        "batch": 266,
+        "holdout": 212
+      },
+      "groups": {
+        "batch": 236,
+        "history": 342,
+        "holdout": 168
+      },
+      "output_sha256": {
+        "scan.yaml": "42b5a1c75688dc77098aed1b0ea94dcc2fd5f3af466615dd77a092ed843f59f4",
+        "partitions.csv": "7d6267f29ad5f6d546bd5efae41561e857af4bda021062299f005dcdca7c43b4",
+        "control_cells.parquet": "2cfdf91e1c80c7e6c6827f540f321330412107e60b658c73c444fc47e59f162d",
+        "detector_scores.parquet": "70bbd7399c622a51db18a8fbd3a075a6a54b9cfcb2a2dc6741bba5cb808c926d",
+        "scan_summary.json": "72ae5bbac4c2b5e20d5cde22d117d9aca1e3fc2b8aaac2d5003af342903a8250",
+        "findings.csv": "09c924a88ce369cb14e4751101ea0cf2cbfc69f8cb09540c4b8fa5f7b3b93aa4"
+      }
+    },
+    {
+      "dataset": "jung_cars",
+      "seed": 11,
+      "directory": "jung_cars_11",
+      "partitions": {
+        "history": 157,
+        "holdout": 131,
+        "batch": 118
+      },
+      "groups": {
+        "batch": 99,
+        "history": 129,
+        "holdout": 74
+      },
+      "output_sha256": {
+        "scan.yaml": "70a599d8d47b851e8c5ec09426fb6c0b903d020b170fa3fa51ab432f65d5e4ba",
+        "partitions.csv": "95645596271ea8e0f10a5712b30647d5b0d35f632aeb365f22ba3551388f5e79",
+        "control_cells.parquet": "d0720bf8a7264af8f8a0620ea7cb331f3f4a2dd28d759e658fb1d3cabddb3fde",
+        "detector_scores.parquet": "eb5f5261cca7b9ea95bff3a9dbbc99e3f1849ea3cc5e0690dab2eb6c7cebb26c",
+        "scan_summary.json": "7bbe72f6d61263eb080c41c6c84cc7d0ccf25739d3c965243dd80653ac9c1dbf",
+        "findings.csv": "a5540c7e3f506b31dd86b57a0689adebed5db4a54f02be3ab8815498c43a7c59"
+      }
+    },
+    {
+      "dataset": "jung_cars",
+      "seed": 22,
+      "directory": "jung_cars_22",
+      "partitions": {
+        "history": 179,
+        "holdout": 131,
+        "batch": 96
+      },
+      "groups": {
+        "batch": 87,
+        "history": 141,
+        "holdout": 74
+      },
+      "output_sha256": {
+        "scan.yaml": "9b62eca12ca6271aa18c0452967c0f64c331a499ca528110b6110100c62ff461",
+        "partitions.csv": "3bfe75d8d9c80811dde3647c6c3bc87a4ea0b116beb1a4187c2779d4316e49bb",
+        "control_cells.parquet": "56303f7b19045534db2d550068c59673461470f1c986948b62893eed82c49ee1",
+        "detector_scores.parquet": "a6926492928620dd2c6386783553a1a237b812ccd49bfd6ff4a49d1854ec8d89",
+        "scan_summary.json": "b2a31fc5c1c5fde2127c813f0f10634a431f3629f2b47676b83a3fb8f9f515d2",
+        "findings.csv": "890e7c31b8f9e75fde65d839b98c053736a88f51694683ba939660b484e3aa85"
+      }
+    },
+    {
+      "dataset": "jung_cars",
+      "seed": 33,
+      "directory": "jung_cars_33",
+      "partitions": {
+        "history": 176,
+        "holdout": 131,
+        "batch": 99
+      },
+      "groups": {
+        "batch": 82,
+        "history": 146,
+        "holdout": 74
+      },
+      "output_sha256": {
+        "scan.yaml": "55b8a288e7cf8559a5f85bb85c99fba18cd25f010f5f53ca9ffbc3b0ddd67fcb",
+        "partitions.csv": "e5e0c6933c7f5cc4ba00ecf4e2b4c7ac2365ff6f0bb466cc74727089bd5d0cc8",
+        "control_cells.parquet": "7f92152ebdd454279c88a015678e5419b259ffa99c161cea78315ede28f1e8d0",
+        "detector_scores.parquet": "5ad4dba134b688c0f78547f9174d1af25dabfba50655c0d58c85340164b0f516",
+        "scan_summary.json": "4730befc8628cb20646e58abc1480a608364874c903eaf6c53ff1d1b7bc88d1a",
+        "findings.csv": "6db3b51cb51332e9223cbfe039d43403faef66bc7c268ca518e16d374624db9d"
+      }
+    }
+  ],
+  "dirty_sha256": {
+    "raha_rayyan": "7e25e6db262b0c72ca2d9735d5959599cf5a582e1c705459507c7b45d0d1d174",
+    "jung_restaurant": "13285f246daed35bffa7f1abf5cfcdc1069a4d73b196af017ffe2d3822191760",
+    "jung_cars": "c803f870e22539a69250ee36c79e91364217f32c07bbb53f289952d8e9be9ff7"
+  },
+  "plan_sha256": "ef2e1c091efef34ba71677e042640c17d4678a13331c4b4b42b358a569cd059f"
+}

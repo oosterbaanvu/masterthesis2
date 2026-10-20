@@ -1,0 +1,55 @@
+dataset,seed,detector,status,compatibility,seconds,scored_cells,finite_scores,flags,review_selected,extra_flags_per_1k,reasons,warnings
+raha_rayyan,11,cdc,incompatible,INCOMPATIBLE,0.0,,,0.0,,0.0,"[""article_title: 447 categories (too many for per-class calibration)""]","[""article_title: 447 categories (too many for per-class calibration)""]"
+raha_rayyan,11,dboost_text,ok,PASS,0.046,3520.0,3520.0,284.0,9.0,801.1,"[""Gaussian test-statistic ranking is an extension; native flags are also retained""]",[]
+raha_rayyan,11,lucario_core,ok,PASS,0.021,3520.0,0.0,1011.0,9.0,2292.6,"[""binary output only (no ranking score)""]",[]
+raha_rayyan,11,dboost_typed,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+raha_rayyan,11,sd,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+raha_rayyan,11,iqr,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+raha_rayyan,22,cdc,incompatible,INCOMPATIBLE,0.0,,,0.0,,0.0,"[""article_title: 478 categories (too many for per-class calibration)""]","[""article_title: 478 categories (too many for per-class calibration)""]"
+raha_rayyan,22,dboost_text,ok,PASS,0.056,3220.0,3220.0,238.0,8.0,723.6,"[""Gaussian test-statistic ranking is an extension; native flags are also retained""]",[]
+raha_rayyan,22,lucario_core,ok,PASS,0.02,3220.0,0.0,907.0,8.0,2260.9,"[""binary output only (no ranking score)""]",[]
+raha_rayyan,22,dboost_typed,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+raha_rayyan,22,sd,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+raha_rayyan,22,iqr,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+raha_rayyan,33,cdc,incompatible,INCOMPATIBLE,0.0,,,0.0,,0.0,"[""article_title: 478 categories (too many for per-class calibration)""]","[""article_title: 478 categories (too many for per-class calibration)""]"
+raha_rayyan,33,dboost_text,ok,PASS,0.043,3220.0,3220.0,256.0,8.0,788.8,"[""Gaussian test-statistic ranking is an extension; native flags are also retained""]",[]
+raha_rayyan,33,lucario_core,ok,PASS,0.019,3220.0,0.0,898.0,8.0,2220.5,"[""binary output only (no ranking score)""]",[]
+raha_rayyan,33,dboost_typed,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+raha_rayyan,33,sd,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+raha_rayyan,33,iqr,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+jung_restaurant,11,cdc,incompatible,INCOMPATIBLE,0.0,,,0.0,,0.0,"[""name: 335 categories (too many for per-class calibration)""]","[""name: 335 categories (too many for per-class calibration)""]"
+jung_restaurant,11,dboost_text,ok,PASS,0.023,1450.0,1450.0,63.0,7.0,17.2,"[""Gaussian test-statistic ranking is an extension; native flags are also retained""]",[]
+jung_restaurant,11,lucario_core,ok,PASS,0.013,1450.0,0.0,51.0,0.0,0.0,"[""binary output only (no ranking score)""]",[]
+jung_restaurant,11,dboost_typed,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+jung_restaurant,11,sd,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+jung_restaurant,11,iqr,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+jung_restaurant,22,cdc,incompatible,INCOMPATIBLE,0.0,,,0.0,,0.0,"[""name: 353 categories (too many for per-class calibration)""]","[""name: 353 categories (too many for per-class calibration)""]"
+jung_restaurant,22,dboost_text,ok,PASS,0.016,1305.0,1305.0,46.0,7.0,34.5,"[""Gaussian test-statistic ranking is an extension; native flags are also retained""]",[]
+jung_restaurant,22,lucario_core,ok,PASS,0.008,1305.0,0.0,29.0,0.0,0.0,"[""binary output only (no ranking score)""]",[]
+jung_restaurant,22,dboost_typed,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+jung_restaurant,22,sd,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+jung_restaurant,22,iqr,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+jung_restaurant,33,cdc,incompatible,INCOMPATIBLE,0.0,,,0.0,,0.0,"[""name: 354 categories (too many for per-class calibration)""]","[""name: 354 categories (too many for per-class calibration)""]"
+jung_restaurant,33,dboost_text,ok,PASS,0.019,1330.0,1330.0,55.0,7.0,22.6,"[""Gaussian test-statistic ranking is an extension; native flags are also retained""]",[]
+jung_restaurant,33,lucario_core,ok,PASS,0.01,1330.0,0.0,72.0,0.0,0.0,"[""binary output only (no ranking score)""]",[]
+jung_restaurant,33,dboost_typed,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+jung_restaurant,33,sd,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+jung_restaurant,33,iqr,not_applicable,NO_NUMERIC_COLUMNS,,,,,,,Text-only contract: SD/IQR have no targets; inferred dBoost duplicates text mode.,
+jung_cars,11,cdc,ok,CONDITIONAL,1.382,944.0,917.0,81.0,3.0,559.3,"[""Origin: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'Europe': n\u22486)"", ""missing values present in ['Cylinders', 'Displacement', 'Horsepower', 'Weight', 'Acceleration', 'Model', 'Origin']; reference rows with a missing target are not used for that column""]",[]
+jung_cars,11,dboost_text,ok,PASS,0.021,944.0,944.0,28.0,3.0,8.5,"[""Gaussian test-statistic ranking is an extension; native flags are also retained""]",[]
+jung_cars,11,lucario_core,ok,PASS,0.017,944.0,0.0,28.0,0.0,0.0,"[""binary output only (no ranking score)""]",[]
+jung_cars,11,dboost_typed,ok,CONDITIONAL,0.009,768.0,768.0,7.0,3.0,0.0,"[""Gaussian test-statistic ranking is an extension; native flags are also retained"", ""28 reference rows do not parse with the inferred types and are not used""]","[""22 rows not analysed (values do not parse with the inferred field types)""]"
+jung_cars,11,sd,ok,PASS,0.004,944.0,0.0,4.0,0.0,0.0,"[""binary output only (no ranking score)""]",[]
+jung_cars,11,iqr,ok,PASS,0.004,944.0,0.0,8.0,0.0,0.0,"[""binary output only (no ranking score)""]",[]
+jung_cars,22,cdc,ok,CONDITIONAL,1.391,768.0,740.0,19.0,2.0,197.9,"[""Origin: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'Europe': n\u22485)"", ""missing values present in ['Cylinders', 'Displacement', 'Horsepower', 'Weight', 'Acceleration', 'Model', 'Origin']; reference rows with a missing target are not used for that column""]",[]
+jung_cars,22,dboost_text,ok,PASS,0.014,768.0,768.0,28.0,2.0,0.0,"[""Gaussian test-statistic ranking is an extension; native flags are also retained""]",[]
+jung_cars,22,lucario_core,ok,PASS,0.014,768.0,0.0,33.0,2.0,41.7,"[""binary output only (no ranking score)""]",[]
+jung_cars,22,dboost_typed,ok,CONDITIONAL,0.009,624.0,624.0,9.0,2.0,41.7,"[""Gaussian test-statistic ranking is an extension; native flags are also retained"", ""31 reference rows do not parse with the inferred types and are not used""]","[""18 rows not analysed (values do not parse with the inferred field types)""]"
+jung_cars,22,sd,ok,PASS,0.004,768.0,0.0,0.0,0.0,0.0,"[""binary output only (no ranking score)""]",[]
+jung_cars,22,iqr,ok,PASS,0.004,768.0,0.0,0.0,0.0,0.0,"[""binary output only (no ranking score)""]",[]
+jung_cars,33,cdc,ok,CONDITIONAL,1.327,792.0,771.0,25.0,2.0,232.3,"[""Origin: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'Japan': n\u22486)"", ""missing values present in ['Cylinders', 'Displacement', 'Horsepower', 'Weight', 'Acceleration', 'Model', 'Origin']; reference rows with a missing target are not used for that column""]",[]
+jung_cars,33,dboost_text,ok,PASS,0.014,792.0,792.0,22.0,2.0,10.1,"[""Gaussian test-statistic ranking is an extension; native flags are also retained""]",[]
+jung_cars,33,lucario_core,ok,PASS,0.013,792.0,0.0,27.0,2.0,50.5,"[""binary output only (no ranking score)""]",[]
+jung_cars,33,dboost_typed,ok,CONDITIONAL,0.009,664.0,664.0,5.0,2.0,10.1,"[""Gaussian test-statistic ranking is an extension; native flags are also retained"", ""34 reference rows do not parse with the inferred types and are not used""]","[""16 rows not analysed (values do not parse with the inferred field types)""]"
+jung_cars,33,sd,ok,PASS,0.004,792.0,0.0,0.0,0.0,0.0,"[""binary output only (no ranking score)""]",[]
+jung_cars,33,iqr,ok,PASS,0.004,792.0,0.0,2.0,2.0,20.2,"[""binary output only (no ranking score)""]",[]

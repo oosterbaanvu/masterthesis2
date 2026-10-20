@@ -1,0 +1,47 @@
+{
+  "landing_page": "https://github.com/BigDaMa/raha/tree/master/datasets/rayyan",
+  "licence": "Raha repository Apache-2.0; upstream dataset-specific redistribution terms not independently confirmed",
+  "version": "BigDaMa/raha commit 7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c",
+  "citation": "Mahdavi et al. (2019), Raha: A Configuration-Free Error Detection System, SIGMOD, doi:10.1145/3299869.3324956",
+  "dataset": "raha_rayyan",
+  "title": "Rayyan bibliographic records (Raha SIGMOD 2019 benchmark)",
+  "status": "VERIFIED",
+  "checked_utc": "2026-10-20T21:12:52+00:00",
+  "files": [
+    {
+      "path": "dirty.csv",
+      "sha256": "7e25e6db262b0c72ca2d9735d5959599cf5a582e1c705459507c7b45d0d1d174",
+      "bytes": 273084,
+      "writable": false
+    },
+    {
+      "path": "clean.csv",
+      "sha256": "23159f43c0706782388ed8957ad0c74eb7b88bc98f34d65bd49296e186d4673f",
+      "bytes": 272785,
+      "writable": false
+    }
+  ],
+  "problems": [],
+  "unpinned": [],
+  "downloads": [
+    {
+      "file": "dirty.csv",
+      "url": "https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/rayyan/dirty.csv",
+      "sha256": "7e25e6db262b0c72ca2d9735d5959599cf5a582e1c705459507c7b45d0d1d174",
+      "bytes": 273084,
+      "retrieved_utc": "2026-10-20T21:12:52+00:00",
+      "extracted": [],
+      "path": "dirty.csv"
+    },
+    {
+      "file": "clean.csv",
+      "url": "https://raw.githubusercontent.com/BigDaMa/raha/7be1334b8c7bbdac3f47ef514fb3e1e8c5fc181c/datasets/rayyan/clean.csv",
+      "sha256": "23159f43c0706782388ed8957ad0c74eb7b88bc98f34d65bd49296e186d4673f",
+      "bytes": 272785,
+      "retrieved_utc": "2026-10-20T21:12:52+00:00",
+      "extracted": [],
+      "path": "clean.csv"
+    }
+  ],
+  "unpinned_at_download": []
+}

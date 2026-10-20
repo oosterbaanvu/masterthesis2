@@ -21,6 +21,12 @@ batch. Verdict: **conditional GO** for a confirmatory study on selection reliabi
 shift. Start with [`docs/comprehensive_pilot_report.md`](docs/comprehensive_pilot_report.md); the foundation phase
 is in [`docs/feasibility_report.md`](docs/feasibility_report.md).
 
+Dataset extension (2026-10-20): Rayyan, Restaurant and optional Cars are now registered with pinned public
+sources, contracts and dirty-only `dqf scan` evaluations. Nine exploratory scans found zero incremental
+missing-value recall over conventional completeness controls; Rayyan references remain uncertain.
+See [`docs/real_error_benchmark_report.md`](docs/real_error_benchmark_report.md) for results and limits,
+and [`docs/published_benchmark_datasets.md`](docs/published_benchmark_datasets.md) for acquisition provenance.
+
 ## What it does
 
 ```
@@ -41,6 +47,9 @@ source .venv/bin/activate
 
 python scripts/download_datasets.py     # download from UCI / pinned GitHub commits, verify SHA-256, make read-only
 python scripts/verify_datasets.py       # re-verify hashes and shapes at any time
+python scripts/download_datasets.py raha_rayyan jung_restaurant jung_cars  # Cars is optional
+python scripts/qualify_published_pairs.py --output data/local_pair_audit.json
+python scripts/evaluate_real_error_benchmarks.py  # dirty-only scans first, references afterward; no injection
 
 dqf controls generate                   # contracts -> dbt/models/generated (committed; a test checks drift)
 dqf controls check uci_credit           # run all dbt controls on the untouched table
@@ -128,6 +137,8 @@ docs/                           research documentation (see below)
 | [`docs/comprehensive_pilot_report.md`](docs/comprehensive_pilot_report.md) | **Pilot results and answers to the ten decisive questions** |
 | [`docs/post_pilot_research_directions.md`](docs/post_pilot_research_directions.md) | Defensible research directions after the pilot |
 | [`docs/dataset_overview.md`](docs/dataset_overview.md) | Per-dataset source, licence, hash, roles, ground truth, suitability |
+| [`docs/published_benchmark_datasets.md`](docs/published_benchmark_datasets.md) | Verified Rayyan/Restaurant/Cars acquisition, label audit and service follow-up plan |
+| [`docs/real_error_benchmark_report.md`](docs/real_error_benchmark_report.md) | Actual service evaluation on published pairs, fixed-budget results, label limits and MSc suitability |
 | [`docs/detector_comparison.md`](docs/detector_comparison.md) | Detector requirements, licences, fair comparison tracks |
 | [`docs/injection_strategies.md`](docs/injection_strategies.md) | Error type / mechanism / rate; strategies A and B; held-out family |
 | [`docs/operational_demo.md`](docs/operational_demo.md) | `dqf scan`: analysing a new batch, findings, recommendation, feedback |

@@ -150,7 +150,11 @@ so the earlier results refer to the same bytes **[ours]**.
   "12.0 oz", "%", "N/A", state appended to city). A format/standardisation benchmark, not a value-error
   benchmark.
 - **Hospital [ours]:** 509 differences; 508 are 'x' character substitutions (synthetic).
-- **Rayyan, Movies [probe]:** small real/format errors in bibliographic and movie data; not needed.
+- **Rayyan [updated 2026-10-20]:** now reproducibly registered and audited as a conditional external
+  benchmark: 948 candidate differences, with major date/reference caveats. Restaurant and optional Cars
+  add published synthetic missing-value variants. See `published_benchmark_datasets.md`; service
+  integration is now evaluated in `real_error_benchmark_report.md`; independent label adjudication
+  remains future work. **Movies [probe]:** not selected.
 - **Feedzai BAF [probe]:** Kaggle metadata states CC BY-NC-SA 4.0, the publisher datasheet CC BY-NC-ND 4.0;
   download requires login (not bypassed). Both are non-commercial; ND would forbid sharing injected
   copies. Bank Marketing covers the monthly-batch role.

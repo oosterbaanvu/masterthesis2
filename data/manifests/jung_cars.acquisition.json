@@ -1,0 +1,47 @@
+{
+  "landing_page": "https://github.com/calgo-lab/error-paper/tree/main/data/cars",
+  "licence": "Repository source openly accessible; verify original data and code reuse rights before redistribution; raw files kept outside Git",
+  "version": "calgo-lab/error-paper commit b8950a91ba0d1488c4e3b053fdccde154644ddd6; released cars_3_1 variant",
+  "citation": "Jung, Jaeger, Chandler, Biessmann (2025), Towards Realistic Error Models for Tabular Data, Journal of Data and Information Quality, doi:10.1145/3774914",
+  "dataset": "jung_cars",
+  "title": "Cars (Jung et al. JDIQ 2025 error-model experiment; format caveat)",
+  "status": "VERIFIED",
+  "checked_utc": "2026-10-20T21:12:54+00:00",
+  "files": [
+    {
+      "path": "dirty.csv",
+      "sha256": "c803f870e22539a69250ee36c79e91364217f32c07bbb53f289952d8e9be9ff7",
+      "bytes": 21936,
+      "writable": false
+    },
+    {
+      "path": "clean.csv",
+      "sha256": "29d0feff7af38acaea5a96d225fa4a213a057ed8f03614881be6abd42d1b553b",
+      "bytes": 22312,
+      "writable": false
+    }
+  ],
+  "problems": [],
+  "unpinned": [],
+  "downloads": [
+    {
+      "file": "dirty.csv",
+      "url": "https://raw.githubusercontent.com/calgo-lab/error-paper/b8950a91ba0d1488c4e3b053fdccde154644ddd6/data/cars/cars_3_1.csv",
+      "sha256": "c803f870e22539a69250ee36c79e91364217f32c07bbb53f289952d8e9be9ff7",
+      "bytes": 21936,
+      "retrieved_utc": "2026-10-20T21:12:53+00:00",
+      "extracted": [],
+      "path": "dirty.csv"
+    },
+    {
+      "file": "clean.csv",
+      "url": "https://raw.githubusercontent.com/calgo-lab/error-paper/b8950a91ba0d1488c4e3b053fdccde154644ddd6/data/cars/clean.csv",
+      "sha256": "29d0feff7af38acaea5a96d225fa4a213a057ed8f03614881be6abd42d1b553b",
+      "bytes": 22312,
+      "retrieved_utc": "2026-10-20T21:12:54+00:00",
+      "extracted": [],
+      "path": "clean.csv"
+    }
+  ],
+  "unpinned_at_download": []
+}

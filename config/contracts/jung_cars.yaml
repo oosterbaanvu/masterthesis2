@@ -1,0 +1,52 @@
+dataset: jung_cars
+table: automobile_records
+description: Published cars_3_1 dirty records; numeric formatting retained in raw files and normalized only in typed views.
+row_id: null
+excluded_columns:
+  Car: High-cardinality model identifier, excluded from predictive features and cell scoring; used for grouping only.
+columns:
+  - {name: MPG, type: numeric, semantic: fuel_economy, missing_tokens: ['', '?']}
+  - {name: Cylinders, type: numeric, semantic: count, missing_tokens: ['', '?']}
+  - {name: Displacement, type: numeric, semantic: engine_volume, missing_tokens: ['', '?']}
+  - {name: Horsepower, type: numeric, semantic: engine_power, missing_tokens: ['', '?']}
+  - {name: Weight, type: numeric, semantic: vehicle_weight, missing_tokens: ['', '?']}
+  - {name: Acceleration, type: numeric, semantic: duration, missing_tokens: ['', '?']}
+  - {name: Model, type: numeric, semantic: model_year_code, missing_tokens: ['', '?']}
+  - {name: Origin, type: categorical, semantic: region_code, missing_tokens: ['', '?']}
+rules:
+  - id: D_REQUIRED
+    kind: not_null
+    columns: all
+    status: provisional
+    evidence: Complete automotive measurement record; missing tokens explicitly mapped to NULL.
+  - id: D_NONNEG_{i}
+    kind: range
+    for_each: [MPG, Cylinders, Displacement, Horsepower, Weight, Acceleration, Model]
+    columns: ['{i}']
+    min: 0
+    status: provisional
+    evidence: Nonnegative physical measurements/counts/year code; no clean-derived min or max used.
+  - id: D_INTEGRAL_{i}
+    kind: expression
+    for_each: [Cylinders, Model]
+    columns: ['{i}']
+    expression: '"{i}" = trunc("{i}")'
+    status: provisional
+    evidence: Counts and model-year codes are integral; not a bound inferred from reference values.
+statistical_controls:
+  - id: S_ENV_{i}
+    kind: envelope
+    for_each: [MPG, Cylinders, Displacement, Horsepower, Weight, Acceleration, Model]
+    columns: ['{i}']
+    expression: '"{i}"'
+    lower_q: 0.0005
+    upper_q: 0.9995
+    status: provisional
+    evidence: Quantiles fixed in advance, fitted on dirty history without filling from the clean reference.
+  - id: S_ORIGIN
+    kind: rare_category
+    columns: [Origin]
+    expression: '"Origin"'
+    min_share: 0.005
+    status: provisional
+    evidence: Dirty-history region frequency; unseen regions are candidates, not verified errors.

@@ -1,0 +1,36 @@
+# Frozen exploratory protocol; no outcome-dependent detector search or error injection.
+version: 1
+scope: design_pool_only
+seeds: [11, 22, 33]
+history_fraction: 0.6
+primary_budget_per_1k: 25
+budgets_per_1k: [10, 25, 50]
+review_seed: 0
+label_policy: conservative_v1
+datasets:
+  raha_rayyan:
+    group_columns: [article_title]
+  jung_restaurant:
+    group_columns: [name, class]
+  jung_cars:
+    group_columns: [Car]
+detectors:
+  cdc:
+    name: cdc_hgb
+    params: {confidence: 0.999, calibration_rows: 32, max_iter: 100, seed: 0, rank_score: normalized_residual}
+  dboost_text:
+    name: dboost
+    params: {model: gaussian, params: [3.0], type_mode: text, fit_on: reference}
+  lucario_core:
+    name: lucario_core
+    params: {fit_on: reference}
+numeric_detectors:
+  dboost_typed:
+    name: dboost
+    params: {model: gaussian, params: [3.0], type_mode: inferred, fit_on: reference}
+  sd:
+    name: sd_outlier
+    params: {n_sd: 3.0, fit_on: reference}
+  iqr:
+    name: iqr_outlier
+    params: {k: 1.5, fit_on: reference}

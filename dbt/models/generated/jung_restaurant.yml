@@ -1,0 +1,132 @@
+# GENERATED from config/contracts/jung_restaurant.yaml by `dqf controls generate`. Do not edit.
+version: 2
+models:
+- name: stg_jung_restaurant
+  description: Published restaurant_3_1 dirty listings; entity class excluded from service features and scoring.
+  config:
+    meta:
+      dataset: jung_restaurant
+      contract: config/contracts/jung_restaurant.yaml
+  data_tests:
+  - dq_not_null:
+      name: jung_restaurant__d_required__name
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"name"'
+        column_name_text: name
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_restaurant__d_required__addr
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"addr"'
+        column_name_text: addr
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_restaurant__d_required__city
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"city"'
+        column_name_text: city
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_restaurant__d_required__phone
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"phone"'
+        column_name_text: phone
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_restaurant__d_required__type
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"type"'
+        column_name_text: type
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_expression:
+      name: jung_restaurant__d_phone_characters
+      arguments:
+        rule_id: D_PHONE_CHARACTERS
+        condition: regexp_full_match("phone", '[0-9 ()+./-]+')
+        columns_text: phone
+        observed_sql: coalesce(cast("phone" as varchar), 'NULL')
+      config:
+        meta:
+          rule_id: D_PHONE_CHARACTERS
+          tier: deterministic
+          status: provisional
+  - dq_rare_category:
+      name: jung_restaurant__s_rare_city
+      arguments:
+        rule_id: S_RARE_city
+        expression: '"city"'
+        columns_text: city
+      config:
+        meta:
+          rule_id: S_RARE_city
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: jung_restaurant__s_rare_type
+      arguments:
+        rule_id: S_RARE_type
+        expression: '"type"'
+        columns_text: type
+      config:
+        meta:
+          rule_id: S_RARE_type
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: jung_restaurant__s_length_name
+      arguments:
+        rule_id: S_LENGTH_name
+        expression: length("name")
+        columns_text: name
+      config:
+        meta:
+          rule_id: S_LENGTH_name
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: jung_restaurant__s_length_addr
+      arguments:
+        rule_id: S_LENGTH_addr
+        expression: length("addr")
+        columns_text: addr
+      config:
+        meta:
+          rule_id: S_LENGTH_addr
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: jung_restaurant__s_length_phone
+      arguments:
+        rule_id: S_LENGTH_phone
+        expression: length("phone")
+        columns_text: phone
+      config:
+        meta:
+          rule_id: S_LENGTH_phone
+          tier: statistical
+          status: provisional

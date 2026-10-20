@@ -1,0 +1,294 @@
+# GENERATED from config/contracts/jung_cars.yaml by `dqf controls generate`. Do not edit.
+version: 2
+models:
+- name: stg_jung_cars
+  description: Published cars_3_1 dirty records; numeric formatting retained in raw files and normalized only in typed views.
+  config:
+    meta:
+      dataset: jung_cars
+      contract: config/contracts/jung_cars.yaml
+  data_tests:
+  - dq_not_null:
+      name: jung_cars__d_required__mpg
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"MPG"'
+        column_name_text: MPG
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_cars__d_required__cylinders
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"Cylinders"'
+        column_name_text: Cylinders
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_cars__d_required__displacement
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"Displacement"'
+        column_name_text: Displacement
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_cars__d_required__horsepower
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"Horsepower"'
+        column_name_text: Horsepower
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_cars__d_required__weight
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"Weight"'
+        column_name_text: Weight
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_cars__d_required__acceleration
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"Acceleration"'
+        column_name_text: Acceleration
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_cars__d_required__model
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"Model"'
+        column_name_text: Model
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: jung_cars__d_required__origin
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"Origin"'
+        column_name_text: Origin
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: jung_cars__d_nonneg_mpg
+      arguments:
+        rule_id: D_NONNEG_MPG
+        column_sql: '"MPG"'
+        column_name_text: MPG
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_MPG
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: jung_cars__d_nonneg_cylinders
+      arguments:
+        rule_id: D_NONNEG_Cylinders
+        column_sql: '"Cylinders"'
+        column_name_text: Cylinders
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_Cylinders
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: jung_cars__d_nonneg_displacement
+      arguments:
+        rule_id: D_NONNEG_Displacement
+        column_sql: '"Displacement"'
+        column_name_text: Displacement
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_Displacement
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: jung_cars__d_nonneg_horsepower
+      arguments:
+        rule_id: D_NONNEG_Horsepower
+        column_sql: '"Horsepower"'
+        column_name_text: Horsepower
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_Horsepower
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: jung_cars__d_nonneg_weight
+      arguments:
+        rule_id: D_NONNEG_Weight
+        column_sql: '"Weight"'
+        column_name_text: Weight
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_Weight
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: jung_cars__d_nonneg_acceleration
+      arguments:
+        rule_id: D_NONNEG_Acceleration
+        column_sql: '"Acceleration"'
+        column_name_text: Acceleration
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_Acceleration
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: jung_cars__d_nonneg_model
+      arguments:
+        rule_id: D_NONNEG_Model
+        column_sql: '"Model"'
+        column_name_text: Model
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_Model
+          tier: deterministic
+          status: provisional
+  - dq_expression:
+      name: jung_cars__d_integral_cylinders
+      arguments:
+        rule_id: D_INTEGRAL_Cylinders
+        condition: '"Cylinders" = trunc("Cylinders")'
+        columns_text: Cylinders
+        observed_sql: coalesce(cast("Cylinders" as varchar), 'NULL')
+      config:
+        meta:
+          rule_id: D_INTEGRAL_Cylinders
+          tier: deterministic
+          status: provisional
+  - dq_expression:
+      name: jung_cars__d_integral_model
+      arguments:
+        rule_id: D_INTEGRAL_Model
+        condition: '"Model" = trunc("Model")'
+        columns_text: Model
+        observed_sql: coalesce(cast("Model" as varchar), 'NULL')
+      config:
+        meta:
+          rule_id: D_INTEGRAL_Model
+          tier: deterministic
+          status: provisional
+  - dq_envelope:
+      name: jung_cars__s_env_mpg
+      arguments:
+        rule_id: S_ENV_MPG
+        expression: '"MPG"'
+        columns_text: MPG
+      config:
+        meta:
+          rule_id: S_ENV_MPG
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: jung_cars__s_env_cylinders
+      arguments:
+        rule_id: S_ENV_Cylinders
+        expression: '"Cylinders"'
+        columns_text: Cylinders
+      config:
+        meta:
+          rule_id: S_ENV_Cylinders
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: jung_cars__s_env_displacement
+      arguments:
+        rule_id: S_ENV_Displacement
+        expression: '"Displacement"'
+        columns_text: Displacement
+      config:
+        meta:
+          rule_id: S_ENV_Displacement
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: jung_cars__s_env_horsepower
+      arguments:
+        rule_id: S_ENV_Horsepower
+        expression: '"Horsepower"'
+        columns_text: Horsepower
+      config:
+        meta:
+          rule_id: S_ENV_Horsepower
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: jung_cars__s_env_weight
+      arguments:
+        rule_id: S_ENV_Weight
+        expression: '"Weight"'
+        columns_text: Weight
+      config:
+        meta:
+          rule_id: S_ENV_Weight
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: jung_cars__s_env_acceleration
+      arguments:
+        rule_id: S_ENV_Acceleration
+        expression: '"Acceleration"'
+        columns_text: Acceleration
+      config:
+        meta:
+          rule_id: S_ENV_Acceleration
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: jung_cars__s_env_model
+      arguments:
+        rule_id: S_ENV_Model
+        expression: '"Model"'
+        columns_text: Model
+      config:
+        meta:
+          rule_id: S_ENV_Model
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: jung_cars__s_origin
+      arguments:
+        rule_id: S_ORIGIN
+        expression: '"Origin"'
+        columns_text: Origin
+      config:
+        meta:
+          rule_id: S_ORIGIN
+          tier: statistical
+          status: provisional

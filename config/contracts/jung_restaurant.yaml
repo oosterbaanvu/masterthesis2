@@ -1,0 +1,42 @@
+dataset: jung_restaurant
+table: restaurant_listings
+description: Published restaurant_3_1 dirty listings; entity class excluded from service features and scoring.
+row_id: null
+excluded_columns:
+  class: Entity grouping annotation, not a business attribute. May be used only for dirty-only split grouping.
+columns:
+  - {name: name, type: categorical, semantic: business_name, missing_tokens: ['', '?']}
+  - {name: addr, type: categorical, semantic: address, missing_tokens: ['', '?']}
+  - {name: city, type: categorical, semantic: locality, missing_tokens: ['', '?']}
+  - {name: phone, type: categorical, semantic: telephone_identifier, missing_tokens: ['', '?']}
+  - {name: type, type: categorical, semantic: cuisine, missing_tokens: ['', '?']}
+rules:
+  - id: D_REQUIRED
+    kind: not_null
+    columns: all
+    status: provisional
+    evidence: Listing completeness; '?' and empty string are declared missing tokens, not numeric coercions.
+  - id: D_PHONE_CHARACTERS
+    kind: expression
+    columns: [phone]
+    expression: 'regexp_full_match("phone", ''[0-9 ()+./-]+'')'
+    status: provisional
+    evidence: Conservative telephone character check; permits source punctuation and does not infer a regional format.
+statistical_controls:
+  - id: S_RARE_{i}
+    kind: rare_category
+    for_each: [city, type]
+    columns: ['{i}']
+    expression: '"{i}"'
+    min_share: 0.005
+    status: provisional
+    evidence: Dirty-history category frequencies; novel legitimate locations or cuisines can trigger alerts.
+  - id: S_LENGTH_{i}
+    kind: envelope
+    for_each: [name, addr, phone]
+    columns: ['{i}']
+    expression: 'length("{i}")'
+    lower_q: 0.0005
+    upper_q: 0.9995
+    status: provisional
+    evidence: Dirty-history string-length envelope, fixed quantiles shared with the financial pilot.

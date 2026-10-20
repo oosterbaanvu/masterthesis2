@@ -7,5 +7,9 @@
 - `runs/` (git-ignored): full run directories written by `dqf run` – stacked batch, dbt artefacts and
   DuckDB file, control alerts, detector scores, injection log, manifest. Regenerate with the commands in
   the repository README.
+- `real_error_benchmark/` (committed): aggregate results of nine dirty-only service scans on published
+  pairs, compatibility/label/workload tables and the frozen configuration/code fingerprints. No raw
+  record values are included. Reproduce with `python scripts/evaluate_real_error_benchmarks.py`;
+  see `docs/real_error_benchmark_report.md`. Predictions and full findings stay in ignored `runs/`.
 
 Everything in this folder is qualification or feasibility evidence; none of it is a confirmatory result.

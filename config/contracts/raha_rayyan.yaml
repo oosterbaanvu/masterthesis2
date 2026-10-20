@@ -1,0 +1,56 @@
+dataset: raha_rayyan
+table: rayyan_articles
+description: >-
+  Published bibliographic dirty records. Codes and ambiguous dates remain literal strings.
+  Required-field, encoding and length checks are provisional engineering checks, not adjudicated labels.
+row_id: id
+excluded_columns:
+  id: Record identifier, not a predictive feature or a scored quality attribute.
+columns:
+  - {name: article_title, type: categorical, semantic: free_text, missing_tokens: ['']}
+  - {name: article_language, type: categorical, semantic: language_code, missing_tokens: ['']}
+  - {name: journal_title, type: categorical, semantic: free_text, missing_tokens: ['']}
+  - {name: jounral_abbreviation, type: categorical, semantic: source_spelling_preserved, required: false, missing_tokens: ['']}
+  - {name: journal_issn, type: categorical, semantic: identifier, required: false, missing_tokens: ['']}
+  - {name: article_jvolumn, type: categorical, semantic: publication_code, required: false, missing_tokens: ['']}
+  - {name: article_jissue, type: categorical, semantic: publication_code, required: false, missing_tokens: ['']}
+  - {name: article_jcreated_at, type: categorical, semantic: ambiguous_date, required: false, missing_tokens: ['']}
+  - {name: article_pagination, type: categorical, semantic: pagination_code, required: false, missing_tokens: ['']}
+  - {name: author_list, type: categorical, semantic: free_text, required: false, missing_tokens: ['']}
+rules:
+  - id: D_REQUIRED
+    kind: not_null
+    columns: [article_title, article_language, journal_title]
+    status: provisional
+    evidence: Minimal usable bibliographic record; not a publisher guarantee of completeness.
+  - id: D_ENCODING_{i}
+    kind: expression
+    for_each: [article_title, journal_title, author_list]
+    columns: ['{i}']
+    expression: 'not contains("{i}", ''�'')'
+    status: provisional
+    evidence: Unicode replacement character indicates decoding loss; not a complete encoding validator.
+  - id: D_UNAMBIGUOUS_DATE
+    kind: expression
+    columns: [article_jcreated_at]
+    expression: 'true'
+    status: unsupported
+    enabled: false
+    evidence: No authoritative day/month/year ordering available; do not infer a date rule from clean repairs.
+statistical_controls:
+  - id: S_LENGTH_{i}
+    kind: envelope
+    for_each: [article_title, journal_title, author_list]
+    columns: ['{i}']
+    expression: 'length("{i}")'
+    lower_q: 0.0005
+    upper_q: 0.9995
+    status: provisional
+    evidence: Length envelope fitted exclusively on dirty historical rows; unusual length is not proven corruption.
+  - id: S_LANGUAGE
+    kind: rare_category
+    columns: [article_language]
+    expression: '"article_language"'
+    min_share: 0.005
+    status: provisional
+    evidence: Dirty-history language frequency; valid rare languages may be flagged.
