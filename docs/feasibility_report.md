@@ -1,5 +1,9 @@
 # Feasibility report and final assessment
 
+> **Superseded in part (2026-10-20):** the comprehensive pilot (`docs/comprehensive_pilot_report.md`) extends
+> this foundation with more detectors, independent replications, delivery sets and an operational scan. Numbers
+> below are the earlier two-seed demo results.
+
 Date: 2026-10-20 · Branch `claude/eager-davinci-u8fn78` · Status: foundation and qualification complete;
 confirmatory experiments **not** run.
 

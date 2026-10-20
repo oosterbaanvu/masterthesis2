@@ -11,12 +11,15 @@ MSc Artificial Intelligence thesis, University of Groningen; graduation internsh
 Rabobank-related data-engineering context. **Public and synthetic data only** – no bank data is used,
 and nothing here estimates real error rates of any bank source.
 
-Status (2026-10-20): **comprehensive feasibility pilot completed** (dev/design-pool data only; provisional).
-Seven datasets are reproducibly acquirable, seven cell-level candidate configurations plus a record-level
-detector are integrated and qualified, two injection strategies are compared with equal budgets, and an
-operational scan of new batches runs end to end. The confirmatory study has **not** been run. Start with
-[`docs/comprehensive_pilot_report.md`](docs/comprehensive_pilot_report.md); the earlier foundation is in
-[`docs/feasibility_report.md`](docs/feasibility_report.md).
+Status (2026-10-20): **comprehensive feasibility pilot completed** (design-pool data only; all results
+provisional). Seven datasets acquire and verify reproducibly (Give Me Some Credit is integrated but blocked
+until the Kaggle competition rules are accepted). CDC and a clean-room dBoost (100 % agreement with the
+original) are the primary scored, label-free cell detectors; LUCARIO-core, SD/IQR and Isolation Forest are
+secondary. 14 replications on UCI Credit and Bank Marketing (random splits and consecutive deliveries) were run.
+An operational `dqf scan` turns offline evidence into ADOPT / DO_NOT_ADOPT / INSUFFICIENT_EVIDENCE for a new
+batch. Verdict: **conditional GO** for a confirmatory study on selection reliability under error-population
+shift. Start with [`docs/comprehensive_pilot_report.md`](docs/comprehensive_pilot_report.md); the foundation phase
+is in [`docs/feasibility_report.md`](docs/feasibility_report.md).
 
 ## What it does
 
@@ -64,17 +67,20 @@ python scripts/dataset_status.py                          # or: dqf datasets sta
 bash envs/dboost/install.sh                               # optional: original dBoost (GPL) for fidelity checks only
 python scripts/qualify_pilot_detectors.py                 # compatibility, runtime, memory, dBoost fidelity
 OMP_NUM_THREADS=1 python scripts/run_pilot.py config/pilot/pilot_uci_credit.yaml          # 5 pilot splits
-OMP_NUM_THREADS=1 python scripts/run_pilot.py config/pilot/pilot_uci_bank_marketing.yaml  # 5 random + 1 temporal
+OMP_NUM_THREADS=1 python scripts/run_pilot.py config/pilot/pilot_uci_bank_marketing.yaml  # 5 random + 4 delivery sets
 python scripts/analyse_pilot.py                           # -> results/pilot/*.csv, docs/figures/pilot_*.png
+python scripts/primary_analysis.py                        # primary analysis, go/no-go, sample size
 python scripts/render_pilot_tables.py > /tmp/tables.md    # the report's tables, regenerated from the CSVs
 python scripts/independent_validation.py                  # BART (Tax) and real-error (Flights, Beers) checks
 dqf scan config/scans/scan_bank_marketing_period13.yaml   # operational scan of a new monthly delivery
 dqf scan config/scans/scan_uci_credit_new_clients.yaml
+dqf scan config/scans/scan_bank_marketing_rules_only.yaml
 dqf feedback results/runs/scans/<scan>                    # after annotating feedback.csv
 ```
 
-One replication takes ~13 min on 4 CPUs (≈400 scenarios, 9 detector configurations, one dbt run); the full
-pilot (11 replications) ran in ~1 h with three parallel processes. `uv sync --extra figures` adds matplotlib
+One replication takes 6–17 min on 4 CPUs (330–400 scenarios, 8 detector configurations, one dbt run). The full
+pilot (14 replications) ran in about 1.5 h; use at most three parallel processes on 15 GB (a Bank replication
+peaks at ~5 GB). `uv sync --extra figures` adds matplotlib
 for the figures.
 
 Set `OMP_NUM_THREADS` when running several scoring jobs at the same time.

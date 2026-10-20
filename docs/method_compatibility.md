@@ -1,5 +1,8 @@
 # Method compatibility
 
+> Pilot candidates added on 2026-10-20 (dBoost, LUCARIO-core, SD/IQR; ZeroED blocked): see
+> `docs/detector_comparison.md` and `results/qualification/pilot_detector_qualification.json`.
+
 Status: 2026-10-20. Every PASS/CONDITIONAL/INCOMPATIBLE verdict below is backed by a real execution
 recorded in `results/qualification/` (reproduce with `python scripts/qualify_detectors.py`,
 `scripts/probe_flights_typed.py`, `scripts/probe_tax_bart.py`, `scripts/compare_rank_scores.py`).

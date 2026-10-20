@@ -47,9 +47,10 @@ feedback can later turn findings into adjudicated precision, which is the only e
 ```bash
 dqf scan config/scans/scan_bank_marketing_period13.yaml   # history: deliveries 1-9, new batch: delivery 13
 dqf scan config/scans/scan_uci_credit_new_clients.yaml    # history: ID <= 15,000, new batch: ID > 25,000
+dqf scan config/scans/scan_bank_marketing_rules_only.yaml # rules-only team, non-temporal extract (ADOPT case)
 ```
 
-Outputs land in `results/runs/scans/<name>/` (git-ignored; copies of the two reports are committed under
+Outputs land in `results/runs/scans/<name>/` (git-ignored; copies of the three reports are committed under
 `reports/scans/`).
 
 ## 4. Limits
