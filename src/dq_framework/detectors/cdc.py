@@ -54,7 +54,6 @@ from dq_framework.detectors.base import (
     environment_info,
 )
 
-
 # Conformal p-values have resolution 1/(n_cal + 1); many cells share the minimum p-value. A tiny,
 # monotone tie-breaker (always < the p-value resolution for n_cal < 10,000) orders cells within a tie
 # by how far they lie from the model's prediction, so that fixed review budgets are not filled in

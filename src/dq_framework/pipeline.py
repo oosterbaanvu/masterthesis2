@@ -216,6 +216,8 @@ def run(cfg: RunConfig, out_root: Path | None = None) -> dict[str, Any]:
                 "tests": ctl.tests["status"].value_counts().to_dict(), "returncode": ctl.meta.get("returncode")},
         "detector": det_meta,
         "n_scenarios": len(cfg.scenarios),
+        "budgets_per_1k": list(cfg.budgets_per_1k),
+        "stored_detector_cells": "flags, target column, and the top max(budget) cells per 1,000 rows per scenario",
         "injection": inj_summ,
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2, default=str))

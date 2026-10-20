@@ -12,4 +12,4 @@ scenarios:
 detector:
   name: cdc_hgb
   params: {confidence: 0.999, max_iter: 100, seed: 0}
-budgets_per_1k: [5, 10, 25]
+budgets_per_1k: [5, 10, 25, 50]
