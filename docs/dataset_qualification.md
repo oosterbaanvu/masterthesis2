@@ -153,7 +153,8 @@ so the earlier results refer to the same bytes **[ours]**.
 - **Rayyan [updated 2026-10-20]:** now reproducibly registered and audited as a conditional external
   benchmark: 948 candidate differences, with major date/reference caveats. Restaurant and optional Cars
   add published synthetic missing-value variants. See `published_benchmark_datasets.md`; service
-  integration and independent label adjudication remain future work. **Movies [probe]:** not selected.
+  integration is now evaluated in `real_error_benchmark_report.md`; independent label adjudication
+  remains future work. **Movies [probe]:** not selected.
 - **Feedzai BAF [probe]:** Kaggle metadata states CC BY-NC-SA 4.0, the publisher datasheet CC BY-NC-ND 4.0;
   download requires login (not bypassed). Both are non-commercial; ND would forbid sharing injected
   copies. Bank Marketing covers the monthly-batch role.

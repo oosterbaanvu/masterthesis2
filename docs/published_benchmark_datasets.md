@@ -3,8 +3,9 @@
 Status: **acquisition and pair audit verified on 20 October 2026** in the target cloud environment, from
 `claude/exciting-ritchie-w1e31t` at `27ce4f67e1535de637d62c95c29878f77d5376ea`. All six CSV downloads match
 the bundle's SHA-256 pins and are read-only. Registry registration is idempotent and preserves existing
-entries. No source contracts, detector evaluation or operational `dqf scan` integration for these sources
-have been implemented. Nothing here establishes production validity.
+entries. The acquisition-only work described below has since been extended with source contracts,
+actual dirty-only service scans and separate reference evaluation; see
+[`real_error_benchmark_report.md`](real_error_benchmark_report.md). Nothing here establishes production validity.
 
 ## Purpose
 
@@ -117,6 +118,11 @@ Path("results/qualification/published_pair_audit.json").write_text(json.dumps(su
 
 ## Follow-up plan for the Data Quality Evaluation & Selection Service
 
+This records the plan from the acquisition stage. Contracts, grouped exploratory splits, compatibility
+checks, dirty-only service runs and separate evaluation are now implemented in
+`real_error_benchmark_report.md`. Independent adjudication, licence clearance and confirmatory
+study evidence remain outstanding; the historical audit alone did not supply them.
+
 1. **Review the sources and labels.** Resolve dataset usage terms. For Rayyan, adjudicate date,
    sentinel, encoding and pagination candidates on the design pool; freeze separate corruption,
    canonicalisation and uncertain-label masks. For Restaurant, document the released variant's
@@ -149,6 +155,9 @@ Path("results/qualification/published_pair_audit.json").write_text(json.dumps(su
 
 ## How this affects the thesis
 
-Do not append these to the financial pilot's main results and treat all F1 scores as directly comparable. Rayyan's bibliographic/date errors, Restaurant's synthetic category changes and Cars' numerical formatting are distinct populations. Benchmark scoring should report detection by family and distinguish true corruption, canonicalisation differences and missing/ambiguous references. The next engineering task is to supply source contracts with meaningful validation rules, check which cell-level detectors are compatible, and use the service to scan the dirty data **without** accessing the clean references. Only the evaluator may inspect the clean table. Split by entities/sources when needed to prevent leakage.
+Do not pool these with the financial pilot's results or treat F1 scores as directly comparable. Rayyan's
+bibliographic/date candidates, Restaurant's synthetic missing values and Cars' numerical formatting are
+distinct populations. The subsequent service evaluation separates label families and uncertainty, groups
+dirty entities and keeps clean references in the evaluator; see `real_error_benchmark_report.md`.
 
 Other existing benchmarks worth qualifying rather than silently adding: Raha Movies (`movies_1`: 7,390 × 17, real source with published references), REIN's Citation/Beers, and the large AddressTable/Clean Me If You Can (2026, geocoder-based references, ODbL data terms). Do not introduce them into a confirmatory study without separate download, licence, label, and detector-compatibility checks.

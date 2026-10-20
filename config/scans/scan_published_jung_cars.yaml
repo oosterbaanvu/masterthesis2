@@ -1,0 +1,62 @@
+# Dirty-only exploratory service scan; clean values are evaluated separately.
+name: published_jung_cars_11
+dataset: jung_cars
+history:
+  select: group_split
+  seed: 11
+  history_fraction: 0.6
+  group_columns: &id001
+  - Car
+  partition: history
+batch:
+  select: group_split
+  seed: 11
+  history_fraction: 0.6
+  group_columns: *id001
+  partition: batch
+exclude_research_holdout: false
+research_scope: design_pool_only
+baseline: full
+evidence: null
+budget_per_1k: 25
+review_seed: 0
+detectors:
+  cdc:
+    name: cdc_hgb
+    params:
+      confidence: 0.999
+      calibration_rows: 32
+      max_iter: 100
+      seed: 0
+      rank_score: normalized_residual
+  dboost_text:
+    name: dboost
+    params:
+      model: gaussian
+      params:
+      - 3.0
+      type_mode: text
+      fit_on: reference
+  lucario_core:
+    name: lucario_core
+    params:
+      fit_on: reference
+  dboost_typed:
+    name: dboost
+    params:
+      model: gaussian
+      params:
+      - 3.0
+      type_mode: inferred
+      fit_on: reference
+  sd:
+    name: sd_outlier
+    params:
+      n_sd: 3.0
+      fit_on: reference
+  iqr:
+    name: iqr_outlier
+    params:
+      k: 1.5
+      fit_on: reference
+continue_on_detector_error: true

@@ -4,7 +4,7 @@ from dq_framework.contracts import load_contract
 from dq_framework.controls import dbt_gen
 
 
-@pytest.mark.parametrize("ds", ["uci_credit", "uci_bank_marketing"])
+@pytest.mark.parametrize("ds", ["uci_credit", "uci_bank_marketing", "raha_rayyan", "jung_restaurant", "jung_cars"])
 def test_contracts_load_and_expand(ds):
     c = load_contract(ds)
     assert c.columns and c.rules
@@ -22,7 +22,7 @@ def test_for_each_expansion_uci_credit():
     assert mom[0].columns == ["BILL_AMT1", "BILL_AMT2", "LIMIT_BAL"]
 
 
-@pytest.mark.parametrize("ds", ["uci_credit", "uci_bank_marketing"])
+@pytest.mark.parametrize("ds", ["uci_credit", "uci_bank_marketing", "raha_rayyan", "jung_restaurant", "jung_cars"])
 def test_generated_dbt_files_are_up_to_date(ds):
     """The committed dbt models/tests must equal what the contract generates."""
     sql, yml = dbt_gen.render(load_contract(ds))

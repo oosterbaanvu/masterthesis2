@@ -15,15 +15,18 @@ import yaml
 from dq_framework import __version__, paths
 from dq_framework.contracts import load_contract
 from dq_framework.controls import alerts_to_cells, fit_reference_stats, run_controls
-from dq_framework.datasets import load_contract_table
+from dq_framework.datasets import get_spec, load_contract_table, load_raw_table
+from dq_framework.detectors.base import BLOCKED, INCOMPATIBLE
 from dq_framework.detectors.registry import make_detector
 from dq_framework.pilot.splits import design_pool
+from dq_framework.service.partitioning import grouped_partitions
+from dq_framework.service.review import review_order
 
 BATCH_ID = "batch"
 FEEDBACK_VERDICTS = ("confirmed_error", "not_an_error", "unsure")
 
 
-def _select(df: pd.DataFrame, spec: dict[str, Any], seed: int = 0) -> pd.Series:
+def _select(df: pd.DataFrame, spec: dict[str, Any], seed: int = 0, *, raw=None, contract=None) -> pd.Series:
     kind = spec.get("select", "periods")
     if kind == "periods":
         return df["_period"].isin(spec["periods"])
@@ -36,6 +39,10 @@ def _select(df: pd.DataFrame, spec: dict[str, Any], seed: int = 0) -> pd.Series:
         m = np.zeros(len(df), dtype=bool)
         m[rng.choice(len(df), size=min(spec["n"], len(df)), replace=False)] = True
         return pd.Series(m, index=df.index)
+    if kind == "group_split":
+        parts = grouped_partitions(raw, df, contract, spec["group_columns"],
+                                   spec.get("seed", 11), spec.get("history_fraction", 0.6))
+        return df["_row_id"].isin(parts.loc[parts["partition"] == spec["partition"], "_row_id"])
     raise ValueError(f"unknown selection {kind}")
 
 
@@ -102,10 +109,13 @@ def run_scan(config_path: str | Path, out_dir: Path | None = None) -> Path:
     df = load_contract_table(ds, contract)
     if cfg.get("exclude_research_holdout", True):
         df = df[design_pool(df, contract, int(cfg.get("holdout_seed", 1)))].reset_index(drop=True)
-    hist = df[_select(df, cfg["history"])].reset_index(drop=True)
-    batch = df[_select(df, cfg["batch"])].reset_index(drop=True)
+    raw = load_raw_table(get_spec(ds)) if any(cfg[k].get("select") == "group_split" for k in ("history", "batch")) else None
+    hist = df[_select(df, cfg["history"], raw=raw, contract=contract)].reset_index(drop=True)
+    batch = df[_select(df, cfg["batch"], raw=raw, contract=contract)].reset_index(drop=True)
     if set(hist["_row_id"]) & set(batch["_row_id"]):
         raise ValueError("history and batch overlap")
+    if not len(hist) or not len(batch):
+        raise ValueError("history and batch must both contain rows")
     out_dir = Path(out_dir or paths.RESULTS_DIR / "runs" / "scans" / f"{cfg.get('name', ds)}")
     out_dir.mkdir(parents=True, exist_ok=True)
     n = len(batch)
@@ -117,6 +127,7 @@ def run_scan(config_path: str | Path, out_dir: Path | None = None) -> Path:
     ctl = run_controls(contract, batch.assign(_scenario_id=BATCH_ID), stats, out_dir / "controls")
     a = ctl.alerts.copy()
     cells = alerts_to_cells(a)
+    cells.to_parquet(out_dir / "control_cells.parquet", index=False)
     rule_cells = set(zip(cells["_row_id"].astype("int64"), cells["column"], strict=True))
     det_rule_cells = set(zip(cells.loc[cells["tier"] == "deterministic", "_row_id"].astype("int64"),
                              cells.loc[cells["tier"] == "deterministic", "column"], strict=True))
@@ -132,7 +143,7 @@ def run_scan(config_path: str | Path, out_dir: Path | None = None) -> Path:
                              "score": np.nan, "explanation": f"observed {r['observed']}; expected {r['expected']}"})
 
     # learned detectors
-    det_rows, rec_rows = [], []
+    det_rows, rec_rows, score_frames = [], [], []
     # shift check: implicated baseline cells per 1,000 rows on this batch vs. on the untouched evaluation partitions
     stat_rate_batch = 1000 * len(rule_cells) / max(n, 1)
     evidence = load_evidence(Path(cfg["evidence"]) if cfg.get("evidence") else None, ds)
@@ -150,17 +161,41 @@ def run_scan(config_path: str | Path, out_dir: Path | None = None) -> Path:
             params["explain"] = True
         det = make_detector({"name": spec["name"], "params": params})
         comp = det.check_compatibility(contract, hist)
+        common = {"detector": key, "name": spec["name"], "granularity": det.granularity,
+                  "fit_scope": det.fit_scope, "provides_scores": det.provides_scores,
+                  "compatibility": comp.verdict, "compatibility_reasons": comp.reasons,
+                  "transformations": comp.transformations, "config": params}
+        if comp.verdict in (INCOMPATIBLE, BLOCKED):
+            det_rows.append({**common, "status": "incompatible", "seconds": 0, "flags": 0,
+                             "extra_flags_beyond_controls": 0, "extra_flags_per_1k": 0,
+                             "findings_listed": 0, "warnings": comp.reasons})
+            continue
         t0 = time.perf_counter()
-        det.fit(hist, contract)
-        out = det.score(batch.assign(_scenario_id=BATCH_ID))
+        try:
+            det.fit(hist, contract)
+            out = det.score(batch.assign(_scenario_id=BATCH_ID))
+            if out.status != "ok":
+                raise RuntimeError(f"detector status {out.status}: {out.warnings}")
+        except Exception as exc:
+            if not cfg.get("continue_on_detector_error", False):
+                raise
+            det_rows.append({**common, "status": "failed", "seconds": round(time.perf_counter() - t0, 3),
+                             "flags": 0, "extra_flags_beyond_controls": 0, "extra_flags_per_1k": 0,
+                             "findings_listed": 0, "warnings": [f"{type(exc).__name__}: {exc}"]})
+            continue
         secs = time.perf_counter() - t0
         s = out.scores
         if det.granularity == "row":
             s = s.assign(column="<record>")
         s = s.assign(_row_id=s["_row_id"].astype("int64"))
         in_base = pd.Series([(rid, c) in base_set for rid, c in zip(s["_row_id"], s["column"], strict=True)], index=s.index)
+        selected = review_order(s[~in_base], ranked=det.provides_scores, seed=cfg.get("review_seed", 0)).head(k)
+        selected_keys = set(zip(selected["_row_id"], selected["column"], strict=True))
+        s["review_selected"] = [(rid, col) in selected_keys for rid, col in zip(s["_row_id"], s["column"], strict=True)]
+        score_frames.append(s.assign(detector=key))
+        selected = s.loc[selected.index].copy()
         if det.provides_scores and det.granularity == "cell":
-            pick = s[~in_base].sort_values("score", ascending=False, kind="mergesort").head(k)
+            pick = selected
             pick = pd.concat([pick, s[s["flag"] & ~in_base & ~s.index.isin(pick.index)]])
             if hasattr(det, "explain_cells") and len(pick):
                 pick = pick.assign(explanation=det.explain_cells(batch, pick).to_numpy())
@@ -172,22 +207,30 @@ def run_scan(config_path: str | Path, out_dir: Path | None = None) -> Path:
             pick = s[s["flag"] & ~in_base]
         extra = int((s["flag"] & ~in_base).sum())
         burden = 1000 * extra / n
-        det_rows.append({"detector": key, "name": spec["name"], "granularity": det.granularity, "fit_scope": det.fit_scope,
-                         "provides_scores": det.provides_scores, "compatibility": comp.verdict, "seconds": round(secs, 1),
+        det_rows.append({**common, "status": "ok", "seconds": round(secs, 3),
                          "flags": int(s["flag"].sum()), "extra_flags_beyond_controls": extra,
-                         "extra_flags_per_1k": round(burden, 1), "findings_listed": len(pick), "warnings": out.warnings})
+                         "extra_flags_per_1k": round(burden, 1), "findings_listed": len(pick), "warnings": out.warnings,
+                         "scored_cells": len(s), "finite_scores": int(np.isfinite(s["score"]).sum()),
+                         "review_selected": len(selected), "metadata": out.meta()})
         for _, r in pick.iterrows():
             col = r["column"]
+            explanation = r.get("explanation")
+            if pd.isna(explanation) or not explanation:
+                explanation = f"{det.name}: {'native flag' if r['flag'] else 'ranked review candidate, not a native flag'}"
             findings.append({"_row_id": int(r["_row_id"]),
                              "record_key": _fmt(value_of.at[int(r["_row_id"]), key_col]) if key_col else "",
                              "column": col, "value": _fmt(value_of.at[int(r["_row_id"]), col]) if col in value_of else "",
                              "source": f"detector:{key}", "tier": "learned" if det.supervision != "none" else "statistical-baseline",
                              "rule_status": "", "score": r["score"],
-                             "explanation": r.get("explanation") or ("flagged" if r["flag"] else "within review budget")})
+                             "review_selected": bool(r.get("review_selected", False)), "explanation": explanation})
         if det.granularity == "cell":
             rec_rows.append(recommend(key, det.provides_scores, evidence, cfg.get("baseline", "full"), budget,
                                       cfg.get("evidence_scheme", "random"), burden, shift_ratio, cfg.get("decision", {})))
-    f = pd.DataFrame(findings)
+    scores = pd.concat(score_frames, ignore_index=True) if score_frames else pd.DataFrame(
+        columns=["_scenario_id", "_row_id", "column", "score", "flag", "review_selected", "detector"])
+    scores.to_parquet(out_dir / "detector_scores.parquet", index=False)
+    f = pd.DataFrame(findings, columns=["_row_id", "record_key", "column", "value", "source", "tier",
+                                      "rule_status", "score", "review_selected", "explanation"])
     f.insert(0, "finding_id", [f"F{i:05d}" for i in range(1, len(f) + 1)])
     f.to_csv(out_dir / "findings.csv", index=False)
     fb = f[["finding_id", "_row_id", "record_key", "column", "value", "source"]].assign(verdict="", note="")
@@ -206,8 +249,10 @@ def run_scan(config_path: str | Path, out_dir: Path | None = None) -> Path:
         "budget_per_1k": budget, "review_slots": k, "baseline": cfg.get("baseline", "full"),
         "detectors": det_rows, "recommendations": rec_rows,
         "findings": {"total": len(f), "by_source": f["source"].value_counts().to_dict()},
-        "notes": ["Findings are review candidates, not verified errors; no ground truth exists for this batch.",
-                  "Recommendations rest on offline synthetic-error evidence; see docs/comprehensive_pilot_report.md."],
+        "ingestion_missing_tokens": {c.name: c.missing_tokens for c in contract.columns if c.missing_tokens},
+        "notes": ["This service reads dirty input only; findings are candidates, not verified errors.",
+                  "Published references, when available, are evaluated separately after the scan.",
+                  "Recommendations require source-specific offline evidence; no evidence is inferred from these findings."],
     }
     (out_dir / "scan_summary.json").write_text(json.dumps(summary, indent=2, default=str))
     (out_dir / "scan_report.md").write_text(render_report(summary, f), encoding="utf-8")
@@ -218,19 +263,22 @@ def render_report(s: dict[str, Any], f: pd.DataFrame, max_rows: int = 40) -> str
     L = [f"# Data-quality scan: {s['scan']}", "",
          f"Dataset `{s['dataset']}` · history {s['history']['rows']:,} rows · new batch {s['batch']['rows']:,} rows · "
          f"run {s['run_utc']} · framework {s['framework_version']}", "",
-         "> Findings are **review candidates**, not verified errors: this batch has no ground truth. "
-         "Recommendations rest on offline evidence from synthetic errors.", "",
+         "> Findings are **review candidates**, not verified errors. The service has no access to a clean reference. "
+         "Recommendations require source-specific offline evidence.", "",
          "## Existing controls", "",
          f"dbt tests: {s['controls']['tests']}; alerts: {s['controls']['alerts']} ({s['controls']['alerts_by_tier']}); "
          f"implicated cells {s['controls']['baseline_alert_cells_per_1k_rows']} per 1,000 rows "
          f"(untouched evaluation partitions of the pilot: {s['controls']['evaluation_baseline_alert_cells_per_1k_rows']}; "
          f"ratio {s['controls']['shift_ratio']}).", "",
          "## Learned and literature detectors", "",
-         "| detector | level | learns on | scores | flags | extra beyond controls (per 1k rows) | listed | seconds |",
-         "|---|---|---|---|---|---|---|---|"]
+         "| detector | status | level | learns on | scores | flags | extra beyond controls (per 1k rows) | listed | seconds |",
+         "|---|---|---|---|---|---|---|---|---|"]
     for d in s["detectors"]:
-        L.append(f"| {d['detector']} | {d['granularity']} | {d['fit_scope']} | {'yes' if d['provides_scores'] else 'no'} | "
+        L.append(f"| {d['detector']} | {d.get('status', 'ok')} | {d['granularity']} | {d['fit_scope']} | {'yes' if d['provides_scores'] else 'no'} | "
                  f"{d['flags']} | {d['extra_flags_beyond_controls']} ({d['extra_flags_per_1k']}) | {d['findings_listed']} | {d['seconds']} |")
+    for d in s["detectors"]:
+        if d.get("status", "ok") != "ok":
+            L.append(f"\n{d['detector']}: **{d['status']}** — " + "; ".join(d.get("warnings", [])) + "\n")
     L += ["", f"Review budget: {s['budget_per_1k']:g} extra cells per 1,000 rows = {s['review_slots']} cells for this batch; "
           "scored detectors list their top cells within that budget plus their own flags, binary detectors list their flags.", "",
           "## Recommendation per detector", ""]

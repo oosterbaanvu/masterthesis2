@@ -119,8 +119,10 @@ def load_contract_table(dataset: str, contract=None) -> pd.DataFrame:
         out[name] = _derive(raw, d).to_numpy()
     for col in contract.columns:
         s = raw[col.name]
+        if col.missing_tokens:
+            s = s.mask(s.isin(col.missing_tokens))
         if col.type == "numeric":
-            out[col.name] = s.astype("float64")
+            out[col.name] = pd.to_numeric(s, errors="raise").astype("float64")
         elif pd.api.types.is_integer_dtype(s):
             out[col.name] = s.astype("Int64")
         else:

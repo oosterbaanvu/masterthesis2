@@ -186,7 +186,7 @@ class DBoost(Detector):
     supervision = "reference_data"
     provides_scores = False
     limitations = [
-        "Binary flags only (no ranking score); evaluated with flag-based metrics.",
+        "Gaussian ranking uses the existing test-statistic extension; histogram variants have binary flags only.",
         "Rows whose values do not parse with the inferred field types (missing values, non-integers in integer "
         "fields) are skipped, as in the original, so type-changing errors are never flagged.",
         "Bit/modulo/date expansions of plain integers are applied to amounts and codes as in the original; they "
@@ -220,8 +220,12 @@ class DBoost(Detector):
     def check_compatibility(self, contract: Contract, reference: pd.DataFrame) -> Compatibility:
         t = ["fields typed int / float / str as dBoost's reader would type the delivered text",
              "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"]
-        reasons = ["binary output only: no budget ranking; flag-based and budget-capped metrics apply"]
+        reasons = ["Gaussian test-statistic ranking is an extension; native flags are also retained"
+                   if self.provides_scores else "binary output only; budget-capped flags use label-blind ordering"]
         types = field_types(contract, reference)
+        if self.config["type_mode"] == "text":
+            types = {c: "str" for c in contract.column_names}
+            t = ["all fields expanded as text; declared missing values represented as empty strings"]
         n_skip = int((~parseable(reference, types)).sum())
         if n_skip:
             reasons.append(f"{n_skip} reference rows do not parse with the inferred types and are not used")

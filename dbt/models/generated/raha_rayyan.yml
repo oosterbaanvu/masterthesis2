@@ -1,0 +1,126 @@
+# GENERATED from config/contracts/raha_rayyan.yaml by `dqf controls generate`. Do not edit.
+# Rules recorded in the contract but NOT enforced:
+#   D_UNAMBIGUOUS_DATE (expression, status=unsupported, enabled=False): No authoritative day/month/year ordering available; do not infer a date rule from clean repairs.
+version: 2
+models:
+- name: stg_raha_rayyan
+  description: Published bibliographic dirty records. Codes and ambiguous dates remain literal strings. Required-field, encoding
+    and length checks are provisional engineering checks, not adjudicated labels.
+  config:
+    meta:
+      dataset: raha_rayyan
+      contract: config/contracts/raha_rayyan.yaml
+  data_tests:
+  - dq_not_null:
+      name: raha_rayyan__d_required__article_title
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"article_title"'
+        column_name_text: article_title
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: raha_rayyan__d_required__article_language
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"article_language"'
+        column_name_text: article_language
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_not_null:
+      name: raha_rayyan__d_required__journal_title
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"journal_title"'
+        column_name_text: journal_title
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: provisional
+  - dq_expression:
+      name: raha_rayyan__d_encoding_article_title
+      arguments:
+        rule_id: D_ENCODING_article_title
+        condition: not contains("article_title", '�')
+        columns_text: article_title
+        observed_sql: coalesce(cast("article_title" as varchar), 'NULL')
+      config:
+        meta:
+          rule_id: D_ENCODING_article_title
+          tier: deterministic
+          status: provisional
+  - dq_expression:
+      name: raha_rayyan__d_encoding_journal_title
+      arguments:
+        rule_id: D_ENCODING_journal_title
+        condition: not contains("journal_title", '�')
+        columns_text: journal_title
+        observed_sql: coalesce(cast("journal_title" as varchar), 'NULL')
+      config:
+        meta:
+          rule_id: D_ENCODING_journal_title
+          tier: deterministic
+          status: provisional
+  - dq_expression:
+      name: raha_rayyan__d_encoding_author_list
+      arguments:
+        rule_id: D_ENCODING_author_list
+        condition: not contains("author_list", '�')
+        columns_text: author_list
+        observed_sql: coalesce(cast("author_list" as varchar), 'NULL')
+      config:
+        meta:
+          rule_id: D_ENCODING_author_list
+          tier: deterministic
+          status: provisional
+  - dq_envelope:
+      name: raha_rayyan__s_length_article_title
+      arguments:
+        rule_id: S_LENGTH_article_title
+        expression: length("article_title")
+        columns_text: article_title
+      config:
+        meta:
+          rule_id: S_LENGTH_article_title
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: raha_rayyan__s_length_journal_title
+      arguments:
+        rule_id: S_LENGTH_journal_title
+        expression: length("journal_title")
+        columns_text: journal_title
+      config:
+        meta:
+          rule_id: S_LENGTH_journal_title
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: raha_rayyan__s_length_author_list
+      arguments:
+        rule_id: S_LENGTH_author_list
+        expression: length("author_list")
+        columns_text: author_list
+      config:
+        meta:
+          rule_id: S_LENGTH_author_list
+          tier: statistical
+          status: provisional
+  - dq_rare_category:
+      name: raha_rayyan__s_language
+      arguments:
+        rule_id: S_LANGUAGE
+        expression: '"article_language"'
+        columns_text: article_language
+      config:
+        meta:
+          rule_id: S_LANGUAGE
+          tier: statistical
+          status: provisional

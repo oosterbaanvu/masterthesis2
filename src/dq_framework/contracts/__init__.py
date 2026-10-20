@@ -41,6 +41,7 @@ class Column:
     description: str = ""
     documented_values: list[Any] | None = None
     unit: str | None = None
+    missing_tokens: list[str] = field(default_factory=list)
 
     @property
     def sql_name(self) -> str:

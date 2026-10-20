@@ -3,6 +3,9 @@
 Status: 2026-10-20. The historical pilot verified seven datasets (GMSC remained blocked). The published
 benchmark extension below additionally downloaded and verified Rayyan, Restaurant and optional Cars in the
 current cloud environment; full audit: [`published_benchmark_datasets.md`](published_benchmark_datasets.md).
+The subsequent dirty-only service evaluation is in [`real_error_benchmark_report.md`](real_error_benchmark_report.md):
+all three sources run, but the synthetic missingness variants show zero detector increment over completeness
+controls and Rayyan labels remain uncertain. The rows below retain acquisition-stage suitability notes.
 The status listing below records the earlier pilot container, not current-machine availability.
 Licence notes record what the sources state;
 they are **not legal advice** and must be confirmed by the supervisor / responsible officer before

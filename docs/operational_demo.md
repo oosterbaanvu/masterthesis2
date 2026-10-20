@@ -23,8 +23,26 @@ likely 'thu' (p = 1.00); observed value has p = 0.000"); dBoost names the expand
 ("'length' outside mean ± 3 sd [0.08, 5.19]"); LUCARIO-core names the violated constraint; Isolation Forest
 reports a record-level outlier score.
 
-Review budget: scored detectors list their top-k cells beyond the existing controls (k = budget × rows / 1,000)
-plus their own flags; binary detectors list their flags. Nothing is ranked for binary methods.
+Review budget: scored detectors list finite top-k cells beyond the existing controls (k = budget × rows / 1,000)
+plus their own flags; binary detectors list their flags. `review_selected` marks the capped extra queue,
+using deterministic label-blind ordering for tied scores/binary flags. No ranking score is invented for
+binary methods. Displayed native flags can exceed k and are not all counted as reviewed.
+
+## Published-pair service evaluation
+
+`config/scans/scan_published_{raha_rayyan,jung_restaurant,jung_cars}.yaml` connect dirty-only versions of
+the published sources. `group_split` reserves the seed-1 research holdout and expands it to dirty entity
+groups before selecting disjoint history and batch sets. Missing tokens are opt-in contract metadata.
+Incompatible detectors are recorded and skipped, and the complete cell outputs are persisted for a
+separate evaluator. The service never opens a clean pair or borrows financial evidence for a new source.
+
+```bash
+dqf scan config/scans/scan_published_jung_restaurant.yaml
+python scripts/evaluate_real_error_benchmarks.py --phase all
+```
+
+The second command freezes nine dirty-only scans before evaluating published reference values. It injects
+no errors. Results and limitations: [`real_error_benchmark_report.md`](real_error_benchmark_report.md).
 
 ## 2. Recommendation rule
 
