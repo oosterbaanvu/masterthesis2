@@ -1,0 +1,488 @@
+{
+  "uci_credit": {
+    "n_reference": 12001,
+    "n_selection": 5999,
+    "detectors": [
+      {
+        "detector": "cdc",
+        "name": "cdc_hgb",
+        "granularity": "cell",
+        "provides_scores": true,
+        "fit_scope": "reference",
+        "supervision": "reference_data",
+        "verdict": "CONDITIONAL",
+        "reasons": [
+          "SEX: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '1': n\u2248402)",
+          "EDUCATION: 7 of 7 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '0': n\u22480)",
+          "MARRIAGE: 4 of 4 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '0': n\u22482)",
+          "PAY_0: 11 of 11 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '7': n\u22480)",
+          "PAY_2: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '7': n\u22480)",
+          "PAY_3: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '1': n\u22480)",
+          "PAY_4: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '6': n\u22480)",
+          "PAY_5: 8 of 8 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '5': n\u22481)",
+          "PAY_6: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '8': n\u22480)"
+        ],
+        "fit_seconds_traced": 123.59,
+        "score_seconds_traced": 5.79,
+        "peak_python_mb": 56.1,
+        "flagged_cells_per_1k_rows": 32.7,
+        "warnings": []
+      },
+      {
+        "detector": "dboost_gaussian",
+        "name": "dboost",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "reference",
+        "supervision": "reference_data",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only: no budget ranking; flag-based and budget-capped metrics apply"
+        ],
+        "fit_seconds_traced": 0.87,
+        "score_seconds_traced": 0.48,
+        "peak_python_mb": 46.4,
+        "flagged_cells_per_1k_rows": 728.6,
+        "warnings": []
+      },
+      {
+        "detector": "dboost_histogram",
+        "name": "dboost",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "reference",
+        "supervision": "reference_data",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only: no budget ranking; flag-based and budget-capped metrics apply"
+        ],
+        "fit_seconds_traced": 12.32,
+        "score_seconds_traced": 144.28,
+        "peak_python_mb": 128.5,
+        "flagged_cells_per_1k_rows": 4617.8,
+        "warnings": []
+      },
+      {
+        "detector": "dboost_gaussian_text",
+        "name": "dboost",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "reference",
+        "supervision": "reference_data",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only: no budget ranking; flag-based and budget-capped metrics apply"
+        ],
+        "fit_seconds_traced": 7.89,
+        "score_seconds_traced": 3.53,
+        "peak_python_mb": 58.4,
+        "flagged_cells_per_1k_rows": 132.2,
+        "warnings": []
+      },
+      {
+        "detector": "dboost_gaussian_batch",
+        "name": "dboost",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "batch",
+        "supervision": "reference_data",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only: no budget ranking; flag-based and budget-capped metrics apply"
+        ],
+        "fit_seconds_traced": 0.02,
+        "score_seconds_traced": 0.75,
+        "peak_python_mb": 32.9,
+        "flagged_cells_per_1k_rows": 714.3,
+        "warnings": []
+      },
+      {
+        "detector": "lucario_core",
+        "name": "lucario_core",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "batch",
+        "supervision": "none",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only (no ranking score)"
+        ],
+        "fit_seconds_traced": 0.0,
+        "score_seconds_traced": 4.45,
+        "peak_python_mb": 13.5,
+        "flagged_cells_per_1k_rows": 114.4,
+        "warnings": []
+      },
+      {
+        "detector": "sd_outlier",
+        "name": "sd_outlier",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "batch",
+        "supervision": "none",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only (no ranking score)"
+        ],
+        "fit_seconds_traced": 0.0,
+        "score_seconds_traced": 0.14,
+        "peak_python_mb": 23.2,
+        "flagged_cells_per_1k_rows": 230.5,
+        "warnings": []
+      },
+      {
+        "detector": "iqr_outlier",
+        "name": "iqr_outlier",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "batch",
+        "supervision": "none",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only (no ranking score)"
+        ],
+        "fit_seconds_traced": 0.0,
+        "score_seconds_traced": 0.14,
+        "peak_python_mb": 20.0,
+        "flagged_cells_per_1k_rows": 1063.0,
+        "warnings": []
+      },
+      {
+        "detector": "iforest",
+        "name": "iforest_row",
+        "granularity": "row",
+        "provides_scores": true,
+        "fit_scope": "reference",
+        "supervision": "reference_data",
+        "verdict": "PASS",
+        "reasons": [
+          "row-level output; evaluated at record level only"
+        ],
+        "fit_seconds_traced": 3.68,
+        "score_seconds_traced": 0.29,
+        "peak_python_mb": 6.1,
+        "flagged_rows_per_1k_rows": 10.2,
+        "warnings": []
+      }
+    ],
+    "dboost_fidelity": [
+      {
+        "model": "gaussian",
+        "params": [
+          3.0
+        ],
+        "corr_threshold": 0.5,
+        "columns": "all",
+        "original_status": "ok",
+        "original_seconds": 65.4,
+        "cells": 23000,
+        "flags_reimpl": 697,
+        "flags_original": 697,
+        "disagreements": 0,
+        "cell_agreement": 1.0
+      },
+      {
+        "model": "histogram",
+        "params": [
+          0.8,
+          0.2
+        ],
+        "corr_threshold": 0.5,
+        "columns": "all",
+        "original_status": "ok",
+        "original_seconds": 79.0,
+        "cells": 23000,
+        "flags_reimpl": 3823,
+        "flags_original": 3823,
+        "disagreements": 0,
+        "cell_agreement": 1.0
+      },
+      {
+        "model": "partitioned",
+        "params": [
+          5.0,
+          0.8,
+          0.2
+        ],
+        "corr_threshold": 0.5,
+        "columns": "all",
+        "original_status": "ok",
+        "original_seconds": 78.0,
+        "cells": 23000,
+        "flags_reimpl": 4730,
+        "flags_original": 4730,
+        "disagreements": 0,
+        "cell_agreement": 1.0
+      }
+    ]
+  },
+  "uci_bank_marketing": {
+    "n_reference": 16474,
+    "n_selection": 8238,
+    "detectors": [
+      {
+        "detector": "cdc",
+        "name": "cdc_hgb",
+        "granularity": "cell",
+        "provides_scores": true,
+        "fit_scope": "reference",
+        "supervision": "reference_data",
+        "verdict": "CONDITIONAL",
+        "reasons": [
+          "job: 12 of 12 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u22487)",
+          "marital: 4 of 4 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u22482)",
+          "education: 8 of 8 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'illiterate': n\u22480)",
+          "default: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u2248210)",
+          "housing: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224824)",
+          "loan: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224824)",
+          "contact: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'telephone': n\u2248365)",
+          "month: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'dec': n\u22484)",
+          "day_of_week: 5 of 5 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'fri': n\u2248189)",
+          "poutcome: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'success': n\u224834)"
+        ],
+        "fit_seconds_traced": 252.5,
+        "score_seconds_traced": 4.62,
+        "peak_python_mb": 46.0,
+        "flagged_cells_per_1k_rows": 35.2,
+        "warnings": []
+      },
+      {
+        "detector": "dboost_gaussian",
+        "name": "dboost",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "reference",
+        "supervision": "reference_data",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only: no budget ranking; flag-based and budget-capped metrics apply"
+        ],
+        "fit_seconds_traced": 5.24,
+        "score_seconds_traced": 2.62,
+        "peak_python_mb": 48.1,
+        "flagged_cells_per_1k_rows": 258.7,
+        "warnings": []
+      },
+      {
+        "detector": "dboost_gaussian_text",
+        "name": "dboost",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "reference",
+        "supervision": "reference_data",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only: no budget ranking; flag-based and budget-capped metrics apply"
+        ],
+        "fit_seconds_traced": 8.83,
+        "score_seconds_traced": 4.87,
+        "peak_python_mb": 66.6,
+        "flagged_cells_per_1k_rows": 211.8,
+        "warnings": []
+      },
+      {
+        "detector": "dboost_histogram",
+        "name": "dboost",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "reference",
+        "supervision": "reference_data",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only: no budget ranking; flag-based and budget-capped metrics apply"
+        ],
+        "fit_seconds_traced": 5.28,
+        "score_seconds_traced": 11.47,
+        "peak_python_mb": 103.9,
+        "flagged_cells_per_1k_rows": 2586.4,
+        "warnings": []
+      },
+      {
+        "detector": "dboost_gaussian_batch",
+        "name": "dboost",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "batch",
+        "supervision": "reference_data",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only: no budget ranking; flag-based and budget-capped metrics apply"
+        ],
+        "fit_seconds_traced": 0.02,
+        "score_seconds_traced": 5.43,
+        "peak_python_mb": 36.1,
+        "flagged_cells_per_1k_rows": 258.7,
+        "warnings": []
+      },
+      {
+        "detector": "lucario_core",
+        "name": "lucario_core",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "batch",
+        "supervision": "none",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only (no ranking score)"
+        ],
+        "fit_seconds_traced": 0.0,
+        "score_seconds_traced": 7.04,
+        "peak_python_mb": 15.9,
+        "flagged_cells_per_1k_rows": 135.8,
+        "warnings": []
+      },
+      {
+        "detector": "sd_outlier",
+        "name": "sd_outlier",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "batch",
+        "supervision": "none",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only (no ranking score)"
+        ],
+        "fit_seconds_traced": 0.0,
+        "score_seconds_traced": 0.17,
+        "peak_python_mb": 25.0,
+        "flagged_cells_per_1k_rows": 111.4,
+        "warnings": []
+      },
+      {
+        "detector": "iqr_outlier",
+        "name": "iqr_outlier",
+        "granularity": "cell",
+        "provides_scores": false,
+        "fit_scope": "batch",
+        "supervision": "none",
+        "verdict": "PASS",
+        "reasons": [
+          "binary output only (no ranking score)"
+        ],
+        "fit_seconds_traced": 0.0,
+        "score_seconds_traced": 0.16,
+        "peak_python_mb": 21.9,
+        "flagged_cells_per_1k_rows": 331.8,
+        "warnings": []
+      },
+      {
+        "detector": "iforest",
+        "name": "iforest_row",
+        "granularity": "row",
+        "provides_scores": true,
+        "fit_scope": "reference",
+        "supervision": "reference_data",
+        "verdict": "PASS",
+        "reasons": [
+          "row-level output; evaluated at record level only"
+        ],
+        "fit_seconds_traced": 4.18,
+        "score_seconds_traced": 0.43,
+        "peak_python_mb": 7.8,
+        "flagged_rows_per_1k_rows": 11.4,
+        "warnings": []
+      }
+    ],
+    "dboost_fidelity": [
+      {
+        "model": "gaussian",
+        "params": [
+          3.0
+        ],
+        "corr_threshold": 0.5,
+        "columns": "all",
+        "original_status": "failed",
+        "original_seconds": 13.5,
+        "original_error": "nvs/dboost/src/dboost/analyzers/utils.py\", line 45, in pearson\n    sigmas = s1.sigma * s2.sigma\n                        ^^^^^^^^\n  File \"/home/user/masterthesis2/envs/dboost/src/dboost/analyzers/utils.py\", line 36, in sigma\n    return sqrt((self.sum2 / self.count) - (self.sum / self.count) ** 2)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: math domain error\n"
+      },
+      {
+        "model": "histogram",
+        "params": [
+          0.8,
+          0.2
+        ],
+        "corr_threshold": 0.5,
+        "columns": "all",
+        "original_status": "failed",
+        "original_seconds": 13.1,
+        "original_error": "nvs/dboost/src/dboost/analyzers/utils.py\", line 45, in pearson\n    sigmas = s1.sigma * s2.sigma\n                        ^^^^^^^^\n  File \"/home/user/masterthesis2/envs/dboost/src/dboost/analyzers/utils.py\", line 36, in sigma\n    return sqrt((self.sum2 / self.count) - (self.sum / self.count) ** 2)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: math domain error\n"
+      },
+      {
+        "model": "partitioned",
+        "params": [
+          5.0,
+          0.8,
+          0.2
+        ],
+        "corr_threshold": 0.5,
+        "columns": "all",
+        "original_status": "failed",
+        "original_seconds": 13.6,
+        "original_error": "nvs/dboost/src/dboost/analyzers/utils.py\", line 45, in pearson\n    sigmas = s1.sigma * s2.sigma\n                        ^^^^^^^^\n  File \"/home/user/masterthesis2/envs/dboost/src/dboost/analyzers/utils.py\", line 36, in sigma\n    return sqrt((self.sum2 / self.count) - (self.sum / self.count) ** 2)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: math domain error\n"
+      },
+      {
+        "model": "gaussian",
+        "params": [
+          3.0
+        ],
+        "corr_threshold": 0.5,
+        "columns": [
+          "age",
+          "job",
+          "marital",
+          "education",
+          "default",
+          "housing",
+          "loan",
+          "contact",
+          "month",
+          "day_of_week",
+          "duration",
+          "campaign",
+          "pdays",
+          "previous",
+          "poutcome"
+        ],
+        "original_status": "ok",
+        "original_seconds": 7.1,
+        "cells": 15000,
+        "flags_reimpl": 185,
+        "flags_original": 185,
+        "disagreements": 0,
+        "cell_agreement": 1.0
+      },
+      {
+        "model": "histogram",
+        "params": [
+          0.8,
+          0.2
+        ],
+        "corr_threshold": 0.5,
+        "columns": [
+          "age",
+          "job",
+          "marital",
+          "education",
+          "default",
+          "housing",
+          "loan",
+          "contact",
+          "month",
+          "day_of_week",
+          "duration",
+          "campaign",
+          "pdays",
+          "previous",
+          "poutcome"
+        ],
+        "original_status": "ok",
+        "original_seconds": 8.0,
+        "cells": 15000,
+        "flags_reimpl": 972,
+        "flags_original": 972,
+        "disagreements": 0,
+        "cell_agreement": 1.0
+      }
+    ]
+  }
+}
