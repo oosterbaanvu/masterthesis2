@@ -55,6 +55,7 @@ def dataset_status(spec: DatasetSpec, check_shape: bool = True) -> dict[str, Any
         "files_expected": len(expected),
         "files_present": len(present),
         "problems": [],
+        "note": spec.raw.get("status"),
     }
     if spec.source == "kaggle":
         from dq_framework.acquisition.kaggle import credential_source
@@ -109,6 +110,8 @@ def format_table(report: dict[str, Any]) -> str:
                      f"{'yes' if r['optional'] else 'no':<8} {r.get('shape', '-'):<40} {r['authentication']}")
         for p in r["problems"] + r.get("warnings", []):
             lines.append(f"    - {p}")
+        if r.get("note") and r["status"] != "VERIFIED":
+            lines.append(f"    note: {r['note']}")
         if "credential_source" in r:
             lines.append(f"    credentials: {r['credential_source']}")
     return "\n".join(lines)

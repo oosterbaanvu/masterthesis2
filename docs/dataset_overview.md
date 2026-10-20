@@ -47,12 +47,29 @@ value; no raw data, secrets or large files are tracked in git.
 | Raha Tax (`raha_tax`) | BigDaMa/raha copy of BART-generated synthetic tax data (Baran, PVLDB 2020) | repository Apache-2.0 | raw GitHub | dirty `8dd3429e…b973`, clean `20129092…87b0` | 200,000 × 15 | no | **weak**: synthetic BART errors, 97.6 % formatting artefacts | yes (scale) | synthetic (BART), cell diff after removing artefacts | 118,253 formatting differences (`0.0` vs `0`, dropped leading zeros) | CDC/dBoost reach a ceiling on BART errors (weak evidence) |
 | Raha Beers (`raha_beers`) | BigDaMa/raha copy; manually cleaned craft-beer listings (Mahdavi et al., SIGMOD 2019) | repository Apache-2.0 | raw GitHub | dirty `7110bf49…0f68`, clean `373227df…93de` | 2,410 × 11 | no | not for value errors: almost all representation/format | no | manual cleaning | units in values (`12.0 oz`, `%`), `N/A` | string/pattern detectors only |
 | Raha Hospital (`raha_hospital`) | BigDaMa/raha copy | repository Apache-2.0 | raw GitHub | dirty `dbc5575b…25ac`, clean `ea3ee449…248b4b` | 1,000 × 20 | no | no: 508/509 errors synthetic `x` substitutions | sanity only | synthetic | — | typo/pattern detectors only |
+| Give Me Some Credit, training file (`gmsc`) — **optional, BLOCKED** | Kaggle competition `GiveMeSomeCredit` (2011), https://www.kaggle.com/competitions/GiveMeSomeCredit | **unresolved**: Kaggle competition rules (must be accepted per account); no open data licence shown by the API | Kaggle login **and accepted competition rules**; the API lists `cs-training.csv` (7,564,965 bytes) but returns HTTP 403 on download for the current account (2026-10-20) | not yet pinned (`pin_pending: true`; first download reports the hash to pin) | 150,000 × 12 expected (index, target, 10 attributes) – UNVERIFIED until download | intended (R1, third financial table) | no | no | none | known from the CleanML copy (not used): MonthlyIncome missing in 19.8 %, NumberOfDependents 2.6 %; extreme DebtRatio / utilisation values | not evaluated (no data) |
 | Feedzai BAF Base (`baf`) — **optional** | Kaggle `sgpjesus/bank-account-fraud-dataset-neurips-2022`; Jesus et al., NeurIPS Datasets & Benchmarks 2022 (arXiv 2211.13358) | **unresolved and restrictive**: Kaggle metadata CC BY-NC-SA 4.0 (re-checked 2026-10-20 via API); publisher datasheet (A44) CC BY-NC-ND 4.0; non-commercial in both | Kaggle login + accepted terms; `KAGGLE_API_TOKEN` | `Base.csv` `7bf10a37…f9b809` (extracted file; Kaggle zip not stable) | 1,000,000 × 32 | technically yes, **not used** | no (CTGAN-generated synthetic data, fraud label ≠ DQ label) | possible (scale, monthly `month`) | none | negative sentinels for missing values (71 % in `prev_address_months_count`) | not evaluated |
+
+**Give Me Some Credit — what is needed.** Log in on kaggle.com with the account behind `KAGGLE_API_TOKEN`,
+accept the rules at https://www.kaggle.com/competitions/GiveMeSomeCredit/rules, then run
+`python scripts/download_datasets.py gmsc`; pin the reported SHA-256 in `config/datasets.yaml`, write
+`config/contracts/gmsc.yaml` from the competition's data dictionary and the untouched data, and run
+`python scripts/run_pilot.py config/pilot/pilot_gmsc.yaml` (to be created from the Credit config). Copies of
+GMSC in third-party repositories (CleanML, TableEG) are **not** used as a substitute (CLAUDE.md: never substitute a
+dataset). The GMSC data dictionary could not be obtained from a primary source either.
+
+**TableEG Credit provenance** (`docs/sources/tableeg_gmsc_provenance.md`): TableEG's `dirty.csv` equals CleanML's
+`Credit/raw/raw.csv` cell for cell (VERIFIED); CleanML states the source is Kaggle GiveMeSomeCredit (VERIFIED as a
+statement), and schema, row count and missing-value counts match GMSC (PROBABLE; no byte comparison with the
+Kaggle original possible). TableEG's `clean.csv` is CleanML's **HoloClean output** (missing-value imputation and
+outlier repair; e.g. 17,435 imputed incomes all equal 88.44), so its labels are algorithmic repairs, not verified
+corrections, contrary to the paper's "manually annotated" description. Verdict: TableEG Credit is a derivative of
+GMSC with **imputed, not independent, ground truth** — rejected as a validation benchmark; no link to UCI Credit.
 
 Not registered (qualified or rejected without download; details in `dataset_qualification.md` and
 `docs/independent_validation.md`): REIN benchmark datasets (no data licence, ResearchGate-only), Auto-Test ST/RT-Bench
 (single-column value lists), AddressTable / Clean Me If You Can (string addresses, ODbL ground truth), TableEG
-Credit (labels are repairs; = Give Me Some Credit via CleanML, provisional), Li et al. Stock, SEC amendments.
+Credit (see above), Li et al. Stock, SEC amendments.
 
 ## Why BAF is acquired but not used
 
