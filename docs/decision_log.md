@@ -209,3 +209,10 @@ copied.
 - **Decision:** BAF acquisition is verified (Kaggle token available on 2026-10-20) but BAF is excluded from all
   pilot results: contradictory non-commercial licences (NC-SA vs NC-ND), commercial internship context,
   CTGAN-synthetic data without DQ labels (`docs/dataset_overview.md`).
+
+### D-26 · Two operating modes for scored detectors — provisional (qualification-informed)
+- **Decision:** a detector that publishes a ranking contributes two candidates to selection: its top-k ranked
+  cells (`cdc`) and its own flags reviewed within the budget (`cdc[flags]`). Binary methods have the flag mode
+  only. Decided after the qualification round (pilot seed 11, selection partition), where CDC's own flags
+  outperformed its ranking at k = 25 against the rules-only baseline (0.034 vs 0.019); no test-set result was
+  looked at. Both are legitimate uses of the same output, so neither mode is privileged.

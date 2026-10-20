@@ -24,8 +24,6 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from dq_framework.pilot.metrics import utility_key
-
 SEL_SETS = {"simple": "sel_simple", "diverse": "sel_diverse"}
 TEST_SETS = ("test_simple", "test_diverse", "test_heldout")
 
@@ -66,10 +64,16 @@ def cell_detectors(det: pd.DataFrame) -> pd.DataFrame:
 
 
 def _utility_frame(metrics: pd.DataFrame, det: pd.DataFrame, budget: float) -> pd.DataFrame:
+    """One utility per (scenario, candidate). A scored detector yields two operating modes: reviewing its top-k
+    ranked cells (``<det>``) and reviewing its own flags within the budget (``<det>[flags]``) - both are things an
+    engineer can do with its output (decision D-26). Binary detectors have the flag mode only."""
     cd = cell_detectors(det)
     m = metrics.merge(cd, on=["dataset", "detector"], how="inner")
-    m["utility"] = [r[utility_key(bool(p), budget)] for (_, r), p in zip(m.iterrows(), m["provides_scores"], strict=True)]
-    return m
+    scored = m["provides_scores"].astype(str).str.lower().isin(["true", "1"])
+    flag_col, rank_col = f"dR_flags@{budget:g}", f"dR_ranked@{budget:g}"
+    m["utility"] = np.where(scored, m.get(rank_col, np.nan), m[flag_col])
+    fm = m[scored].assign(detector=lambda x: x["detector"] + "[flags]", utility=lambda x: x[flag_col])
+    return pd.concat([m, fm], ignore_index=True)
 
 
 def case_means(u: pd.DataFrame, by: list[str]) -> pd.DataFrame:

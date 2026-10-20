@@ -11,9 +11,12 @@ MSc Artificial Intelligence thesis, University of Groningen; graduation internsh
 Rabobank-related data-engineering context. **Public and synthetic data only** – no bank data is used,
 and nothing here estimates real error rates of any bank source.
 
-Status (2026-10-20): **foundation and qualification phase.** Literature, datasets, detectors and error
-injection are qualified; an end-to-end feasibility demonstration runs on two financial datasets. The
-confirmatory experiments have **not** been run. Start with [`docs/feasibility_report.md`](docs/feasibility_report.md).
+Status (2026-10-20): **comprehensive feasibility pilot completed** (dev/design-pool data only; provisional).
+Seven datasets are reproducibly acquirable, seven cell-level candidate configurations plus a record-level
+detector are integrated and qualified, two injection strategies are compared with equal budgets, and an
+operational scan of new batches runs end to end. The confirmatory study has **not** been run. Start with
+[`docs/comprehensive_pilot_report.md`](docs/comprehensive_pilot_report.md); the earlier foundation is in
+[`docs/feasibility_report.md`](docs/feasibility_report.md).
 
 ## What it does
 
@@ -54,6 +57,26 @@ python scripts/analyse_decision_sensitivity.py results/runs/<run_dir>   # decisi
 python -m pytest -q                     # unit + dbt integration tests (+ data tests when data is present)
 ```
 
+### Comprehensive pilot (2026-10-20)
+
+```bash
+python scripts/dataset_status.py                          # or: dqf datasets status  (present / verified; local manifest)
+bash envs/dboost/install.sh                               # optional: original dBoost (GPL) for fidelity checks only
+python scripts/qualify_pilot_detectors.py                 # compatibility, runtime, memory, dBoost fidelity
+OMP_NUM_THREADS=1 python scripts/run_pilot.py config/pilot/pilot_uci_credit.yaml          # 5 pilot splits
+OMP_NUM_THREADS=1 python scripts/run_pilot.py config/pilot/pilot_uci_bank_marketing.yaml  # 5 random + 1 temporal
+python scripts/analyse_pilot.py                           # -> results/pilot/*.csv, docs/figures/pilot_*.png
+python scripts/render_pilot_tables.py > /tmp/tables.md    # the report's tables, regenerated from the CSVs
+python scripts/independent_validation.py                  # BART (Tax) and real-error (Flights, Beers) checks
+dqf scan config/scans/scan_bank_marketing_period13.yaml   # operational scan of a new monthly delivery
+dqf scan config/scans/scan_uci_credit_new_clients.yaml
+dqf feedback results/runs/scans/<scan>                    # after annotating feedback.csv
+```
+
+One replication takes ~13 min on 4 CPUs (≈400 scenarios, 9 detector configurations, one dbt run); the full
+pilot (11 replications) ran in ~1 h with three parallel processes. `uv sync --extra figures` adds matplotlib
+for the figures.
+
 Set `OMP_NUM_THREADS` when running several scoring jobs at the same time.
 
 Isolated environments for the *original* detector implementations (only needed for fidelity checks):
@@ -79,14 +102,16 @@ python scripts/download_baf.py --report data/manifests/baf.validation.json
 config/datasets.yaml            dataset registry: sources, pinned hashes, roles, licences
 config/contracts/               source contracts: columns, semantics, rules with evidence status
 config/experiments/             scenario catalog and run configurations
+config/pilot/, config/scans/    pilot designs (strategies, held-out family, detectors) and operational scan configs
 data/raw/ (ignored)             immutable downloads;  data/manifests/  acquisition manifests (committed)
 dbt/                            dbt Core project: generic evidence tests (macros/), generated models/tests
-src/dq_framework/               acquisition, contracts, profiling, controls, injection, detectors, evaluation, reporting, pipeline, cli
-envs/                           isolated environments + runners for the original CDC and Raha implementations
+src/dq_framework/               acquisition (+status), contracts, profiling, controls, injection, detectors (cdc, dboost,
+                                univariate/LUCARIO-core, iforest, subprocess adapters), evaluation, pilot, service (scan), cli
+envs/                           isolated environments + runners for the original CDC, Raha and dBoost (GPL, child process)
 scripts/                        download / verify / validate_injection / qualification probes
 tests/                          pytest suite (CI runs without datasets)
 reports/                        feasibility demo reports (Markdown)
-results/qualification/          small qualification outputs (CSV/JSON); results/runs/ is ignored
+results/qualification/          small qualification outputs (CSV/JSON); results/pilot/ pilot summaries; results/runs/ is ignored
 docs/                           research documentation (see below)
 ```
 
@@ -94,7 +119,13 @@ docs/                           research documentation (see below)
 
 | Document | Content |
 |---|---|
-| [`docs/feasibility_report.md`](docs/feasibility_report.md) | What was done, what passed/failed, final assessment |
+| [`docs/comprehensive_pilot_report.md`](docs/comprehensive_pilot_report.md) | **Pilot results and answers to the ten decisive questions** |
+| [`docs/post_pilot_research_directions.md`](docs/post_pilot_research_directions.md) | Defensible research directions after the pilot |
+| [`docs/dataset_overview.md`](docs/dataset_overview.md) | Per-dataset source, licence, hash, roles, ground truth, suitability |
+| [`docs/detector_comparison.md`](docs/detector_comparison.md) | Detector requirements, licences, fair comparison tracks |
+| [`docs/injection_strategies.md`](docs/injection_strategies.md) | Error type / mechanism / rate; strategies A and B; held-out family |
+| [`docs/operational_demo.md`](docs/operational_demo.md) | `dqf scan`: analysing a new batch, findings, recommendation, feedback |
+| [`docs/feasibility_report.md`](docs/feasibility_report.md) | Foundation phase: what was done, what passed/failed |
 | [`docs/literature_review.md`](docs/literature_review.md), [`docs/references.bib`](docs/references.bib) | Verified literature |
 | [`docs/research_gap.md`](docs/research_gap.md), [`docs/research_directions.md`](docs/research_directions.md) | Novelty assessment, directions, recommended research question |
 | [`docs/research_design.md`](docs/research_design.md) | Proposed confirmatory protocol |
@@ -108,4 +139,7 @@ docs/                           research documentation (see below)
 
 Raw third-party data is never committed. UCI datasets are CC BY 4.0 (cite Yeh 2009; Moro et al. 2014);
 Raha benchmark files come from BigDaMa/raha (Apache-2.0 repository, no separate data licence stated).
-Licence notes are not legal advice.
+BAF is optional and excluded from the pilot (contradictory non-commercial licences). dBoost's original code
+(GPL-3.0) is never copied or imported: it is fetched by `envs/dboost/install.sh` and run as a child process;
+the framework's `dboost` detector is a clean-room re-implementation. LUCARIO's and REIN's code carry no
+reuse licence and were not copied. Licence notes are not legal advice.

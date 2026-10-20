@@ -139,7 +139,7 @@ def main(argv: list[str] | None = None) -> int:
         v.to_csv(args.out / f"{k}.csv", index=False, float_format="%.4g")
     made = figures(args.figures, t)
     meta = {"replications": [d.name for d in dirs], "budgets_per_1k": budgets, "min_gain": cfg_gain,
-            "tables": sorted(t), "figures": [str(p.relative_to(paths.ROOT)) for p in made]}
+            "tables": sorted(t), "figures": [str(p.relative_to(paths.ROOT)) if p.is_relative_to(paths.ROOT) else str(p) for p in made]}
     (args.out / "index.json").write_text(json.dumps(meta, indent=2) + "\n")
     print(json.dumps(meta, indent=2))
     return 0

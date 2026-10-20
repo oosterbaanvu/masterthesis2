@@ -76,12 +76,15 @@ def recommend(det_key: str, provides_scores: bool, evidence: pd.DataFrame, basel
                    f"({'ranked' if provides_scores else 'budget-capped flags'}; scheme {r.get('scheme', '?')})")
     if not provides_scores:
         reasons.append(f"extra alerts on this batch beyond the existing controls: {burden_per_1k:.1f} per 1,000 rows (cap {cap:g})")
+    if int(r["n_replications"]) < rule.get("min_replications", 3):
+        reasons.append(f"only {int(r['n_replications'])} independent pilot replication(s): an interval over replications "
+                       f"is not meaningful (ADOPT needs >= {rule.get('min_replications', 3)})")
     if shift_ratio > max_shift:
         reasons.append(f"this batch triggers {shift_ratio:.1f}x the existing controls' alert rate of the evaluation "
                        f"partitions: offline evidence may not transfer (shift)")
     if (not provides_scores and burden_per_1k > cap) or r["utility_hi"] < min_gain:
         rec = "DO_NOT_ADOPT"
-    elif r["utility_lo"] >= min_gain and shift_ratio <= max_shift:
+    elif r["utility_lo"] >= min_gain and shift_ratio <= max_shift and int(r["n_replications"]) >= rule.get("min_replications", 3):
         rec = "ADOPT"
     else:
         rec = "INSUFFICIENT_EVIDENCE"
