@@ -2,6 +2,7 @@
 
   dqf datasets download [KEY ...]      download + verify against pinned hashes
   dqf datasets verify [KEY ...]        re-verify raw files (read-only)
+  dqf datasets status [KEY ...]        which datasets are present / verified; writes data/local_manifest.json
   dqf controls generate [DATASET ...]  regenerate dbt models/tests from contracts
   dqf controls check DATASET           run dbt controls on the untouched table, report failure rates
   dqf profile DATASET                  descriptive profile of the analysed table
@@ -20,7 +21,7 @@ from dq_framework import paths
 
 
 def _cmd_datasets(args: argparse.Namespace) -> int:
-    script = "download_datasets" if args.action == "download" else "verify_datasets"
+    script = {"download": "download_datasets", "verify": "verify_datasets", "status": "dataset_status"}[args.action]
     sys.path.insert(0, str(paths.ROOT / "scripts"))
     mod = __import__(script)
     return mod.main(args.keys)
@@ -91,7 +92,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="dqf", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     d = sub.add_parser("datasets")
-    d.add_argument("action", choices=["download", "verify"])
+    d.add_argument("action", choices=["download", "verify", "status"])
     d.add_argument("keys", nargs="*")
     d.set_defaults(func=_cmd_datasets)
     c = sub.add_parser("controls")

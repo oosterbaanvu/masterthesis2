@@ -24,7 +24,6 @@ from dq_framework.contracts import Contract, load_contract
 from dq_framework.controls import alerts_to_cells, fit_reference_stats, run_controls
 from dq_framework.datasets import load_contract_table, make_split
 from dq_framework.detectors.base import Detector
-from dq_framework.detectors.cdc import ConformalDataCleaningHGB
 from dq_framework.evaluation import evaluate_rows, evaluate_scenario
 from dq_framework.injection import Scenario, inject
 from dq_framework.injection.catalog import expand, load_catalog
@@ -73,19 +72,9 @@ class RunConfig:
 
 
 def make_detector(spec: dict[str, Any]) -> Detector:
-    name = spec["name"]
-    params = spec.get("params", {}) or {}
-    if name == "cdc_hgb":
-        return ConformalDataCleaningHGB(**params)
-    if name == "iforest_row":
-        from dq_framework.detectors.iforest import IsolationForestRow
+    from dq_framework.detectors.registry import make_detector as _make
 
-        return IsolationForestRow(**params)
-    if name == "cdc_original":
-        from dq_framework.detectors.subprocess_adapter import OriginalCDC
-
-        return OriginalCDC(**params)
-    raise ValueError(f"unknown detector {name}")
+    return _make(spec)
 
 
 def run(cfg: RunConfig, out_root: Path | None = None) -> dict[str, Any]:

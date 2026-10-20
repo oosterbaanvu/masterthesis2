@@ -299,6 +299,39 @@ class PlausibleSubstitution(Operation):
         return pd.Series(out, index=rows, dtype=object if ctx.column_type == "categorical" else "float64")
 
 
+class OrdinalShift(Operation):
+    """Period / position shift of an ordered code: the value is replaced by its neighbour in ``order``.
+
+    Example: ``month`` delivered as the previous month (``step: -1``) - a stale period label. With
+    ``require_observed`` (default) the new value must occur in the reference partition, so the error stays a
+    plausible, valid code; without wrap-around the first/last value of the order is not eligible.
+    """
+
+    name = "ordinal_shift"
+    column_types = ("categorical",)
+
+    def _target(self, v, ctx):
+        order = list(self.params["order"])
+        step = int(self.params.get("step", 1))
+        if v not in order:
+            return None
+        i = order.index(v) + step
+        if self.params.get("wrap", False):
+            i %= len(order)
+        elif not 0 <= i < len(order):
+            return None
+        w = order[i]
+        if self.params.get("require_observed", True) and w not in set(ctx.domain):
+            return None
+        return w
+
+    def eligible(self, s, ctx):
+        return s.astype(object).map(lambda v: pd.notna(v) and self._target(v, ctx) is not None).astype(bool)
+
+    def apply(self, s, rows, ctx, seed):
+        return pd.Series([self._target(v, ctx) for v in s.loc[rows].astype(object)], index=rows, dtype=object)
+
+
 class InvalidCode(Operation):
     """Out-of-domain category code (sanity check: accepted_values catches it)."""
 
@@ -317,7 +350,7 @@ class InvalidCode(Operation):
 OPERATIONS: dict[str, type[Operation]] = {
     cls.name: cls
     for cls in (Scale, CategorySwap, CodeRemap, Missing, Outlier, SignFlip, DigitTransposition, PeriodShift, Rounding,
-                PlausibleSubstitution, InvalidCode)
+                PlausibleSubstitution, InvalidCode, OrdinalShift)
 }
 
 

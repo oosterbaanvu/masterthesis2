@@ -68,6 +68,12 @@ class Detector(ABC):
     name: ClassVar[str]
     granularity: ClassVar[str] = "cell"
     supervision: ClassVar[str] = "none"  # none | reference_data | few_labels
+    # True if ``score`` is a ranking score published with (or derived in the paper of) the method; binary-only
+    # methods return NaN scores and are never ranked (no ranking is constructed for them).
+    provides_scores: ClassVar[bool] = True
+    # Where the method learns its model: "reference" (historical data) or "batch" (the unlabelled batch under
+    # test, i.e. transductive). Recorded per run; it changes what information the method uses.
+    fit_scope: ClassVar[str] = "reference"
     limitations: ClassVar[list[str]] = []
 
     def __init__(self, **config: Any) -> None:

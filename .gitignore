@@ -44,3 +44,5 @@ access_token
 *.pem
 *.key
 envs/*/install.log
+data/local_manifest.json
+envs/dboost/src/
