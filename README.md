@@ -63,8 +63,15 @@ bash envs/cdc_aistats/install.sh                         # Python 3.9, AutoGluon
 uv venv --python 3.9 envs/raha/.venv && VIRTUAL_ENV=envs/raha/.venv uv pip install -r envs/raha/requirements.txt
 ```
 
-BAF (Feedzai) cannot be downloaded automatically (Kaggle login, non-commercial licence); see
-`docs/dataset_qualification.md`.
+BAF (Feedzai, Base variant) is an **optional** dataset, downloaded through the official Kaggle client and
+never needed by the rest of the framework. Its licence is unresolved (non-commercial; ND vs SA), see
+`docs/dataset_qualification.md`:
+
+```bash
+uv sync --frozen --extra dev --extra kaggle   # or: pip install kaggle
+export KAGGLE_API_TOKEN=...                   # kaggle.com > Settings > API; or ~/.kaggle/kaggle.json
+python scripts/download_baf.py --report data/manifests/baf.validation.json
+```
 
 ## Repository layout
 

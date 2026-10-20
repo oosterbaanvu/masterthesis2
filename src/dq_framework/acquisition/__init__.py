@@ -12,6 +12,8 @@ Design rules
   be pinned by a human before the dataset is considered verified.
 * Partial downloads go to a ``.part`` file and are renamed only after the
   hash check, so an interrupted run never leaves a file that looks complete.
+* Kaggle-hosted datasets (``source: kaggle``) go through the official client in
+  :mod:`dq_framework.acquisition.kaggle`, an optional extra.
 * A manifest with URL, acquisition time, size and hash is written to
   ``data/manifests/<dataset>.acquisition.json``.
 """
@@ -72,6 +74,16 @@ class DatasetSpec:
     @property
     def manual(self) -> bool:
         return bool(self.raw.get("acquisition", {}).get("manual", False))
+
+    @property
+    def source(self) -> str:
+        """``http`` (default: plain URL download) or ``kaggle`` (official client, optional extra)."""
+        return self.raw.get("acquisition", {}).get("source", "http")
+
+    @property
+    def optional(self) -> bool:
+        """Optional datasets are skipped unless requested by name; their absence is not a failure."""
+        return bool(self.raw.get("optional", False))
 
 
 def load_registry(path: Path | None = None) -> dict[str, DatasetSpec]:
@@ -166,6 +178,10 @@ def acquire(spec: DatasetSpec, force: bool = False) -> dict[str, Any]:
     """Download and extract one dataset; returns the acquisition manifest."""
     if spec.manual:
         return verify(spec)
+    if spec.source == "kaggle":
+        from dq_framework.acquisition.kaggle import acquire_kaggle
+
+        return acquire_kaggle(spec, force=force)
     problems: list[str] = []
     unpinned: list[str] = []
     records: list[dict[str, Any]] = []

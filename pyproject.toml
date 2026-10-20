@@ -23,6 +23,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.6"]
+# Optional: BAF (Kaggle) acquisition only; the framework runs without it.
+kaggle = ["kaggle>=2.0,<3"]
 
 [project.scripts]
 dqf = "dq_framework.cli:main"

@@ -155,21 +155,48 @@ datasets:
     # Headers differ between dirty and clean (snake_case vs CamelCase): aligned by position.
     pair: {dirty: dirty.csv, clean: clean.csv, read_as_string: true, align_columns: positional}
 
-  baf_base:
+  baf:
     title: "Feedzai Bank Account Fraud (BAF) suite, Base variant (NeurIPS 2022 Datasets & Benchmarks)"
     landing_page: https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022
-    licence: "UNRESOLVED: publisher datasheet states CC BY-NC-ND 4.0; Kaggle page not verified from this environment"
+    licence: "UNRESOLVED: Kaggle API metadata CC BY-NC-SA 4.0 (checked 2026-10-20); publisher datasheet CC BY-NC-ND 4.0"
     citation: "Jesus et al. (2022). Turning the Tables: Biased, Imbalanced, Dynamic Tabular Datasets for ML Evaluation. NeurIPS Datasets and Benchmarks."
+    version: "Kaggle sgpjesus/bank-account-fraud-dataset-neurips-2022; Base.csv dated 2023-11-29"
     roles: [controlled_financial]
     cell_error_ground_truth: false
-    status: BLOCKED
+    # Optional: never downloaded by default, absence is not a failure, the framework runs without it.
+    optional: true
+    status: "OPTIONAL: downloadable via Kaggle API; licence unresolved; not qualified (D-03)"
     acquisition:
-      manual: true
+      source: kaggle
+      kaggle_dataset: sgpjesus/bank-account-fraud-dataset-neurips-2022
       instructions: >-
-        Requires a logged-in Kaggle download and licence clearance (non-commercial, no-derivatives).
-        Place unmodified Base.csv at data/raw/baf_base/Base.csv and pin its sha256 here. Never commit it.
+        Run `python scripts/download_baf.py` (needs `uv sync --extra kaggle` and KAGGLE_API_TOKEN or
+        ~/.kaggle/kaggle.json). Raw files land read-only in data/raw/baf/ and are never committed.
       files:
         - name: Base.csv
           url: https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022
           path: Base.csv
-          sha256: null
+          # Hash of the extracted CSV (Kaggle serves a re-compressible zip), pinned at first download 2026-10-20.
+          sha256: 7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809
+    table:
+      file: Base.csv
+      format: csv
+      expected_rows: 1000000
+      expected_columns: [fraud_bool, income, name_email_similarity, prev_address_months_count,
+                         current_address_months_count, customer_age, days_since_request, intended_balcon_amount,
+                         payment_type, zip_count_4w, velocity_6h, velocity_24h, velocity_4w, bank_branch_count_8w,
+                         date_of_birth_distinct_emails_4w, employment_status, credit_risk_score, email_is_free,
+                         housing_status, phone_home_valid, phone_mobile_valid, bank_months_count, has_other_cards,
+                         proposed_credit_limit, foreign_request, source, session_length_in_minutes, device_os,
+                         keep_alive_session, device_distinct_emails_8w, device_fraud_count, month]
+      # Prediction target: not a data-quality label.
+      target: fraud_bool
+      # Missing values are encoded as negatives, not NaN (Base.csv has no NaN cells).
+      missing_sentinels_status: "provisional: per the BAF datasheet (Jesus et al. 2022); not yet checked against its text here"
+      missing_sentinels:
+        prev_address_months_count: -1
+        current_address_months_count: -1
+        intended_balcon_amount: negative
+        bank_months_count: -1
+        session_length_in_minutes: -1
+        device_distinct_emails_8w: -1

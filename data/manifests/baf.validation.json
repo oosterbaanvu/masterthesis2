@@ -1,0 +1,102 @@
+{
+  "dataset": "baf",
+  "file": "Base.csv",
+  "rows": 1000000,
+  "n_columns": 32,
+  "columns": {
+    "fraud_bool": "int64",
+    "income": "float64",
+    "name_email_similarity": "float64",
+    "prev_address_months_count": "int64",
+    "current_address_months_count": "int64",
+    "customer_age": "int64",
+    "days_since_request": "float64",
+    "intended_balcon_amount": "float64",
+    "payment_type": "object",
+    "zip_count_4w": "int64",
+    "velocity_6h": "float64",
+    "velocity_24h": "float64",
+    "velocity_4w": "float64",
+    "bank_branch_count_8w": "int64",
+    "date_of_birth_distinct_emails_4w": "int64",
+    "employment_status": "object",
+    "credit_risk_score": "int64",
+    "email_is_free": "int64",
+    "housing_status": "object",
+    "phone_home_valid": "int64",
+    "phone_mobile_valid": "int64",
+    "bank_months_count": "int64",
+    "has_other_cards": "int64",
+    "proposed_credit_limit": "float64",
+    "foreign_request": "int64",
+    "source": "object",
+    "session_length_in_minutes": "float64",
+    "device_os": "object",
+    "keep_alive_session": "int64",
+    "device_distinct_emails_8w": "int64",
+    "device_fraud_count": "int64",
+    "month": "int64"
+  },
+  "shape_check": {
+    "ok": true,
+    "problems": [],
+    "summary": "1000000 rows x 32 cols"
+  },
+  "missing_nan": {},
+  "missing_nan_total": 0,
+  "missing_sentinels": {
+    "prev_address_months_count": {
+      "rule": -1,
+      "n": 712920,
+      "rate": 0.71292
+    },
+    "current_address_months_count": {
+      "rule": -1,
+      "n": 4254,
+      "rate": 0.004254
+    },
+    "intended_balcon_amount": {
+      "rule": "negative",
+      "n": 742523,
+      "rate": 0.742523
+    },
+    "bank_months_count": {
+      "rule": -1,
+      "n": 253635,
+      "rate": 0.253635
+    },
+    "session_length_in_minutes": {
+      "rule": -1,
+      "n": 2015,
+      "rate": 0.002015
+    },
+    "device_distinct_emails_8w": {
+      "rule": -1,
+      "n": 359,
+      "rate": 0.000359
+    }
+  },
+  "missing_sentinels_status": "provisional: per the BAF datasheet (Jesus et al. 2022); not yet checked against its text here",
+  "negative_values": {
+    "prev_address_months_count": 712920,
+    "current_address_months_count": 4254,
+    "intended_balcon_amount": 742523,
+    "velocity_6h": 44,
+    "credit_risk_score": 14445,
+    "bank_months_count": 253635,
+    "session_length_in_minutes": 2015,
+    "device_distinct_emails_8w": 359
+  },
+  "duplicate_rows": 0,
+  "target": {
+    "column": "fraud_bool",
+    "counts": {
+      "0": 988971,
+      "1": 11029
+    },
+    "rates": {
+      "0": 0.988971,
+      "1": 0.011029
+    }
+  }
+}

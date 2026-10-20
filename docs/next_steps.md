@@ -12,8 +12,8 @@ Status: 2026-10-20. Ordered by dependency. "User" = actions only the student (or
 3. **Ask the industry contact the eight questions** in `practical_use_case.md` §6 (review capacity, observed
    error types and their concentration, statistical controls in use). The answers fix the review budget k,
    the minimum gain δ and which mechanism scenarios count as realistic.
-4. **Optional – BAF:** only if a monthly-batch synthetic bank dataset at scale is still wanted. Requires a
-   Kaggle login download and supervisor/legal confirmation of the non-commercial licence (NC-ND per the
+4. **Optional – BAF:** only if a monthly-batch synthetic bank dataset at scale is still wanted. Download is
+   now scripted (`scripts/download_baf.py`, Kaggle token); still requires supervisor/legal confirmation of the non-commercial licence (NC-ND per the
    datasheet, NC-SA per Kaggle). Bank Marketing currently covers the batch role.
 5. Optionally read the 2025 University of Twente MSc thesis on ensemble anomaly detection for credit-risk
    data quality (`madaras2025ensemble` in `references.bib`) to differentiate the contribution.

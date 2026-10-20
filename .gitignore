@@ -10,6 +10,11 @@ envs/*/.venv/
 # Data: raw third-party files are never committed (downloaded reproducibly, verified by hash)
 data/raw/**
 !data/raw/README.md
+# Optional Kaggle datasets (BAF): explicit, in case the rule above is ever narrowed
+data/raw/baf/
+/Base.csv
+/Variant*.csv
+*.csv.zip
 data/interim/
 data/scenarios/
 data/manual/
@@ -34,6 +39,8 @@ mlruns/
 
 # Local secrets
 .env
+kaggle.json
+access_token
 *.pem
 *.key
 envs/*/install.log

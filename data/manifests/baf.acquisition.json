@@ -1,0 +1,34 @@
+{
+  "landing_page": "https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022",
+  "licence": "UNRESOLVED: Kaggle API metadata CC BY-NC-SA 4.0 (checked 2026-10-20); publisher datasheet CC BY-NC-ND 4.0",
+  "version": "Kaggle sgpjesus/bank-account-fraud-dataset-neurips-2022; Base.csv dated 2023-11-29",
+  "citation": "Jesus et al. (2022). Turning the Tables: Biased, Imbalanced, Dynamic Tabular Datasets for ML Evaluation. NeurIPS Datasets and Benchmarks.",
+  "dataset": "baf",
+  "title": "Feedzai Bank Account Fraud (BAF) suite, Base variant (NeurIPS 2022 Datasets & Benchmarks)",
+  "status": "VERIFIED",
+  "checked_utc": "2026-10-20T09:22:04+00:00",
+  "files": [
+    {
+      "path": "Base.csv",
+      "sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "bytes": 213427735,
+      "writable": false
+    }
+  ],
+  "problems": [],
+  "unpinned": [],
+  "downloads": [
+    {
+      "file": "Base.csv",
+      "url": "kaggle://sgpjesus/bank-account-fraud-dataset-neurips-2022/Base.csv",
+      "archive": "Base.csv.zip",
+      "archive_sha256": "3fec019ec7050060c5b8288562ebaaa4a0b76ed18741c4e4ccd2d13ccd12c02c",
+      "archive_bytes": 86391953,
+      "sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "bytes": 213427735,
+      "path": "Base.csv",
+      "retrieved_utc": "2026-10-20T09:22:04+00:00"
+    }
+  ],
+  "unpinned_at_download": []
+}

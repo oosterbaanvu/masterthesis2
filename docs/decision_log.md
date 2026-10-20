@@ -141,3 +141,13 @@ copied.
 - **Decision:** no claim of synthetic-to-real transfer for CDC. Flights cannot test CDC (chance-level AUC
   under a leakage-free split; errors are inter-source conflicts). An out-of-generator check on BART errors
   in Tax is reported as a bounded validity check (`method_compatibility.md` §5).
+
+### D-16 · BAF as an optional Kaggle dataset — provisional (licence)
+- **Decision:** BAF Base is acquired through the official Kaggle client (`kaggle` optional extra,
+  `scripts/download_baf.py`) into `data/raw/baf/`, hash-pinned on the extracted CSV and marked
+  `optional: true`: default downloads and verification skip it, and no other component depends on it.
+  This does not change D-03: BAF has no role until its licence is confirmed and it passes qualification.
+- **Evidence:** download and validation on 2026-10-20 (`data/manifests/baf.acquisition.json`,
+  `baf.validation.json`).
+- **Risk:** licence NC-ND (datasheet) vs NC-SA (Kaggle) unresolved; under ND, injected copies may not be
+  shared. Kaggle may re-compress the zip, so only the CSV hash is pinned.

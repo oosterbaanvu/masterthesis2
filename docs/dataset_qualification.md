@@ -23,7 +23,7 @@ Research roles:
 | Raha Tax | yes, hash-pinned | R3; out-of-generator probe | **CONDITIONAL** | 97.6% of published "errors" are formatting artefacts; ~2,000 substantive BART errors usable after typing |
 | Raha Beers | yes, hash-pinned | – | **NOT SELECTED** | Errors are almost all formatting/representation |
 | Raha Hospital | yes, hash-pinned | sanity only | **NOT SELECTED** | 508/509 errors are synthetic 'x' substitutions |
-| Feedzai BAF Base | no | – | **BLOCKED** | Kaggle login required; licence NC-ND (datasheet) vs NC-SA (Kaggle) unresolved; fraud label ≠ DQ label |
+| Feedzai BAF Base | yes (Kaggle API, optional), hash-pinned | – | **OPTIONAL, not qualified** | Downloadable with a Kaggle token (2026-10-20); licence NC-ND (datasheet) vs NC-SA (Kaggle) unresolved; fraud label ≠ DQ label |
 | Li et al. Stock (deep-web) | probe only | R2 exploratory | **NOT SELECTED** | Financial and real, but truth = 5-site majority vote; error rate 33%→11% depending on tolerance rule |
 | SEC Financial Statement Data Sets (amendments) | no | future work | **NOT SELECTED** | Real issuer corrections possible but not packaged; legitimate restatements, alignment and sparsity problems |
 | AddressTable (Clean Me If You Can, 2026) | probe sample only | possible R2/R3 | **NOT SELECTED (now)** | Real errors at scale but string-only, standardisation-dominated, 7.3 GB, licence ambiguity |
@@ -47,7 +47,8 @@ authoritative URL, checks the pinned SHA-256 of the archive **and** of every ext
 nested zips), writes files read-only, records a manifest in `data/manifests/`, and verifies shape. A
 truncated download or hash mismatch aborts without leaving a partial file (tested in
 `tests/test_acquisition.py`). Status on 2026-10-19 **[ours]**: all six automatic datasets VERIFIED; BAF
-BLOCKED (manual).
+BLOCKED (manual). Since 2026-10-20 BAF is an optional Kaggle dataset (`scripts/download_baf.py`), skipped
+unless requested.
 
 The UCI Credit archive hash (`56c885f8…727602`) equals the archive used in the earlier pilot repository,
 so the earlier results refer to the same bytes **[ours]**.
@@ -152,7 +153,13 @@ so the earlier results refer to the same bytes **[ours]**.
 - **Rayyan, Movies [probe]:** small real/format errors in bibliographic and movie data; not needed.
 - **Feedzai BAF [probe]:** Kaggle metadata states CC BY-NC-SA 4.0, the publisher datasheet CC BY-NC-ND 4.0;
   download requires login (not bypassed). Both are non-commercial; ND would forbid sharing injected
-  copies. Remains BLOCKED; Bank Marketing covers the monthly-batch role.
+  copies. Bank Marketing covers the monthly-batch role.
+- **Feedzai BAF [ours, 2026-10-20]:** downloaded via the official Kaggle client (`scripts/download_baf.py`,
+  optional). Base.csv: 1,000,000 rows × 32 columns, SHA-256 `7bf10a37…f9b809` (extracted CSV), 0 NaN
+  cells; missing values are encoded as negatives (e.g. `prev_address_months_count` = -1 in 71.3% of rows,
+  `intended_balcon_amount` < 0 in 74.3%; mapping per datasheet, **provisional**); `fraud_bool` = 1 in
+  1.103% of rows (prediction target, not a DQ label). Full report: `data/manifests/baf.validation.json`.
+  Licence still unresolved; not qualified for any role.
 - **Li et al. Stock [probe]:** the only financial real-conflict candidate; truth is a 5-site majority vote
   with partial coverage and rounding; mismatch rate 33.1% exact, 16.4% at ±1%, 10.6% at ±5%; no licence
   statement. Labels would be rule-defined – exploratory only.

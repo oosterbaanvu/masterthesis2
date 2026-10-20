@@ -7,6 +7,9 @@ Checks per dataset:
   3. the primary table loads with the declared reader and has the expected
      row count and column names (or, for dirty/clean pairs, identical shapes).
 
+An optional dataset (e.g. BAF) that has not been downloaded is reported as
+ABSENT (optional) and does not fail the run.
+
 Usage:
     python scripts/verify_datasets.py [dataset ...] [--json out.json]
 """
@@ -32,6 +35,10 @@ def main(argv: list[str] | None = None) -> int:
     exit_code = 0
     for key in keys:
         spec = registry[key]
+        if spec.optional and not any(spec.raw_dir.glob("*")):
+            report[key] = {"dataset": key, "status": "ABSENT (optional)"}
+            print(f"[ABSENT (optional)] {key}")
+            continue
         res = verify(spec)
         if res["status"] != "FAIL":
             res["shape_check"] = check_table_shape(spec)
