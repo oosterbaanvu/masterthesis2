@@ -1,0 +1,22 @@
+{
+  "sis-ethz/Picket": {
+    "sha": "773797ae1c1ed37c345facfb43e289a75d92cc1c",
+    "licence": "MIT",
+    "url": "https://github.com/sis-ethz/Picket"
+  },
+  "abmohajeri/holodetect": {
+    "sha": "92ba865096d9d5242b9f6047738026ec6e6a0056",
+    "licence": null,
+    "url": "https://github.com/abmohajeri/holodetect"
+  },
+  "mooselab/Detect-Cell-level-Data-Anomalies-With-LUCARIO": {
+    "sha": "3664bfa830b7b13f8a08cc7dd960c871c56aaeeb",
+    "licence": null,
+    "url": "https://github.com/mooselab/Detect-Cell-level-Data-Anomalies-With-LUCARIO"
+  },
+  "ZJU-Data-Governance-and-Services-Team/ZeroED": {
+    "sha": "2b84266e1d8b2014d36643d343429d9a20bd769e",
+    "licence": null,
+    "url": "https://github.com/ZJU-DataVIP-Lab/ZeroED"
+  }
+}

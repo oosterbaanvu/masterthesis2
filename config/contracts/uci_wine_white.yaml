@@ -1,0 +1,95 @@
+dataset: uci_wine_white
+table: wine_measurements
+description: White Vinho Verde physicochemical inputs; sensory quality target excluded.
+  Historical measurements are not assumed verified error-free.
+row_id: null
+excluded_columns:
+  quality: Sensory prediction target, never a data-quality error label.
+columns:
+- name: fixed acidity
+  type: numeric
+  semantic: physicochemical_measurement
+- name: volatile acidity
+  type: numeric
+  semantic: physicochemical_measurement
+- name: citric acid
+  type: numeric
+  semantic: physicochemical_measurement
+- name: residual sugar
+  type: numeric
+  semantic: physicochemical_measurement
+- name: chlorides
+  type: numeric
+  semantic: physicochemical_measurement
+- name: free sulfur dioxide
+  type: numeric
+  semantic: physicochemical_measurement
+- name: total sulfur dioxide
+  type: numeric
+  semantic: physicochemical_measurement
+- name: density
+  type: numeric
+  semantic: physicochemical_measurement
+- name: pH
+  type: numeric
+  semantic: physicochemical_measurement
+- name: sulphates
+  type: numeric
+  semantic: physicochemical_measurement
+- name: alcohol
+  type: numeric
+  semantic: physicochemical_measurement
+rules:
+- id: D_REQUIRED
+  kind: not_null
+  columns: all
+  status: verified
+  evidence: 'UCI winequality.names: no missing values in the published measurements.'
+- id: D_NONNEG_{i}
+  kind: range
+  for_each: &id001
+  - fixed acidity
+  - volatile acidity
+  - citric acid
+  - residual sugar
+  - chlorides
+  - free sulfur dioxide
+  - total sulfur dioxide
+  - density
+  - pH
+  - sulphates
+  - alcohol
+  columns:
+  - '{i}'
+  min: 0
+  status: provisional
+  evidence: Nonnegative concentration, density, percentage or pH; no clean-test range
+    fitting.
+- id: D_PH
+  kind: range
+  columns:
+  - pH
+  min: 0
+  max: 14
+  status: provisional
+  evidence: Conventional aqueous pH screening range, not an empirical min/max.
+- id: D_FREE_TOTAL
+  kind: expression
+  columns:
+  - free sulfur dioxide
+  - total sulfur dioxide
+  expression: '"free sulfur dioxide" <= "total sulfur dioxide"'
+  status: provisional
+  evidence: Free sulfur is a component of total sulfur; laboratory measurement uncertainty
+    can cause violations.
+statistical_controls:
+- id: S_ENV_{i}
+  kind: envelope
+  for_each: *id001
+  columns:
+  - '{i}'
+  expression: '"{i}"'
+  lower_q: 0.0005
+  upper_q: 0.9995
+  status: provisional
+  evidence: Fixed quantiles fitted on historical design-pool data only.

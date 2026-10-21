@@ -35,6 +35,7 @@ from dq_framework.datasets import load_contract_table
 from dq_framework.detectors.registry import make_detector
 from dq_framework.injection import inject
 from dq_framework.pilot import metrics as M
+from dq_framework.pilot import total_budget
 from dq_framework.pilot.scenarios import PilotScenario, build_all
 from dq_framework.pilot.splits import delivery_split, pilot_split
 
@@ -230,7 +231,8 @@ def run_replication(cfg: dict[str, Any], pilot_seed: int, scheme: str = "random"
     # 5. metrics -----------------------------------------------------------------------------------------
     cell_dets = [k for k in outputs if det_meta[k]["granularity"] == "cell"]
     row_dets = [k for k in outputs if det_meta[k]["granularity"] == "row"]
-    met_rows, base_rows, overlap_rows, burden_rows = [], [], [], []
+    met_rows, base_rows, overlap_rows, burden_rows, shared_overlaps, pr_rows = [], [], [], [], [], []
+    pr_seen = set()
     for p, sid0 in UNTOUCHED.items():
         g = grids[p]
         bm = base_masks(sid0, g)
@@ -263,8 +265,25 @@ def run_replication(cfg: dict[str, Any], pilot_seed: int, scheme: str = "random"
                 f, s = outputs[k][ps.sid]
                 sc = s if det_meta[k]["provides_scores"] else None
                 m = M.cell_metrics(inj, bc, f, sc, budgets, target_col=tcol)
+                if cfg.get("shared_total_budget"):
+                    m.update(total_budget.metrics(inj, bc, f, sc, budgets))
+                    if b == BASELINES[0] and sc is not None and (ps.family, k) not in pr_seen and ps.partition == "test":
+                        from sklearn.metrics import precision_recall_curve
+
+                        finite = np.isfinite(sc)
+                        if inj[finite].any():
+                            precision, recall, _ = precision_recall_curve(inj[finite], sc[finite])
+                            for level in np.linspace(0, 1, 51):
+                                precision_at = float(precision[recall >= level].max()) if (recall >= level).any() else 0.0
+                                pr_rows.append({"sid": ps.sid, "family": ps.family, "column": ps.scenario.column,
+                                                "detector": k, "recall": level, "precision": precision_at})
+                            pr_seen.add((ps.family, k))
                 met_rows.append({"sid": ps.sid, "detector": k, "baseline": b, **m})
-                found[k] = M.found_mask(inj, bc, f, sc, float(cfg.get("overlap_budget", 25)))
+                if cfg.get("shared_total_budget"):
+                    _, selected, _ = total_budget.queues(bc, f, sc, int(round(25 * g.shape[0] / 1000)))
+                    found[k] = selected & inj
+                else:
+                    found[k] = M.found_mask(inj, bc, f, sc, float(cfg.get("overlap_budget", 25)))
                 if sc is not None:  # record-level view of a cell detector (max score per row)
                     rs = np.nanmax(np.where(np.isfinite(s), s, -np.inf), axis=1)
                     rm = M.row_metrics(inj, br, f.any(1), rs, budgets)
@@ -282,6 +301,11 @@ def run_replication(cfg: dict[str, Any], pilot_seed: int, scheme: str = "random"
                                          "a_found": int(found[a].sum()), "b_found": int(found[bb].sum()),
                                          "both": int((found[a] & found[bb]).sum()),
                                          "either": int((found[a] | found[bb]).sum())})
+                    if cfg.get("shared_total_budget"):
+                        shared_overlaps.append({"sid": ps.sid, "baseline": b, "a": a, "b": bb,
+                                                "a_only": int((found[a] & ~found[bb]).sum()),
+                                                "b_only": int((found[bb] & ~found[a]).sum()),
+                                                "both": int((found[a] & found[bb]).sum()), "n_injected": n_inj})
             if cell_dets:
                 overlap_rows.append({"sid": ps.sid, "baseline": b, "a": "<all>", "b": "<all>", "n_injected": n_inj,
                                      "a_found": int(union.sum()), "b_found": int(union.sum()), "both": int(union.sum()),
@@ -293,6 +317,12 @@ def run_replication(cfg: dict[str, Any], pilot_seed: int, scheme: str = "random"
     pd.DataFrame(base_rows).to_csv(out_dir / "baseline_metrics.csv", index=False)
     pd.DataFrame(overlap_rows).to_csv(out_dir / "overlap.csv", index=False)
     pd.DataFrame(burden_rows).to_csv(out_dir / "untouched_burden.csv", index=False)
+    if cfg.get("shared_total_budget"):
+        pd.DataFrame(shared_overlaps).to_csv(out_dir / "shared_overlap.csv", index=False)
+        pd.DataFrame(pr_rows).to_csv(out_dir / "pr_curves.csv", index=False)
+        exact_logs = [lg.assign(sid=sid, original=lg["original"].map(repr), injected=lg["injected"].map(repr))
+                      for sid, lg in logs.items()]
+        pd.concat(exact_logs, ignore_index=True).to_parquet(out_dir / "injection_log.parquet", index=False)
     pd.DataFrame(failures, columns=["sid", "set", "case_id", "stage", "error"]).to_csv(out_dir / "failures.csv", index=False)
     rule_burden = (ctl.alerts[ctl.alerts["_scenario_id"].isin(UNTOUCHED.values())]
                    .groupby(["_scenario_id", "rule_id", "tier", "rule_status"]).size().rename("alerts").reset_index())

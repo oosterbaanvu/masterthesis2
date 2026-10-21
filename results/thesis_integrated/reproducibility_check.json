@@ -1,0 +1,69 @@
+{
+  "dataset": "uci_wine_white",
+  "seed": 11,
+  "independent_evidence": false,
+  "checks": {
+    "scenarios.csv": {
+      "same": true,
+      "sha256": "3f45cfd0380bcaf72c0d983b35fbc8479b7431eaae401ea352fd655a21f7f5d3"
+    },
+    "detector_metrics.csv": {
+      "same": true,
+      "sha256": "85de4a32ab7cbec8bc5f5d8ffb85b4202419c1dc4175d5852baea85205c0c040"
+    },
+    "baseline_metrics.csv": {
+      "same": true,
+      "sha256": "4db86cff28c1fe59901ee36c2e9835398132ee0e5f921ea52f2512d118037f59"
+    },
+    "shared_overlap.csv": {
+      "same": true,
+      "sha256": "124a0ff389dbf7d4ec3491dce362a9045c32cacb5609e34dfc6f2c89d48b2dfa"
+    },
+    "pr_curves.csv": {
+      "same": true,
+      "sha256": "93a925931bb2c2270c9abad70eefb2ed801db13960136b5ad78c6472fe0901cd"
+    },
+    "injection_log.parquet": {
+      "same": true,
+      "sha256": "a583ffbabe452ec0b70bfffa26390283e9650c9f5e61e6ae4f6c2aa8957e046b"
+    },
+    "failures.csv": {
+      "same": true,
+      "sha256": "6c29568f61d4ad692a751eb64495c8079fb3bcd2ea10357d797d1d73f0274e26"
+    },
+    "untouched_burden.csv": {
+      "same": true,
+      "sha256": "6d9afd2db358943f5e0f4da35e8567effe1a587c01a0829713d67cb11d325495"
+    },
+    "untouched_rule_burden.csv": {
+      "same": true,
+      "sha256": "e2c4e7c0712de1d8c8e3a97a3f0b4ab8f6ed781367ab54cef3886814f148df28"
+    }
+  },
+  "analysis_repeat": {
+    "matched_mechanisms_uci_bank_marketing_random.csv": true,
+    "overlap.csv": true,
+    "paired_selectors.csv": true,
+    "runtime.csv": true,
+    "pr_curves.csv": true,
+    "case_metrics.csv": true,
+    "selection.csv": true,
+    "family_metrics.csv": true,
+    "matched_mechanisms_uci_wine_white_random.csv": true,
+    "selection_summary.csv": true,
+    "run_provenance.json": true,
+    "scenario_inventory.csv": true,
+    "untouched_workload.csv": true,
+    "failures.csv": true,
+    "matched_mechanisms_uci_credit_random.csv": true,
+    "holdout_audit.csv": true,
+    "paired_designs.csv": true,
+    "matched_mechanisms_uci_bank_marketing_delivery.csv": true,
+    "case_uncertainty.csv": true,
+    "frozen_inputs.json": true
+  },
+  "resume": {
+    "reused_runs": 11,
+    "pending_jobs": 0
+  }
+}

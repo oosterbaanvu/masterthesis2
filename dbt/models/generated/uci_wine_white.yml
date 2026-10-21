@@ -1,0 +1,411 @@
+# GENERATED from config/contracts/uci_wine_white.yaml by `dqf controls generate`. Do not edit.
+version: 2
+models:
+- name: stg_uci_wine_white
+  description: White Vinho Verde physicochemical inputs; sensory quality target excluded. Historical measurements are not
+    assumed verified error-free.
+  config:
+    meta:
+      dataset: uci_wine_white
+      contract: config/contracts/uci_wine_white.yaml
+  data_tests:
+  - dq_not_null:
+      name: uci_wine_white__d_required__fixed_acidity
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"fixed acidity"'
+        column_name_text: fixed acidity
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_wine_white__d_required__volatile_acidity
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"volatile acidity"'
+        column_name_text: volatile acidity
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_wine_white__d_required__citric_acid
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"citric acid"'
+        column_name_text: citric acid
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_wine_white__d_required__residual_sugar
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"residual sugar"'
+        column_name_text: residual sugar
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_wine_white__d_required__chlorides
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"chlorides"'
+        column_name_text: chlorides
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_wine_white__d_required__free_sulfur_dioxide
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"free sulfur dioxide"'
+        column_name_text: free sulfur dioxide
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_wine_white__d_required__total_sulfur_dioxide
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"total sulfur dioxide"'
+        column_name_text: total sulfur dioxide
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_wine_white__d_required__density
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"density"'
+        column_name_text: density
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_wine_white__d_required__ph
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"pH"'
+        column_name_text: pH
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_wine_white__d_required__sulphates
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"sulphates"'
+        column_name_text: sulphates
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_not_null:
+      name: uci_wine_white__d_required__alcohol
+      arguments:
+        rule_id: D_REQUIRED
+        column_sql: '"alcohol"'
+        column_name_text: alcohol
+      config:
+        meta:
+          rule_id: D_REQUIRED
+          tier: deterministic
+          status: verified
+  - dq_range:
+      name: uci_wine_white__d_nonneg_fixed_acidity
+      arguments:
+        rule_id: D_NONNEG_fixed acidity
+        column_sql: '"fixed acidity"'
+        column_name_text: fixed acidity
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_fixed acidity
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_nonneg_volatile_acidity
+      arguments:
+        rule_id: D_NONNEG_volatile acidity
+        column_sql: '"volatile acidity"'
+        column_name_text: volatile acidity
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_volatile acidity
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_nonneg_citric_acid
+      arguments:
+        rule_id: D_NONNEG_citric acid
+        column_sql: '"citric acid"'
+        column_name_text: citric acid
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_citric acid
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_nonneg_residual_sugar
+      arguments:
+        rule_id: D_NONNEG_residual sugar
+        column_sql: '"residual sugar"'
+        column_name_text: residual sugar
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_residual sugar
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_nonneg_chlorides
+      arguments:
+        rule_id: D_NONNEG_chlorides
+        column_sql: '"chlorides"'
+        column_name_text: chlorides
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_chlorides
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_nonneg_free_sulfur_dioxide
+      arguments:
+        rule_id: D_NONNEG_free sulfur dioxide
+        column_sql: '"free sulfur dioxide"'
+        column_name_text: free sulfur dioxide
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_free sulfur dioxide
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_nonneg_total_sulfur_dioxide
+      arguments:
+        rule_id: D_NONNEG_total sulfur dioxide
+        column_sql: '"total sulfur dioxide"'
+        column_name_text: total sulfur dioxide
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_total sulfur dioxide
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_nonneg_density
+      arguments:
+        rule_id: D_NONNEG_density
+        column_sql: '"density"'
+        column_name_text: density
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_density
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_nonneg_ph
+      arguments:
+        rule_id: D_NONNEG_pH
+        column_sql: '"pH"'
+        column_name_text: pH
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_pH
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_nonneg_sulphates
+      arguments:
+        rule_id: D_NONNEG_sulphates
+        column_sql: '"sulphates"'
+        column_name_text: sulphates
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_sulphates
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_nonneg_alcohol
+      arguments:
+        rule_id: D_NONNEG_alcohol
+        column_sql: '"alcohol"'
+        column_name_text: alcohol
+        min_value: 0
+      config:
+        meta:
+          rule_id: D_NONNEG_alcohol
+          tier: deterministic
+          status: provisional
+  - dq_range:
+      name: uci_wine_white__d_ph
+      arguments:
+        rule_id: D_PH
+        column_sql: '"pH"'
+        column_name_text: pH
+        min_value: 0
+        max_value: 14
+      config:
+        meta:
+          rule_id: D_PH
+          tier: deterministic
+          status: provisional
+  - dq_expression:
+      name: uci_wine_white__d_free_total
+      arguments:
+        rule_id: D_FREE_TOTAL
+        condition: '"free sulfur dioxide" <= "total sulfur dioxide"'
+        columns_text: free sulfur dioxide,total sulfur dioxide
+        observed_sql: coalesce(cast("free sulfur dioxide" as varchar), 'NULL') || '|' || coalesce(cast("total sulfur dioxide"
+          as varchar), 'NULL')
+      config:
+        meta:
+          rule_id: D_FREE_TOTAL
+          tier: deterministic
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_fixed_acidity
+      arguments:
+        rule_id: S_ENV_fixed acidity
+        expression: '"fixed acidity"'
+        columns_text: fixed acidity
+      config:
+        meta:
+          rule_id: S_ENV_fixed acidity
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_volatile_acidity
+      arguments:
+        rule_id: S_ENV_volatile acidity
+        expression: '"volatile acidity"'
+        columns_text: volatile acidity
+      config:
+        meta:
+          rule_id: S_ENV_volatile acidity
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_citric_acid
+      arguments:
+        rule_id: S_ENV_citric acid
+        expression: '"citric acid"'
+        columns_text: citric acid
+      config:
+        meta:
+          rule_id: S_ENV_citric acid
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_residual_sugar
+      arguments:
+        rule_id: S_ENV_residual sugar
+        expression: '"residual sugar"'
+        columns_text: residual sugar
+      config:
+        meta:
+          rule_id: S_ENV_residual sugar
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_chlorides
+      arguments:
+        rule_id: S_ENV_chlorides
+        expression: '"chlorides"'
+        columns_text: chlorides
+      config:
+        meta:
+          rule_id: S_ENV_chlorides
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_free_sulfur_dioxide
+      arguments:
+        rule_id: S_ENV_free sulfur dioxide
+        expression: '"free sulfur dioxide"'
+        columns_text: free sulfur dioxide
+      config:
+        meta:
+          rule_id: S_ENV_free sulfur dioxide
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_total_sulfur_dioxide
+      arguments:
+        rule_id: S_ENV_total sulfur dioxide
+        expression: '"total sulfur dioxide"'
+        columns_text: total sulfur dioxide
+      config:
+        meta:
+          rule_id: S_ENV_total sulfur dioxide
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_density
+      arguments:
+        rule_id: S_ENV_density
+        expression: '"density"'
+        columns_text: density
+      config:
+        meta:
+          rule_id: S_ENV_density
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_ph
+      arguments:
+        rule_id: S_ENV_pH
+        expression: '"pH"'
+        columns_text: pH
+      config:
+        meta:
+          rule_id: S_ENV_pH
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_sulphates
+      arguments:
+        rule_id: S_ENV_sulphates
+        expression: '"sulphates"'
+        columns_text: sulphates
+      config:
+        meta:
+          rule_id: S_ENV_sulphates
+          tier: statistical
+          status: provisional
+  - dq_envelope:
+      name: uci_wine_white__s_env_alcohol
+      arguments:
+        rule_id: S_ENV_alcohol
+        expression: '"alcohol"'
+        columns_text: alcohol
+      config:
+        meta:
+          rule_id: S_ENV_alcohol
+          tier: statistical
+          status: provisional

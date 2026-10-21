@@ -1,0 +1,39 @@
+study: integrated_exploratory_2026_10_21
+configs:
+- config/thesis/uci_bank_marketing.yaml
+- config/thesis/uci_credit.yaml
+- config/thesis/uci_wine_white.yaml
+primary_budget: 25
+total_budgets:
+- 10
+- 25
+- 50
+budget_policy: half baseline first (ceil); novel detector cells next; unused capacity
+  returns to baseline; no free baseline credit; ties seeded uniform cell permutation
+  0
+primary_detectors:
+- cdc
+- dboost_gaussian
+- dboost_gaussian_text
+secondary_detectors:
+- iqr_outlier
+naive:
+  rule: argmax mean delta_shared, NO_ADDITION if best mean <= 0
+robust:
+  bootstrap_unit: error case after averaging dependent splits/rates/injection seeds
+  bootstrap_replicates: 1000
+  lower_quantile: 0.1
+  minimum_lower_gain: 0.005
+  worst_family_floor: -0.01
+  min_cases: 3
+  seed: 0
+compute:
+  max_parallel_jobs: 2
+  threads_per_job: 2
+  max_pool_rows: 9000
+holdout: seed-1 test excluded; pilot test is inside design pool, never confirmatory
+unsupported:
+  uci_wine_white:
+  - 'valid_category: no eligible non-target categorical column'
+  - 'actual temporal delivery: no chronology'
+  - 'format strings: numeric ingestion would change the measurement type; not manufactured'

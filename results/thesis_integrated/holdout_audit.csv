@@ -1,0 +1,12 @@
+dataset,seed,scheme,changed_cells,successful_scenarios,sql_input_rows,reserved_rows,reserved_injections,non_design_sql_rows,count_and_uniqueness_check
+uci_bank_marketing,1,delivery,19233,274,1287759,8236,0,0,PASS
+uci_bank_marketing,2,delivery,10362,278,701654,8236,0,0,PASS
+uci_bank_marketing,11,random,10988,328,742500,8236,0,0,PASS
+uci_bank_marketing,12,random,10988,328,742500,8236,0,0,PASS
+uci_bank_marketing,13,random,10988,328,742500,8236,0,0,PASS
+uci_credit,11,random,13467,402,908825,6003,0,0,PASS
+uci_credit,12,random,13554,402,909121,6003,0,0,PASS
+uci_credit,13,random,13467,402,908596,6003,0,0,PASS
+uci_wine_white,11,random,2820,188,190055,959,0,0,PASS
+uci_wine_white,12,random,2791,194,193392,959,0,0,PASS
+uci_wine_white,13,random,2789,194,192801,959,0,0,PASS

@@ -319,3 +319,48 @@ datasets:
       read_options: {dtype: str, keep_default_na: false}
       expected_rows: 406
       expected_columns: [Car, MPG, Cylinders, Displacement, Horsepower, Weight, Acceleration, Model, Origin]
+
+  uci_wine_white:
+    title: Wine Quality (white Vinho Verde, UCI 186)
+    landing_page: https://archive.ics.uci.edu/dataset/186/wine+quality
+    doi: 10.24432/C56S3T
+    licence: CC BY 4.0 (UCI dataset landing page); cite Cortez et al. (2009)
+    citation: Cortez et al. (2009), Modeling wine preferences by data mining from physicochemical
+      properties, Decision Support Systems 47(4), doi:10.1016/j.dss.2009.05.016
+    version: UCI static archive acquired 2026-10-21; byte-pinned archive and members
+    roles:
+    - controlled_nonfinancial
+    - engineering_demo
+    cell_error_ground_truth: false
+    acquisition:
+      files:
+      - name: winequality.zip
+        url: https://archive.ics.uci.edu/static/public/186/wine+quality.zip
+        sha256: 3ed56667f4b828242bd732d7d1dd7f2861e54432239d7fa63877014cbb0304d4
+        extract:
+        - member: winequality-white.csv
+          path: winequality-white.csv
+          sha256: 76c3f809815c17c07212622f776311faeb31e87610d52c26d87d6e361b169836
+        - member: winequality.names
+          path: winequality.names
+          sha256: 15d215e73b39105952380fd487e4ce1bf5a6b83a425abb285c2ec55193d3ca92
+    table:
+      file: winequality-white.csv
+      format: csv
+      read_options:
+        sep: ;
+      expected_rows: 4898
+      expected_columns:
+      - fixed acidity
+      - volatile acidity
+      - citric acid
+      - residual sugar
+      - chlorides
+      - free sulfur dioxide
+      - total sulfur dioxide
+      - density
+      - pH
+      - sulphates
+      - alcohol
+      - quality
+    contract: config/contracts/uci_wine_white.yaml

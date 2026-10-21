@@ -1,0 +1,2146 @@
+[
+  {
+    "manifest": {
+      "replication": "uci_bank_marketing-delivery-d1",
+      "dataset": "uci_bank_marketing",
+      "pilot_seed": 1,
+      "scheme": "delivery",
+      "config": "/workspace/masterthesis2/config/thesis/uci_bank_marketing.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:36:24+00:00",
+      "elapsed_s": 296.8,
+      "injection_seconds": 2.5,
+      "partitions": {
+        "reference": 9764,
+        "selection": 5278,
+        "test": 4159,
+        "holdout_excluded": 8236,
+        "unused": 13751
+      },
+      "delivery": {
+        "reference": [
+          1,
+          2
+        ],
+        "selection": [
+          3
+        ],
+        "test": [
+          4
+        ]
+      },
+      "n_scenarios": 274,
+      "n_failed_scenarios": 54,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 9.6,
+        "tests": {
+          "pass": 43,
+          "warn": 15
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "CONDITIONAL",
+          "reasons": [
+            "job: 12 of 12 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'student': n\u22484)",
+            "marital: 4 of 4 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u22481)",
+            "education: 8 of 8 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'illiterate': n\u22480)",
+            "default: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u2248161)",
+            "housing: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224816)",
+            "loan: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224816)",
+            "contact: 1 of 1 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'telephone': n\u2248512)",
+            "month: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'jun': n\u2248186)",
+            "day_of_week: 5 of 5 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'thu': n\u224891)",
+            "poutcome: 1 of 1 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'nonexistent': n\u2248512)"
+          ],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 45.555352881001454,
+          "score_seconds": 117.8319309589915,
+          "n_score_calls": 276,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.21473691599931044,
+          "score_seconds": 4.046280769005534,
+          "n_score_calls": 276,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.43766432700067526,
+          "score_seconds": 4.817745168011243,
+          "n_score_calls": 276,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.0025161499997921055,
+          "score_seconds": 2.3344496969839383,
+          "n_score_calls": 276,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "17b5acde1ab37e616f56b63ec9080b1d83010f8d3dbe81d2251611748ed56ef0",
+        "overlap.csv": "b60a96cf61005b0db911f544f901ffac6a29f308980bce7f26cdcfd19fc3527f",
+        "pr_curves.csv": "848e3581b3730904471200238a7a4ccf78009a27a391a2f10897248d3b4f41d9",
+        "manifest.json": "9dd95daab0a27ec3cbf7bc41047e6b2c3526be4707c61f8bc0c837a508342ecf",
+        "injection_log.parquet": "4dbfbefbb6e4296a3b2698e41abd1209e12faff5b910cc1a6254dd664a925279",
+        "failures.csv": "73022c70fcb12b17138cc469631ed54cfa03fbb6f19d598e2910e9c23bec4d7c",
+        "untouched_burden.csv": "d70f7f0287a41634dbf542d4f3fc65b6e92f12b61d310a8484c29b02be44319a",
+        "shared_overlap.csv": "6726d4c1ff18d93241df2ddb24fc56549428c3295a18df151a3473a7cafea035",
+        "scenarios.csv": "01bc4a247592e19247e1c7f2e74f4be04d5e6ef4a09d5c2b0ada35975722e1b5",
+        "baseline_metrics.csv": "32b0b79f7270cab3f92f3f78bc42cb5c77154eff22c823f8fc12d98a55b5d737",
+        "untouched_rule_burden.csv": "c6ec4fea32a1b76bddc1fd1cc66962f9b4de0ef9760bc9b9eb9e31be694b5f36"
+      },
+      "worker_peak_rss_mb_upper_bound": 8470.34375,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  },
+  {
+    "manifest": {
+      "replication": "uci_bank_marketing-delivery-d2",
+      "dataset": "uci_bank_marketing",
+      "pilot_seed": 2,
+      "scheme": "delivery",
+      "config": "/workspace/masterthesis2/config/thesis/uci_bank_marketing.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:40:18+00:00",
+      "elapsed_s": 260.1,
+      "injection_seconds": 1.9,
+      "partitions": {
+        "reference": 9437,
+        "selection": 2958,
+        "test": 2200,
+        "holdout_excluded": 8236,
+        "unused": 18357
+      },
+      "delivery": {
+        "reference": [
+          3,
+          4
+        ],
+        "selection": [
+          5,
+          6
+        ],
+        "test": [
+          8,
+          9
+        ]
+      },
+      "n_scenarios": 278,
+      "n_failed_scenarios": 50,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 8.7,
+        "tests": {
+          "pass": 39,
+          "warn": 19
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "CONDITIONAL",
+          "reasons": [
+            "job: 12 of 12 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'student': n\u22483)",
+            "marital: 4 of 4 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u22481)",
+            "education: 8 of 8 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'illiterate': n\u22480)",
+            "default: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'yes': n\u22480)",
+            "housing: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224811)",
+            "loan: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224811)",
+            "contact: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'telephone': n\u224848)",
+            "month: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'aug': n\u2248226)",
+            "day_of_week: 5 of 5 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'fri': n\u224877)",
+            "poutcome: 1 of 1 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'nonexistent': n\u2248512)"
+          ],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 45.55118338600005,
+          "score_seconds": 121.1191119450159,
+          "n_score_calls": 280,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.21305093199953262,
+          "score_seconds": 4.110589189996972,
+          "n_score_calls": 280,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.45669985899985477,
+          "score_seconds": 4.640921271999105,
+          "n_score_calls": 280,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.002189885000916547,
+          "score_seconds": 2.125119729003927,
+          "n_score_calls": 280,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "5b7bb27885f9bada6b76a24759ced543c57c5207a23033cdd609418c9d63f214",
+        "overlap.csv": "f821e6da69c9cd0890f163a645c6aaabca6614691a2a9feb2e709d489fafbfd7",
+        "pr_curves.csv": "f78e0e39c84bb6ced8a6a028cad1964d6654b4270358a6bda0d0e508316b3f8c",
+        "manifest.json": "401f850a811d903372eefafa113d31125397e2621d3cd67a76df46579b3008b2",
+        "injection_log.parquet": "4d781a5649729f977b4337bdf30dc0ff09cd57d320d2398283fa422b6364edc6",
+        "failures.csv": "1e6353ae0bb64244f3ccf2d29a92a0862c5414b0cc93370f4a58d75c371ede3e",
+        "untouched_burden.csv": "e0c20536f3e9fb3a7375037e26813232cc62d8740d0600939c5d2574e3988c78",
+        "shared_overlap.csv": "ed343e730ea4827105ac9fa681e86638485e0fa4d268d038372d000f84956e63",
+        "scenarios.csv": "a94b15ddf5fe9ebd5abc1dee2076cd85038fee3106e0723ecd5d5fb5412dc917",
+        "baseline_metrics.csv": "12d8834f3173fd9bffd715c48b16b24d059335efd6400d42552efd7f0e524e9f",
+        "untouched_rule_burden.csv": "d3e98057421219e8025cc505df506fa405ca67036c748a4cd0437857727834cf"
+      },
+      "worker_peak_rss_mb_upper_bound": 6390.04296875,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  },
+  {
+    "manifest": {
+      "replication": "uci_bank_marketing-random-s11",
+      "dataset": "uci_bank_marketing",
+      "pilot_seed": 11,
+      "scheme": "random",
+      "config": "/workspace/masterthesis2/config/thesis/uci_bank_marketing.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:31:27+00:00",
+      "elapsed_s": 288.6,
+      "injection_seconds": 2.0,
+      "partitions": {
+        "reference": 4500,
+        "selection": 2250,
+        "test": 2250,
+        "holdout_excluded": 8236,
+        "unused": 23952
+      },
+      "delivery": null,
+      "n_scenarios": 328,
+      "n_failed_scenarios": 0,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 8.5,
+        "tests": {
+          "pass": 43,
+          "warn": 15
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "CONDITIONAL",
+          "reasons": [
+            "job: 12 of 12 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u22484)",
+            "marital: 4 of 4 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u22481)",
+            "education: 8 of 8 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'illiterate': n\u22480)",
+            "default: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u2248108)",
+            "housing: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224812)",
+            "loan: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224812)",
+            "contact: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'telephone': n\u2248191)",
+            "month: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'dec': n\u22482)",
+            "day_of_week: 5 of 5 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'tue': n\u224897)",
+            "poutcome: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'success': n\u224815)"
+          ],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 45.470718720998775,
+          "score_seconds": 160.60609582800134,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.10255779500039353,
+          "score_seconds": 4.64926533898506,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.2035735020017455,
+          "score_seconds": 4.4643730350035185,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.0018868580009439029,
+          "score_seconds": 2.0643086500313075,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "082da6bc9db03da17bfc61d47c8e20b87ff2a983474c854d7a1a37bb9cd30583",
+        "overlap.csv": "5aeb6e2c7309d18fcf0173b8893076b8ac6e1db62000e529f667dfa47fd14b9c",
+        "pr_curves.csv": "db842a58dd4b7bff6c8d7370488351792f103f0b6948c69271325543223b67a2",
+        "manifest.json": "b4863cab69a8386edbc0646d751e68cd9a32173900d216911fa75ae36614e9d7",
+        "injection_log.parquet": "bd84642620796d947cea1a1be5edf7fcffce3f9674b33fa5a8b19a74d4b3a6a3",
+        "failures.csv": "7f8b36a1b4f93265ab561be8edd5a69c94acf5ff8938bd1a1ec8f5301f853aad",
+        "untouched_burden.csv": "60dab19aceed4a4a24aa47e7605e98e8b843bfc560257ee88cfd66889e19942d",
+        "shared_overlap.csv": "af064ed6f46e78b285f2277d607263448a608e08dc6c3b8f451271f5687ae9cb",
+        "scenarios.csv": "eb9c0bc421aa09e6794d4555a133ff4251a16cebeb0bea91d92c5dbfbcde46be",
+        "baseline_metrics.csv": "9d0e84855f8c715348cef7d978f53e7e23d15bca209b4a1282561edfd3a8f863",
+        "untouched_rule_burden.csv": "b197e62a6f07959b446b06191dd98714e2c1b97fb7d5d067ebcd739aac35f19e"
+      },
+      "worker_peak_rss_mb_upper_bound": 1185.1875,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  },
+  {
+    "manifest": {
+      "replication": "uci_bank_marketing-random-s12",
+      "dataset": "uci_bank_marketing",
+      "pilot_seed": 12,
+      "scheme": "random",
+      "config": "/workspace/masterthesis2/config/thesis/uci_bank_marketing.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:31:27+00:00",
+      "elapsed_s": 288.0,
+      "injection_seconds": 1.9,
+      "partitions": {
+        "reference": 4500,
+        "selection": 2250,
+        "test": 2250,
+        "holdout_excluded": 8236,
+        "unused": 23952
+      },
+      "delivery": null,
+      "n_scenarios": 328,
+      "n_failed_scenarios": 0,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 8.6,
+        "tests": {
+          "pass": 44,
+          "warn": 14
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "CONDITIONAL",
+          "reasons": [
+            "job: 12 of 12 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u22484)",
+            "marital: 4 of 4 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u22481)",
+            "education: 8 of 8 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'illiterate': n\u22480)",
+            "default: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u2248110)",
+            "housing: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224814)",
+            "loan: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224814)",
+            "contact: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'telephone': n\u2248192)",
+            "month: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'dec': n\u22482)",
+            "day_of_week: 5 of 5 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'fri': n\u224898)",
+            "poutcome: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'success': n\u224816)"
+          ],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 45.26914386899989,
+          "score_seconds": 159.7716176170161,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.12666413800070586,
+          "score_seconds": 4.807332243992278,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.21890853500008234,
+          "score_seconds": 4.630385993004893,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.0017080689995054854,
+          "score_seconds": 2.0917300199889723,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "c7fa6983c488082ae559850cd400ebe8da57db59033d451a7a520d8741b73122",
+        "overlap.csv": "28a5575fa947e376d29ab18e89bc825da3aabc089f2ab5e04518ba022f00b004",
+        "pr_curves.csv": "ddee033b06fd714895153ef3188e32081d7caa25220f09b33e6f12a4a0f1e875",
+        "manifest.json": "4045b24216bb2f974a743facce207e4d930af29e02df9bc7c3686e8650cfd28e",
+        "injection_log.parquet": "63691751ef469ebd3a61a39fc4c01c62b816566e40b1ccb2e5cb1a0046394ade",
+        "failures.csv": "7f8b36a1b4f93265ab561be8edd5a69c94acf5ff8938bd1a1ec8f5301f853aad",
+        "untouched_burden.csv": "5c2884deb592efebfbaa76a6c9ca2da6ca7c1cf382bc34a6ed90e0bc3212fe12",
+        "shared_overlap.csv": "35b82cabc000f1cb9a774452e9ef2985339e0855595245783b9295d00567e848",
+        "scenarios.csv": "8a1d51ba55d4ae8da362c60035f68e9c2f772be478c7f9124b3594b04288fbfa",
+        "baseline_metrics.csv": "ae77cc94535b30df0849d92d7ad96669b08a148451e5c7465fc84499ffef5df4",
+        "untouched_rule_burden.csv": "75af8f7f357966d40b2847db3d544c15c3244db034dbae30141d79fd24c547ef"
+      },
+      "worker_peak_rss_mb_upper_bound": 1183.19140625,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  },
+  {
+    "manifest": {
+      "replication": "uci_bank_marketing-random-s13",
+      "dataset": "uci_bank_marketing",
+      "pilot_seed": 13,
+      "scheme": "random",
+      "config": "/workspace/masterthesis2/config/thesis/uci_bank_marketing.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:35:58+00:00",
+      "elapsed_s": 271.2,
+      "injection_seconds": 1.9,
+      "partitions": {
+        "reference": 4500,
+        "selection": 2250,
+        "test": 2250,
+        "holdout_excluded": 8236,
+        "unused": 23952
+      },
+      "delivery": null,
+      "n_scenarios": 328,
+      "n_failed_scenarios": 0,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 7.8,
+        "tests": {
+          "pass": 44,
+          "warn": 14
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "CONDITIONAL",
+          "reasons": [
+            "job: 12 of 12 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u22484)",
+            "marital: 4 of 4 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u22481)",
+            "education: 7 of 7 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224820)",
+            "default: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u2248107)",
+            "housing: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224811)",
+            "loan: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'unknown': n\u224811)",
+            "contact: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'telephone': n\u2248192)",
+            "month: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'dec': n\u22482)",
+            "day_of_week: 5 of 5 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'tue': n\u224898)",
+            "poutcome: 3 of 3 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. 'success': n\u224815)"
+          ],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 42.12269016299979,
+          "score_seconds": 147.51177567999184,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.10406103100103792,
+          "score_seconds": 4.175397313994836,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.20100353099951462,
+          "score_seconds": 5.340166725014569,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.0023349279999820283,
+          "score_seconds": 2.2948519680048776,
+          "n_score_calls": 330,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "98684b45eb5c246c3a0faed8dceac56b9b67600592014de35b3b15641169cd42",
+        "overlap.csv": "9970f8529f5d901bfe8ab693f339697891a2a45f21dea9515a1445e01ad070c1",
+        "pr_curves.csv": "330aadb3bd0db6091888d5978bea3f0fcc314bfdf5488bcb9ee382095e63fc9c",
+        "manifest.json": "9807c8c75a0114220396709909805fd9f3df82e33271311ad64d24051909e2c3",
+        "injection_log.parquet": "6ef4129871c320cb18ab6b0cf61f2366c963ec938bd9d51194e279789740817c",
+        "failures.csv": "7f8b36a1b4f93265ab561be8edd5a69c94acf5ff8938bd1a1ec8f5301f853aad",
+        "untouched_burden.csv": "75621f3e80cca4e709c6d65975407a8bf4412737e37d3afba42d28c77d6286fd",
+        "shared_overlap.csv": "2869aeaef8f19ba27e7240a70115d37fd9d0ae485a8c6a4f6edc20cab48f2e36",
+        "scenarios.csv": "70db3f1cd7d4ebf46381d79a4be975730884a62fdbf16c8871c055fb27ac5046",
+        "baseline_metrics.csv": "3e565c87ec4a14e94345120c04ec97501d3eaf47b3aaf655df6c7d08bfff5119",
+        "untouched_rule_burden.csv": "d386e1acca33b3a8d37df4ecf91d98f67b5c0e2f4d02e470587c2c86e0ec9404"
+      },
+      "worker_peak_rss_mb_upper_bound": 1211.984375,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  },
+  {
+    "manifest": {
+      "replication": "uci_credit-random-s11",
+      "dataset": "uci_credit",
+      "pilot_seed": 11,
+      "scheme": "random",
+      "config": "/workspace/masterthesis2/config/thesis/uci_credit.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:43:30+00:00",
+      "elapsed_s": 425.2,
+      "injection_seconds": 2.3,
+      "partitions": {
+        "reference": 4501,
+        "selection": 2249,
+        "test": 2250,
+        "holdout_excluded": 6003,
+        "unused": 14997
+      },
+      "delivery": null,
+      "n_scenarios": 402,
+      "n_failed_scenarios": 0,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 9.2,
+        "tests": {
+          "warn": 42,
+          "pass": 39
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "CONDITIONAL",
+          "reasons": [
+            "SEX: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '1': n\u2248204)",
+            "EDUCATION: 7 of 7 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '0': n\u22480)",
+            "MARRIAGE: 4 of 4 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '0': n\u22480)",
+            "PAY_0: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '8': n\u22480)",
+            "PAY_2: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '8': n\u22480)",
+            "PAY_3: 11 of 11 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '1': n\u22480)",
+            "PAY_4: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '6': n\u22480)",
+            "PAY_5: 9 of 9 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '6': n\u22480)",
+            "PAY_6: 9 of 9 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '6': n\u22480)"
+          ],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 58.70529683700079,
+          "score_seconds": 248.89307571098652,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.03469159300038882,
+          "score_seconds": 5.443121541997243,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.31127431799905025,
+          "score_seconds": 7.064723205985501,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.002828626998962136,
+          "score_seconds": 3.278291661008552,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "02b013e59b6d965c8b6f5e4b3840c67c53ce75292918d579c2d7dd8f0b2c3cd5",
+        "overlap.csv": "d5147bc4843b96f7fa0475e5ad11a57210b7afcb19e62d91f9939c902b4cba72",
+        "pr_curves.csv": "74ea7e573f37f6755f15888fae4808ac234038cd58fa2cad54b82d43b0329bd2",
+        "manifest.json": "22ce9904745053288d02002889e06e2ab17f07f41c3bd705519d50805ed81614",
+        "injection_log.parquet": "7cca6c954a2382d533ed7067afb45558df5a6d0dbe190c20864875d281420014",
+        "failures.csv": "7f8b36a1b4f93265ab561be8edd5a69c94acf5ff8938bd1a1ec8f5301f853aad",
+        "untouched_burden.csv": "40b7b419f4b2f6716e27c761327d0c035ee5ff0d632a12cf515a9a18032ae1fd",
+        "shared_overlap.csv": "f65cfa0ad6455a1739c7655cbbb1978e94835fe8649ddd7f536a1d0f22a4e591",
+        "scenarios.csv": "6d9de1c7fc5c403de1752b0f56c01fe3e88117c1edf7fdc31fb8fc275100cefd",
+        "baseline_metrics.csv": "2d56964fded6fdfb60fd5f73cd84e6b10e3e66871508d8ef4e8cf7e487230517",
+        "untouched_rule_burden.csv": "98df58c02bf91c14b51abe8088f64df252c06e8b10b35c8442e68fd5e3216727"
+      },
+      "worker_peak_rss_mb_upper_bound": 8470.34375,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  },
+  {
+    "manifest": {
+      "replication": "uci_credit-random-s12",
+      "dataset": "uci_credit",
+      "pilot_seed": 12,
+      "scheme": "random",
+      "config": "/workspace/masterthesis2/config/thesis/uci_credit.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:47:25+00:00",
+      "elapsed_s": 425.7,
+      "injection_seconds": 2.7,
+      "partitions": {
+        "reference": 4499,
+        "selection": 2252,
+        "test": 2249,
+        "holdout_excluded": 6003,
+        "unused": 14997
+      },
+      "delivery": null,
+      "n_scenarios": 402,
+      "n_failed_scenarios": 0,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 8.2,
+        "tests": {
+          "warn": 41,
+          "pass": 40
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "CONDITIONAL",
+          "reasons": [
+            "SEX: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '1': n\u2248203)",
+            "EDUCATION: 7 of 7 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '0': n\u22480)",
+            "MARRIAGE: 4 of 4 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '0': n\u22481)",
+            "PAY_0: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '8': n\u22480)",
+            "PAY_2: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '8': n\u22480)",
+            "PAY_3: 11 of 11 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '5': n\u22480)",
+            "PAY_4: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '6': n\u22480)",
+            "PAY_5: 9 of 9 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '6': n\u22480)",
+            "PAY_6: 9 of 9 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '6': n\u22480)"
+          ],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 56.31105649299934,
+          "score_seconds": 251.36094375000175,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.03489383799933421,
+          "score_seconds": 6.750409922007748,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.3188090869989537,
+          "score_seconds": 7.135953200986478,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.0028862920007668436,
+          "score_seconds": 3.4470465370177408,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "3fa52f82d4b16c523bd0825a3ac474b7da525a1d4b091a3fda91a285518738d2",
+        "overlap.csv": "d44459a44d275bd38e0dcb030c644bc78b851a4acb5e5276ff58157d15733733",
+        "pr_curves.csv": "2153b054011f48a0a587a5f765e784474c3d29952eb528790625fefdfe518a64",
+        "manifest.json": "16ad6ea41ab9e8f524a69c0c514deef2f62887d60e98fca82f7724a08dd07aa6",
+        "injection_log.parquet": "335eccbf5ecf0ccfdde9f94707b594f43fc1c7348322729e67d5417636d2d697",
+        "failures.csv": "7f8b36a1b4f93265ab561be8edd5a69c94acf5ff8938bd1a1ec8f5301f853aad",
+        "untouched_burden.csv": "e28d508837d51f8f21f980c7b87682d8341335273bd95d1c32a5663dea8648b1",
+        "shared_overlap.csv": "fcba614f65107fa07eeb47f1370cc6505993238b9cecdd4dd5edef6a95ca3790",
+        "scenarios.csv": "883422a775d0957e3aabb34ecbf0cd00af23fbb8c30327e1c508b55d604a64f3",
+        "baseline_metrics.csv": "d508a3b4541287c378d6684cd7b5689df876e090763343b948981d7af5866b90",
+        "untouched_rule_burden.csv": "b3bd8d1c425f18e8510c797fc068aaeb0d415e7308c3d21e81b7258a8a287ad2"
+      },
+      "worker_peak_rss_mb_upper_bound": 6390.04296875,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  },
+  {
+    "manifest": {
+      "replication": "uci_credit-random-s13",
+      "dataset": "uci_credit",
+      "pilot_seed": 13,
+      "scheme": "random",
+      "config": "/workspace/masterthesis2/config/thesis/uci_credit.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:50:43+00:00",
+      "elapsed_s": 433.4,
+      "injection_seconds": 2.1,
+      "partitions": {
+        "reference": 4502,
+        "selection": 2249,
+        "test": 2249,
+        "holdout_excluded": 6003,
+        "unused": 14997
+      },
+      "delivery": null,
+      "n_scenarios": 402,
+      "n_failed_scenarios": 0,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 8.2,
+        "tests": {
+          "warn": 42,
+          "pass": 39
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "CONDITIONAL",
+          "reasons": [
+            "SEX: 2 of 2 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '1': n\u2248202)",
+            "EDUCATION: 7 of 7 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '0': n\u22480)",
+            "MARRIAGE: 4 of 4 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '0': n\u22481)",
+            "PAY_0: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '6': n\u22480)",
+            "PAY_2: 11 of 11 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '8': n\u22480)",
+            "PAY_3: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '1': n\u22480)",
+            "PAY_4: 10 of 10 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '6': n\u22480)",
+            "PAY_5: 8 of 8 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '5': n\u22480)",
+            "PAY_6: 9 of 9 labels have fewer than 999 expected calibration examples; for them the alert rate on genuine values degrades to about 1/(n+1) (e.g. '5': n\u22480)"
+          ],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 59.70633686099973,
+          "score_seconds": 251.89715802200953,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.029769221999231377,
+          "score_seconds": 6.069617054026821,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.23250428000028478,
+          "score_seconds": 7.593587522993403,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.004569783999613719,
+          "score_seconds": 3.5820676979747077,
+          "n_score_calls": 404,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "67587dd95bdf8c394aeabb31b97d8b40fe2218dea0a4abc24fb83e5f7c8590cc",
+        "overlap.csv": "f4bda0912c3d1cb2b836b8bccecd3be96bf6363c59344068b3c39780cc9f6032",
+        "pr_curves.csv": "c9bf8b8c6a3d36d9271b2100d407bfc8fb4b625668688072e9f63debf8034dee",
+        "manifest.json": "6539bdee0e2454378124c83fc0cc53bfd72c35842de4645baaf0d2ac25781b2a",
+        "injection_log.parquet": "0319d123acfd77060e9350798ad32195b6ec080bec771c0033cf0008dba3dfc7",
+        "failures.csv": "7f8b36a1b4f93265ab561be8edd5a69c94acf5ff8938bd1a1ec8f5301f853aad",
+        "untouched_burden.csv": "a757ac7208a672922e98110a4adde1b44095e38abbe301ae38fcb7a18030e860",
+        "shared_overlap.csv": "ef70cb8f0bfe32464aaf534a56d8dc8fa1d132281629c211bec15baf4af8f214",
+        "scenarios.csv": "f18e8fe0f5841936975e30b5481e5133261b70e759ca2f70e36664fea43d495c",
+        "baseline_metrics.csv": "53bd0747648319668b1931dec1e4af03fbd20f1b5fc5b232f070ab5f51fdf5b4",
+        "untouched_rule_burden.csv": "147337d33e69ce743963290e2c5ac82d51fb71b32d2ec71c1b4cc5ab6215073b"
+      },
+      "worker_peak_rss_mb_upper_bound": 8470.34375,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  },
+  {
+    "manifest": {
+      "replication": "uci_wine_white-random-s11",
+      "dataset": "uci_wine_white",
+      "pilot_seed": 11,
+      "scheme": "random",
+      "config": "/workspace/masterthesis2/config/thesis/uci_wine_white.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:48:32+00:00",
+      "elapsed_s": 66.8,
+      "injection_seconds": 0.8,
+      "partitions": {
+        "reference": 1938,
+        "selection": 1003,
+        "test": 998,
+        "holdout_excluded": 959,
+        "unused": 0
+      },
+      "delivery": null,
+      "n_scenarios": 188,
+      "n_failed_scenarios": 6,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 5.6,
+        "tests": {
+          "pass": 24,
+          "warn": 11
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 14.412576591001198,
+          "score_seconds": 25.946616316001382,
+          "n_score_calls": 190,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.010302306000085082,
+          "score_seconds": 1.3251538160020573,
+          "n_score_calls": 190,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.090068498000619,
+          "score_seconds": 1.9069303929991293,
+          "n_score_calls": 190,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.0025543320007272996,
+          "score_seconds": 1.0558026760081702,
+          "n_score_calls": 190,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "85de4a32ab7cbec8bc5f5d8ffb85b4202419c1dc4175d5852baea85205c0c040",
+        "overlap.csv": "1493e4a819c919a4aa14d68cb5b6d5eaef3afb6dcbedff49d635d4ad5d7f938e",
+        "pr_curves.csv": "93a925931bb2c2270c9abad70eefb2ed801db13960136b5ad78c6472fe0901cd",
+        "manifest.json": "78e41a1c07ce3631ded6dee719caf0012b7a69223af8fe9f7d1c369d361a0f65",
+        "injection_log.parquet": "a583ffbabe452ec0b70bfffa26390283e9650c9f5e61e6ae4f6c2aa8957e046b",
+        "failures.csv": "6c29568f61d4ad692a751eb64495c8079fb3bcd2ea10357d797d1d73f0274e26",
+        "untouched_burden.csv": "6d9afd2db358943f5e0f4da35e8567effe1a587c01a0829713d67cb11d325495",
+        "shared_overlap.csv": "124a0ff389dbf7d4ec3491dce362a9045c32cacb5609e34dfc6f2c89d48b2dfa",
+        "scenarios.csv": "3f45cfd0380bcaf72c0d983b35fbc8479b7431eaae401ea352fd655a21f7f5d3",
+        "baseline_metrics.csv": "4db86cff28c1fe59901ee36c2e9835398132ee0e5f921ea52f2512d118037f59",
+        "untouched_rule_burden.csv": "e2c4e7c0712de1d8c8e3a97a3f0b4ab8f6ed781367ab54cef3886814f148df28"
+      },
+      "worker_peak_rss_mb_upper_bound": 6390.04296875,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  },
+  {
+    "manifest": {
+      "replication": "uci_wine_white-random-s12",
+      "dataset": "uci_wine_white",
+      "pilot_seed": 12,
+      "scheme": "random",
+      "config": "/workspace/masterthesis2/config/thesis/uci_wine_white.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:49:39+00:00",
+      "elapsed_s": 67.1,
+      "injection_seconds": 1.1,
+      "partitions": {
+        "reference": 1971,
+        "selection": 960,
+        "test": 1008,
+        "holdout_excluded": 959,
+        "unused": 0
+      },
+      "delivery": null,
+      "n_scenarios": 194,
+      "n_failed_scenarios": 0,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 6.0,
+        "tests": {
+          "pass": 24,
+          "warn": 11
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 14.494564007000008,
+          "score_seconds": 24.95736499600389,
+          "n_score_calls": 196,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.006898298001033254,
+          "score_seconds": 1.4485482030140702,
+          "n_score_calls": 196,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.10046986899942567,
+          "score_seconds": 1.916362244008269,
+          "n_score_calls": 196,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.0025461810000706464,
+          "score_seconds": 1.0325145760143641,
+          "n_score_calls": 196,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "4328e3a7baeeb18cd26c0c899908dcd7b990f3e7780e38002cc25a6f22b77037",
+        "overlap.csv": "a69be1d10a92d5b48cddab001dae299cf6a8b9ccb9cb26b16efdc485a471e63e",
+        "pr_curves.csv": "a492c6f85dec8ad139dda3f2ceb34e0343d7622dd9157c85b97b53e058249707",
+        "manifest.json": "ae91a8f6e2ef2d87919ea62f57104bc0454373c27bb688e14d92be079ab5049b",
+        "injection_log.parquet": "6f1c60450a70c346eb5a2994e3d0effef39f212bcf131cd187da3adaa313d22d",
+        "failures.csv": "7f8b36a1b4f93265ab561be8edd5a69c94acf5ff8938bd1a1ec8f5301f853aad",
+        "untouched_burden.csv": "846b6d2b7671c7255567aa994bcaf3622ea685185e3c934145b5429ca1f11512",
+        "shared_overlap.csv": "c51603bd33f73e84941d23469e23e45751e77bae02dea32fe262c20d243851cd",
+        "scenarios.csv": "b3993eb53c55877456b8695882a15883725ff2c8f23df8fc6e9b25a7931904f7",
+        "baseline_metrics.csv": "b2347578b9428a4a91f5b7f6fc13b8b8aae29a32ec307827cc5b5441c7665d88",
+        "untouched_rule_burden.csv": "1db98c12f29acc8c9909b03736bd5ffde2f4a9cc8d65c28fcee909a2e0625226"
+      },
+      "worker_peak_rss_mb_upper_bound": 6390.04296875,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  },
+  {
+    "manifest": {
+      "replication": "uci_wine_white-random-s13",
+      "dataset": "uci_wine_white",
+      "pilot_seed": 13,
+      "scheme": "random",
+      "config": "/workspace/masterthesis2/config/thesis/uci_wine_white.yaml",
+      "framework_version": "0.1.0",
+      "started_utc": "2026-10-20T23:50:43+00:00",
+      "elapsed_s": 63.9,
+      "injection_seconds": 0.8,
+      "partitions": {
+        "reference": 1974,
+        "selection": 972,
+        "test": 993,
+        "holdout_excluded": 959,
+        "unused": 0
+      },
+      "delivery": null,
+      "n_scenarios": 194,
+      "n_failed_scenarios": 0,
+      "budgets_per_1k": [
+        10.0,
+        25.0,
+        50.0
+      ],
+      "dbt": {
+        "version": "- installed: 1.12.6; - duckdb: 1.11.0 - Up to date!",
+        "elapsed_s": 6.5,
+        "tests": {
+          "pass": 23,
+          "warn": 12
+        }
+      },
+      "detectors": {
+        "cdc": {
+          "detector": "cdc",
+          "name": "cdc_hgb",
+          "params": {
+            "confidence": 0.999,
+            "max_iter": 100,
+            "seed": 0,
+            "rank_score": "normalized_residual",
+            "calibration_rows": 512
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [],
+          "transformations": [
+            "categorical columns encoded as pandas categories fixed to reference levels"
+          ],
+          "fit_seconds": 13.342528193001272,
+          "score_seconds": 25.25068308599475,
+          "n_score_calls": 196,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian": {
+          "detector": "dboost_gaussian",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "fields typed int / float / str as dBoost's reader would type the delivered text",
+            "integral numeric columns expanded as integers (bits, mod, div, gmtime date parts)"
+          ],
+          "fit_seconds": 0.006530815000587609,
+          "score_seconds": 0.9970354680026503,
+          "n_score_calls": 196,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "dboost_gaussian_text": {
+          "detector": "dboost_gaussian_text",
+          "name": "dboost",
+          "params": {
+            "model": "gaussian",
+            "params": [
+              3.0
+            ],
+            "corr_threshold": 0.5,
+            "type_mode": "text"
+          },
+          "granularity": "cell",
+          "provides_scores": true,
+          "fit_scope": "reference",
+          "supervision": "reference_data",
+          "compatibility": "PASS",
+          "reasons": [
+            "Gaussian test-statistic ranking is an extension; native flags are also retained"
+          ],
+          "transformations": [
+            "all fields expanded as text; declared missing values represented as empty strings"
+          ],
+          "fit_seconds": 0.06394352099960088,
+          "score_seconds": 1.5845914660021663,
+          "n_score_calls": 196,
+          "warnings_sample": [],
+          "status": "ok"
+        },
+        "iqr_outlier": {
+          "detector": "iqr_outlier",
+          "name": "iqr_outlier",
+          "params": {
+            "k": 1.5,
+            "fit_on": "reference"
+          },
+          "granularity": "cell",
+          "provides_scores": false,
+          "fit_scope": "reference",
+          "supervision": "none",
+          "compatibility": "PASS",
+          "reasons": [
+            "binary output only (no ranking score)"
+          ],
+          "transformations": [
+            "values compared as numbers / text"
+          ],
+          "fit_seconds": 0.001760949999152217,
+          "score_seconds": 0.866519156992581,
+          "n_score_calls": 196,
+          "warnings_sample": [],
+          "status": "ok"
+        }
+      },
+      "environment": {
+        "python": "3.12.14",
+        "numpy": "2.5.4",
+        "pandas": "2.3.3",
+        "sklearn": "1.9.1",
+        "machine": "x86_64",
+        "cpus": 5
+      }
+    },
+    "completion": {
+      "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+      "outputs": {
+        "detector_metrics.csv": "5568b27ca02c97a841e11e3f2fd473339c7daf3f8a083878945c42c44ab79043",
+        "overlap.csv": "426eadcafd703e6d903b58bdb32c745f4254ad867fcea9cff05f8a7a08cb9058",
+        "pr_curves.csv": "35e43b915b16e8db92da1efeee77cca43e23d486da70c901b33db48edee9b734",
+        "manifest.json": "4f130ab8d7e30757f486fa611d1ff60ba8d889272919b93fc5af731aebd742bc",
+        "injection_log.parquet": "08722b5385ac4af5cc2a90c2acb8b3c77c8f0f32bc90d29563fc9ac8cb076468",
+        "failures.csv": "7f8b36a1b4f93265ab561be8edd5a69c94acf5ff8938bd1a1ec8f5301f853aad",
+        "untouched_burden.csv": "f6b0d75c81b3897801bcf2aa3fb9a90538d349f01368bab0f9f41abce2bfb785",
+        "shared_overlap.csv": "73b904a05c16d368667f7277992c3c59bde1da43e88db6d3461d71b1fde06b39",
+        "scenarios.csv": "1e6b1fb2ae5f9dcd17dbfab18532d20df99f3e04ed58c3260ae9ac2f98d87437",
+        "baseline_metrics.csv": "21fbc3dbe6078e7de7cd37c5294ed01fb18ab2b941fa80518050667e3d57bcda",
+        "untouched_rule_burden.csv": "4a12e7821f14afaa39a2f9dcd9784a24e1740b47efe3044f51437a64f5cd7f7a"
+      },
+      "worker_peak_rss_mb_upper_bound": 6390.04296875,
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.31.dev"
+        },
+        {
+          "internal_api": "openmp",
+          "num_threads": 2,
+          "version": null
+        },
+        {
+          "internal_api": "openblas",
+          "num_threads": 2,
+          "version": "0.3.34.106.0"
+        }
+      ]
+    }
+  }
+]

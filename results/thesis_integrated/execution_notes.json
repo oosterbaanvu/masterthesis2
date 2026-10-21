@@ -1,0 +1,14 @@
+{
+  "scientific_configuration": "config/thesis/study.yaml",
+  "aborted_attempt": {
+    "input_digest": "d734c8a41396ca84f3d9cef8c4fd949fd3e9eba91f10aabf8ec2aacb0f41666a",
+    "local_archive": "results/runs/thesis_integrated_thread_init_aborted",
+    "reason": "Native libraries initialized before environment thread limits; five threads observed instead of two. Two incomplete bank jobs stopped. Initial completed wine timing/realization probe excluded from final aggregate.",
+    "outcome_tuning": false
+  },
+  "final_attempt": {
+    "input_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f",
+    "correction": "Runtime threadpoolctl limit 2 in workers, environment limits before interpreter start, passive OpenMP waiting, persistent console/test logs.",
+    "scientific_parameters_changed": false
+  }
+}

@@ -27,6 +27,13 @@ missing-value recall over conventional completeness controls; Rayyan references 
 See [`docs/real_error_benchmark_report.md`](docs/real_error_benchmark_report.md) for results and limits,
 and [`docs/published_benchmark_datasets.md`](docs/published_benchmark_datasets.md) for acquisition provenance.
 
+Integrated exploratory study: the new research branch adds white Wine Quality, a genuinely shared
+total review budget and naive/uncertainty-guarded detector selection. The scientific question stays
+unchanged. See [`docs/thesis_scale_pilot_report.md`](docs/thesis_scale_pilot_report.md),
+[`docs/thesis_research_design.md`](docs/thesis_research_design.md) and
+[`docs/thesis_literature_review.md`](docs/thesis_literature_review.md). Earlier experiments remain intact;
+the reserved confirmatory holdout is excluded.
+
 ## What it does
 
 ```
@@ -94,6 +101,24 @@ for the figures.
 
 Set `OMP_NUM_THREADS` when running several scoring jobs at the same time.
 
+### Integrated exploratory study
+
+```bash
+uv sync --frozen --extra dev --extra figures
+python scripts/download_datasets.py uci_credit uci_bank_marketing uci_wine_white
+OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 OMP_WAIT_POLICY=PASSIVE DBT_SEND_ANONYMOUS_USAGE_STATS=false \
+  python scripts/run_thesis_study.py --workers 2
+python scripts/analyse_thesis_study.py
+# Reuses the nine frozen dirty-only scans from the published-benchmark phase:
+python scripts/validate_thesis_transfer.py
+python scripts/render_thesis_tables.py > results/thesis_integrated/tables.md
+```
+
+The driver resumes only matching completed outputs and refuses changed frozen inputs. Native runtime
+thread limits are enforced after import/fork. Full values/logs remain in ignored `results/runs/`;
+committed tables, output hashes and execution notes are in `results/thesis_integrated/`. Published
+transfer requires the prior frozen scan artifacts; see the report for reproduction order and limits.
+
 Isolated environments for the *original* detector implementations (only needed for fidelity checks):
 
 ```bash
@@ -134,6 +159,10 @@ docs/                           research documentation (see below)
 
 | Document | Content |
 |---|---|
+| [`docs/thesis_scale_pilot_report.md`](docs/thesis_scale_pilot_report.md) | Integrated study: measured total-budget utility, selection reliability and qualified published transfer |
+| [`docs/thesis_literature_review.md`](docs/thesis_literature_review.md) | Detector information tracks, source/licence qualification and contribution boundary |
+| [`docs/thesis_research_design.md`](docs/thesis_research_design.md) | Frozen exploratory protocol, leakage safeguards, total-budget policy and selectors |
+| [`docs/thesis_proposal_draft.md`](docs/thesis_proposal_draft.md) | Evidence-informed MSc proposal, scope and confirmatory prerequisites |
 | [`docs/comprehensive_pilot_report.md`](docs/comprehensive_pilot_report.md) | **Pilot results and answers to the ten decisive questions** |
 | [`docs/post_pilot_research_directions.md`](docs/post_pilot_research_directions.md) | Defensible research directions after the pilot |
 | [`docs/dataset_overview.md`](docs/dataset_overview.md) | Per-dataset source, licence, hash, roles, ground truth, suitability |
