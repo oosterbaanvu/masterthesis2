@@ -1,0 +1,159 @@
+dataset: uci_wine_white
+holdout_seed: 1
+pilot_seeds:
+- 11
+- 12
+- 13
+schemes:
+- random
+fractions:
+- 0.5
+- 0.25
+- 0.25
+pool_max_rows: 9000
+rates:
+- 0.01
+- 0.02
+seeds_per_cell: 3
+budgets_per_1k:
+- 10
+- 25
+- 50
+overlap_budget: 25
+shared_total_budget: true
+mechanisms:
+  ecar:
+    mechanism: soft_ecar
+  ear_alcohol:
+    mechanism: soft_ear
+    params:
+      condition_column: alcohol
+      strength: 4
+      direction: high
+  enar_high:
+    mechanism: soft_enar
+    params:
+      direction: high
+      strength: 4
+  enar_low:
+    mechanism: soft_enar
+    params:
+      direction: low
+      strength: 8
+  ear_density:
+    mechanism: soft_ear
+    params:
+      condition_column: density
+      strength: 8
+      direction: high
+strategies:
+  simple:
+    mechanisms:
+    - ecar
+  diverse:
+    mechanisms:
+    - ecar
+    - ear_alcohol
+    - enar_high
+cases:
+- id: alcohol_fraction
+  column: alcohol
+  operation: scale
+  params:
+    factor: 0.1
+  family: scale
+- id: density_x10
+  column: density
+  operation: scale
+  params:
+    factor: 10
+  family: scale
+- id: sugar_subst
+  column: residual sugar
+  operation: plausible_substitution
+  family: substitution
+- id: acidity_subst
+  column: fixed acidity
+  operation: plausible_substitution
+  family: substitution
+- id: sulphates_subst
+  column: sulphates
+  operation: plausible_substitution
+  family: substitution
+- id: sulfur_transp
+  column: total sulfur dioxide
+  operation: digit_transposition
+  family: keying
+- id: sugar_round
+  column: residual sugar
+  operation: rounding
+  params:
+    unit: 5
+  family: precision
+- id: ph_missing
+  column: pH
+  operation: missing
+  family: sanity
+  role: sanity
+heldout:
+  mechanisms:
+  - ecar
+  - enar_low
+  - ear_density
+  cases:
+  - id: h_free_scale
+    column: free sulfur dioxide
+    operation: scale
+    params:
+      factor: 10
+    family: scale
+  - id: h_chloride_subst
+    column: chlorides
+    operation: plausible_substitution
+    family: substitution
+  - id: h_alcohol_subst
+    column: alcohol
+    operation: plausible_substitution
+    family: substitution
+  - id: h_density_round
+    column: density
+    operation: rounding
+    params:
+      unit: 0.1
+    family: precision
+primary_detectors:
+- cdc
+- dboost_gaussian
+- dboost_gaussian_text
+detectors:
+  cdc:
+    name: cdc_hgb
+    params:
+      confidence: 0.999
+      max_iter: 100
+      seed: 0
+      rank_score: normalized_residual
+      calibration_rows: 512
+  dboost_gaussian:
+    name: dboost
+    params:
+      model: gaussian
+      params:
+      - 3.0
+      corr_threshold: 0.5
+  dboost_gaussian_text:
+    name: dboost
+    params:
+      model: gaussian
+      params:
+      - 3.0
+      corr_threshold: 0.5
+      type_mode: text
+  iqr_outlier:
+    name: iqr_outlier
+    params:
+      k: 1.5
+      fit_on: reference
+decision:
+  min_gain: 0.005
+  n_boot: 1000

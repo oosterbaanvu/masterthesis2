@@ -1,0 +1,44 @@
+{
+  "checked_utc": "2026-10-21T00:00:18.807311+00:00",
+  "pytest": {
+    "command": "python -m pytest -q -ra",
+    "passed": 199,
+    "skipped": 5,
+    "warnings": 2,
+    "elapsed_seconds": 71.54,
+    "skip_reasons": {
+      "optional_kaggle_baf_gmsc": 2,
+      "isolated_original_dboost_not_installed": 3
+    },
+    "dbt_integration": "executed"
+  },
+  "ruff": {
+    "command": "ruff check src scripts tests",
+    "status": "PASS"
+  },
+  "study": {
+    "runs": 11,
+    "successful_scenarios": 3318,
+    "failed_injections": 110,
+    "successful_configuration_fits": 44,
+    "native_threads_per_pool": 2,
+    "frozen_digest": "d2bf3309b459541eba713123231607a8916e0bd67273974840de2978c97a3f5f"
+  },
+  "holdout_audit": {
+    "reserved_injections": 0,
+    "non_design_sql_rows": 0,
+    "count_and_uniqueness_checks": "PASS in all 11 runs"
+  },
+  "reproducibility": {
+    "scientific_wine_files_byte_identical": 9,
+    "analysis_summary_files_byte_identical": 20,
+    "resume_reused_runs": 11,
+    "resume_pending_jobs": 0
+  },
+  "analysis_code_sha256": {
+    "scripts/analyse_thesis_study.py": "12e9ee68f22476c3d3ff9131e900fc0163467a72056678c6842ad6e53e1d1392",
+    "scripts/render_thesis_tables.py": "7c071168953559d60070f730f3aacb09bfd8e01ac97f386495e27daa7a02bd7c",
+    "scripts/validate_thesis_transfer.py": "b8e85344b83758275e711d64b2ee13fdf3d293c00afd9ef6f89b8ebb0bcde9e0"
+  },
+  "status": "EXPLORATORY; confirmatory evaluation and supervisor approval remain separate"
+}

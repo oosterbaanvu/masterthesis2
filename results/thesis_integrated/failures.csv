@@ -1,0 +1,111 @@
+sid,set,case_id,stage,error,dataset,pilot_seed,scheme
+sel_simple:month.category_swap.soft_ecar.r0.01.s19017082.8c3a09a1e7,sel_simple,month_swap,injection,need 53 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_simple:month.category_swap.soft_ecar.r0.01.s16352043.099f870c2a,sel_simple,month_swap,injection,need 53 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_simple:month.category_swap.soft_ecar.r0.01.s434910897.2069d7a637,sel_simple,month_swap,injection,need 53 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_simple:month.category_swap.soft_ecar.r0.02.s463677475.8de0ca47da,sel_simple,month_swap,injection,need 106 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_simple:month.category_swap.soft_ecar.r0.02.s973320642.95d1d8c0a6,sel_simple,month_swap,injection,need 106 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_simple:month.category_swap.soft_ecar.r0.02.s600709257.e44919c660,sel_simple,month_swap,injection,need 106 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_diverse:month.category_swap.soft_enar.r0.01.s252052834.6364840254,sel_diverse,month_swap,injection,need 53 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_diverse:month.category_swap.soft_ecar.r0.01.s443760410.127d47c1d8,sel_diverse,month_swap,injection,need 53 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_diverse:month.category_swap.soft_ear.r0.01.s581775931.456b6740d0,sel_diverse,month_swap,injection,need 53 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_diverse:month.category_swap.soft_enar.r0.02.s906264437.1f97d8f266,sel_diverse,month_swap,injection,need 106 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_diverse:month.category_swap.soft_ecar.r0.02.s627595428.a043156500,sel_diverse,month_swap,injection,need 106 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+sel_diverse:month.category_swap.soft_ear.r0.02.s690380576.32a3d246cf,sel_diverse,month_swap,injection,need 106 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.category_swap.soft_ecar.r0.01.s614678397.baa51fb6b5,test_simple,month_swap,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.category_swap.soft_ecar.r0.01.s914605934.1c6822b97a,test_simple,month_swap,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.category_swap.soft_ecar.r0.01.s262952790.e3fae87110,test_simple,month_swap,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.category_swap.soft_ecar.r0.02.s110429521.662022bbb5,test_simple,month_swap,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.category_swap.soft_ecar.r0.02.s653990710.900aafb590,test_simple,month_swap,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.category_swap.soft_ecar.r0.02.s422511410.5ad0b58ccf,test_simple,month_swap,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.01.s438266733.1dc61a584b,test_simple,month_prev,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.01.s441746998.588bcec381,test_simple,month_prev,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.01.s604704735.57da1c27ef,test_simple,month_prev,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.02.s779171932.cf49cc33ea,test_simple,month_prev,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.02.s441730678.566f3a6fdd,test_simple,month_prev,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.02.s839664907.65307bea80,test_simple,month_prev,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.category_swap.soft_enar.r0.01.s751527142.17a9f52c00,test_diverse,month_swap,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.category_swap.soft_ecar.r0.01.s431275771.5cd6d315eb,test_diverse,month_swap,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.category_swap.soft_ear.r0.01.s516257348.3a8a309c70,test_diverse,month_swap,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.category_swap.soft_enar.r0.02.s140579428.d4acb37298,test_diverse,month_swap,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.category_swap.soft_ecar.r0.02.s453973943.4fb1c73141,test_diverse,month_swap,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.category_swap.soft_ear.r0.02.s23530010.c7a3ca92db,test_diverse,month_swap,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.ordinal_shift.soft_ear.r0.01.s279271404.40e2e7b1ab,test_diverse,month_prev,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.ordinal_shift.soft_enar.r0.01.s881203402.fc181fb8f3,test_diverse,month_prev,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.ordinal_shift.soft_ecar.r0.01.s537430135.f01a31ebbe,test_diverse,month_prev,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.ordinal_shift.soft_ear.r0.02.s831560112.11fab5a0ab,test_diverse,month_prev,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.ordinal_shift.soft_enar.r0.02.s109364050.96984ad620,test_diverse,month_prev,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_diverse:month.ordinal_shift.soft_ecar.r0.02.s850920361.abcd35c855,test_diverse,month_prev,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_heldout:contact.category_swap.soft_ear.r0.01.s122828957.a831b9bd7e,test_heldout,h_contact_swap,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_heldout:contact.category_swap.soft_ecar.r0.01.s569367422.c91c25c90a,test_heldout,h_contact_swap,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_heldout:contact.category_swap.soft_enar.r0.01.s448414494.c504eda73d,test_heldout,h_contact_swap,injection,need 42 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_heldout:contact.category_swap.soft_ear.r0.02.s839471825.3a7539450b,test_heldout,h_contact_swap,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_heldout:contact.category_swap.soft_ecar.r0.02.s163538110.50f72f23cd,test_heldout,h_contact_swap,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_heldout:contact.category_swap.soft_enar.r0.02.s585370896.54933ec3af,test_heldout,h_contact_swap,injection,need 83 eligible cells but only 0 are eligible,uci_bank_marketing,1,delivery
+test_heldout:cons.conf.idx.plausible_substitution.soft_ear.r0.01.s915438820.b20943b43c,test_heldout,h_cci_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:cons.conf.idx.plausible_substitution.soft_ecar.r0.01.s542101220.7f791f7524,test_heldout,h_cci_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:cons.conf.idx.plausible_substitution.soft_enar.r0.01.s937865476.05497be775,test_heldout,h_cci_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:cons.conf.idx.plausible_substitution.soft_ear.r0.02.s17102074.081de7b3a4,test_heldout,h_cci_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:cons.conf.idx.plausible_substitution.soft_ecar.r0.02.s761105550.f4af416b72,test_heldout,h_cci_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:cons.conf.idx.plausible_substitution.soft_enar.r0.02.s547554068.34e307ba47,test_heldout,h_cci_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:previous.plausible_substitution.soft_enar.r0.01.s999769434.b2ba78985b,test_heldout,h_previous_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:previous.plausible_substitution.soft_ecar.r0.01.s613232574.c2e0e84fe8,test_heldout,h_previous_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:previous.plausible_substitution.soft_enar.r0.01.s244138232.8cda0f8ab8,test_heldout,h_previous_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:previous.plausible_substitution.soft_ecar.r0.02.s34345205.fa1a1e5709,test_heldout,h_previous_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:previous.plausible_substitution.soft_enar.r0.02.s985775534.264f3646a2,test_heldout,h_previous_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+test_heldout:previous.plausible_substitution.soft_ecar.r0.02.s214152203.9dfd71fdd7,test_heldout,h_previous_subst,injection,no cell changed,uci_bank_marketing,1,delivery
+sel_simple:month.category_swap.soft_ecar.r0.01.s969553904.b5f7997856,sel_simple,month_swap,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.category_swap.soft_ecar.r0.01.s568813618.0e4ec41bb5,sel_simple,month_swap,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.category_swap.soft_ecar.r0.01.s302223933.2f2681ede6,sel_simple,month_swap,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.category_swap.soft_ecar.r0.02.s38454663.e6c8139ecf,sel_simple,month_swap,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.category_swap.soft_ecar.r0.02.s811062420.d5d3a5cea5,sel_simple,month_swap,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.category_swap.soft_ecar.r0.02.s555098338.b4e11cca77,sel_simple,month_swap,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.ordinal_shift.soft_ecar.r0.01.s26179599.0a3e00412a,sel_simple,month_prev,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.ordinal_shift.soft_ecar.r0.01.s483293766.08bc30a434,sel_simple,month_prev,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.ordinal_shift.soft_ecar.r0.01.s256063541.9edcaf88a4,sel_simple,month_prev,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.ordinal_shift.soft_ecar.r0.02.s175856458.0830977488,sel_simple,month_prev,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.ordinal_shift.soft_ecar.r0.02.s996841890.d8b93d9913,sel_simple,month_prev,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_simple:month.ordinal_shift.soft_ecar.r0.02.s296255940.766e4d3715,sel_simple,month_prev,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.category_swap.soft_enar.r0.01.s732845304.cb05cbf366,sel_diverse,month_swap,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.category_swap.soft_ecar.r0.01.s355483368.e550bf45ee,sel_diverse,month_swap,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.category_swap.soft_ear.r0.01.s968660957.17098d3486,sel_diverse,month_swap,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.category_swap.soft_enar.r0.02.s507621037.01f0729010,sel_diverse,month_swap,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.category_swap.soft_ecar.r0.02.s52177462.e9b2e4beec,sel_diverse,month_swap,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.category_swap.soft_ear.r0.02.s746676714.6f41387d03,sel_diverse,month_swap,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.ordinal_shift.soft_ear.r0.01.s16607422.94bbb40836,sel_diverse,month_prev,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.ordinal_shift.soft_enar.r0.01.s190209554.278951f210,sel_diverse,month_prev,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.ordinal_shift.soft_ecar.r0.01.s403461052.e413cabce5,sel_diverse,month_prev,injection,need 30 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.ordinal_shift.soft_ear.r0.02.s773440763.59267e4bbf,sel_diverse,month_prev,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.ordinal_shift.soft_enar.r0.02.s428392521.aa6e9cbe95,sel_diverse,month_prev,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+sel_diverse:month.ordinal_shift.soft_ecar.r0.02.s515642180.3121a3fa09,sel_diverse,month_prev,injection,need 59 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.category_swap.soft_ecar.r0.01.s97965845.5ea1a07a03,test_simple,month_swap,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.category_swap.soft_ecar.r0.01.s562082687.0ccdfcd464,test_simple,month_swap,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.category_swap.soft_ecar.r0.01.s894655693.cfd4ba1152,test_simple,month_swap,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.category_swap.soft_ecar.r0.02.s191930779.b1d702a3f7,test_simple,month_swap,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.category_swap.soft_ecar.r0.02.s21723364.52a02c7499,test_simple,month_swap,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.category_swap.soft_ecar.r0.02.s415359415.0d295ed306,test_simple,month_swap,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.01.s752940570.328cc634d5,test_simple,month_prev,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.01.s282820351.3e46d7e2e3,test_simple,month_prev,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.01.s384097325.aa8261989f,test_simple,month_prev,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.02.s99488061.96c662d802,test_simple,month_prev,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.02.s611361351.fda9bf0d29,test_simple,month_prev,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_simple:month.ordinal_shift.soft_ecar.r0.02.s792886681.2d55d11d60,test_simple,month_prev,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.category_swap.soft_enar.r0.01.s124802565.e1a3233b61,test_diverse,month_swap,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.category_swap.soft_ecar.r0.01.s810915116.61885c9d27,test_diverse,month_swap,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.category_swap.soft_ear.r0.01.s232650490.4a9cff18b8,test_diverse,month_swap,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.category_swap.soft_enar.r0.02.s156974179.4407a56d51,test_diverse,month_swap,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.category_swap.soft_ecar.r0.02.s809506802.b4c883c53a,test_diverse,month_swap,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.category_swap.soft_ear.r0.02.s521620449.a331a5178f,test_diverse,month_swap,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.ordinal_shift.soft_ear.r0.01.s205486858.8f25a0b1fd,test_diverse,month_prev,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.ordinal_shift.soft_enar.r0.01.s698201811.3326096e96,test_diverse,month_prev,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.ordinal_shift.soft_ecar.r0.01.s411709610.ccf6f4d77c,test_diverse,month_prev,injection,need 22 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.ordinal_shift.soft_ear.r0.02.s440237741.9465add986,test_diverse,month_prev,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.ordinal_shift.soft_enar.r0.02.s36522973.8884c94aac,test_diverse,month_prev,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_diverse:month.ordinal_shift.soft_ecar.r0.02.s790719320.2431b41b74,test_diverse,month_prev,injection,need 44 eligible cells but only 0 are eligible,uci_bank_marketing,2,delivery
+test_heldout:previous.plausible_substitution.soft_enar.r0.01.s158756368.b849e42ed5,test_heldout,h_previous_subst,injection,no cell changed,uci_bank_marketing,2,delivery
+test_heldout:previous.plausible_substitution.soft_enar.r0.02.s252829873.21742dd229,test_heldout,h_previous_subst,injection,no cell changed,uci_bank_marketing,2,delivery
+test_heldout:chlorides.plausible_substitution.soft_enar.r0.01.s780616585.d9e48d3b96,test_heldout,h_chloride_subst,injection,no cell changed,uci_wine_white,11,random
+test_heldout:chlorides.plausible_substitution.soft_ear.r0.01.s400633478.9f33f9d251,test_heldout,h_chloride_subst,injection,no cell changed,uci_wine_white,11,random
+test_heldout:chlorides.plausible_substitution.soft_ecar.r0.01.s984367182.64fd4bf1c8,test_heldout,h_chloride_subst,injection,no cell changed,uci_wine_white,11,random
+test_heldout:chlorides.plausible_substitution.soft_enar.r0.02.s255138967.6d4b86fb05,test_heldout,h_chloride_subst,injection,no cell changed,uci_wine_white,11,random
+test_heldout:chlorides.plausible_substitution.soft_ear.r0.02.s86316359.beea39801a,test_heldout,h_chloride_subst,injection,no cell changed,uci_wine_white,11,random
+test_heldout:chlorides.plausible_substitution.soft_ecar.r0.02.s504904862.3928184c85,test_heldout,h_chloride_subst,injection,no cell changed,uci_wine_white,11,random

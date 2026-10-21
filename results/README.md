@@ -11,5 +11,10 @@
   pairs, compatibility/label/workload tables and the frozen configuration/code fingerprints. No raw
   record values are included. Reproduce with `python scripts/evaluate_real_error_benchmarks.py`;
   see `docs/real_error_benchmark_report.md`. Predictions and full findings stay in ignored `runs/`.
+- `thesis_integrated/` (committed): exploratory shared-total-budget results, paired selector/design
+  comparisons, conditional case uncertainty, workload, scenario failures and run/output fingerprints.
+  This is a new estimand; do not pool these numbers with the earlier additive-budget pilot. Reproduce
+  with `scripts/run_thesis_study.py`, `analyse_thesis_study.py` and `validate_thesis_transfer.py`; see
+  `docs/thesis_scale_pilot_report.md`. Figures are in `docs/figures/thesis/`; raw cells remain ignored.
 
 Everything in this folder is qualification or feasibility evidence; none of it is a confirmatory result.

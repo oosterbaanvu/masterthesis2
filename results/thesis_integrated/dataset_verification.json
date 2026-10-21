@@ -1,0 +1,164 @@
+{
+  "uci_credit": {
+    "dataset": "uci_credit",
+    "title": "Default of Credit Card Clients (Taiwan, 2005)",
+    "status": "VERIFIED",
+    "checked_utc": "2026-10-20T23:29:57+00:00",
+    "files": [
+      {
+        "path": "default_of_credit_card_clients.xls",
+        "sha256": "30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933",
+        "bytes": 5539328,
+        "writable": false
+      }
+    ],
+    "problems": [],
+    "unpinned": [],
+    "shape_check": {
+      "ok": true,
+      "problems": [],
+      "summary": "30000 rows x 25 cols"
+    }
+  },
+  "uci_bank_marketing": {
+    "dataset": "uci_bank_marketing",
+    "title": "Bank Marketing (Portuguese bank telemarketing, May 2008 - Nov 2010), bank-additional-full",
+    "status": "VERIFIED",
+    "checked_utc": "2026-10-20T23:29:58+00:00",
+    "files": [
+      {
+        "path": "bank-additional-full.csv",
+        "sha256": "74adfc578bf77a7ff4bb1ba4a9f8709d9e3c6907342959c2c8416847e0afb4d8",
+        "bytes": 5834924,
+        "writable": false
+      },
+      {
+        "path": "bank-additional-names.txt",
+        "sha256": "10045462a4c026f858dffa159370c4270510230c1fc63c6c91ca51bba4b3df26",
+        "bytes": 5458,
+        "writable": false
+      },
+      {
+        "path": "bank-full.csv",
+        "sha256": "d1513ec63b385506f7cfce9f2c5caa9fe99e7ba4e8c3fa264b3aaf0f849ed32d",
+        "bytes": 4610348,
+        "writable": false
+      }
+    ],
+    "problems": [],
+    "unpinned": [],
+    "shape_check": {
+      "ok": true,
+      "problems": [],
+      "summary": "41188 rows x 21 cols"
+    }
+  },
+  "uci_wine_white": {
+    "dataset": "uci_wine_white",
+    "title": "Wine Quality (white Vinho Verde, UCI 186)",
+    "status": "VERIFIED",
+    "checked_utc": "2026-10-20T23:29:58+00:00",
+    "files": [
+      {
+        "path": "winequality-white.csv",
+        "sha256": "76c3f809815c17c07212622f776311faeb31e87610d52c26d87d6e361b169836",
+        "bytes": 264426,
+        "writable": false
+      },
+      {
+        "path": "winequality.names",
+        "sha256": "15d215e73b39105952380fd487e4ce1bf5a6b83a425abb285c2ec55193d3ca92",
+        "bytes": 3305,
+        "writable": false
+      }
+    ],
+    "problems": [],
+    "unpinned": [],
+    "shape_check": {
+      "ok": true,
+      "problems": [],
+      "summary": "4898 rows x 12 cols"
+    }
+  },
+  "raha_rayyan": {
+    "dataset": "raha_rayyan",
+    "title": "Rayyan bibliographic records (Raha SIGMOD 2019 benchmark)",
+    "status": "VERIFIED",
+    "checked_utc": "2026-10-20T23:29:58+00:00",
+    "files": [
+      {
+        "path": "dirty.csv",
+        "sha256": "7e25e6db262b0c72ca2d9735d5959599cf5a582e1c705459507c7b45d0d1d174",
+        "bytes": 273084,
+        "writable": false
+      },
+      {
+        "path": "clean.csv",
+        "sha256": "23159f43c0706782388ed8957ad0c74eb7b88bc98f34d65bd49296e186d4673f",
+        "bytes": 272785,
+        "writable": false
+      }
+    ],
+    "problems": [],
+    "unpinned": [],
+    "shape_check": {
+      "ok": true,
+      "problems": [],
+      "summary": "1000 rows x 11 cols; dirty (1000, 11), clean (1000, 11)"
+    }
+  },
+  "jung_restaurant": {
+    "dataset": "jung_restaurant",
+    "title": "Restaurant (Jung et al. JDIQ 2025 error-model experiment)",
+    "status": "VERIFIED",
+    "checked_utc": "2026-10-20T23:29:58+00:00",
+    "files": [
+      {
+        "path": "dirty.csv",
+        "sha256": "13285f246daed35bffa7f1abf5cfcdc1069a4d73b196af017ffe2d3822191760",
+        "bytes": 62251,
+        "writable": false
+      },
+      {
+        "path": "clean.csv",
+        "sha256": "4273d92fb4246732fabdc13b449786458d97995cd179780b6f7c6a756351d953",
+        "bytes": 63454,
+        "writable": false
+      }
+    ],
+    "problems": [],
+    "unpinned": [],
+    "shape_check": {
+      "ok": true,
+      "problems": [],
+      "summary": "864 rows x 6 cols; dirty (864, 6), clean (864, 6)"
+    }
+  },
+  "jung_cars": {
+    "dataset": "jung_cars",
+    "title": "Cars (Jung et al. JDIQ 2025 error-model experiment; format caveat)",
+    "status": "VERIFIED",
+    "checked_utc": "2026-10-20T23:29:58+00:00",
+    "files": [
+      {
+        "path": "dirty.csv",
+        "sha256": "c803f870e22539a69250ee36c79e91364217f32c07bbb53f289952d8e9be9ff7",
+        "bytes": 21936,
+        "writable": false
+      },
+      {
+        "path": "clean.csv",
+        "sha256": "29d0feff7af38acaea5a96d225fa4a213a057ed8f03614881be6abd42d1b553b",
+        "bytes": 22312,
+        "writable": false
+      }
+    ],
+    "problems": [],
+    "unpinned": [],
+    "shape_check": {
+      "ok": true,
+      "problems": [],
+      "summary": "406 rows x 9 cols; dirty (406, 9), clean (406, 9)"
+    }
+  }
+}

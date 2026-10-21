@@ -1,0 +1,5 @@
+{
+  "source_plan_sha256": "ef2e1c091efef34ba71677e042640c17d4678a13331c4b4b42b358a569cd059f",
+  "new_policy": "half baseline first (ceil); novel detector cells next; unused capacity returns to baseline; no free baseline credit; ties seeded uniform cell permutation 0",
+  "note": "Reused earlier frozen dirty-only predictions. No new model fit or injection. Not new independent replications."
+}

@@ -1,0 +1,295 @@
+dataset: uci_credit
+holdout_seed: 1
+pilot_seeds:
+- 11
+- 12
+- 13
+schemes:
+- random
+fractions:
+- 0.5
+- 0.25
+- 0.25
+rates:
+- 0.01
+- 0.02
+seeds_per_cell: 3
+budgets_per_1k:
+- 10
+- 25
+- 50
+overlap_budget: 25
+mechanisms:
+  ecar:
+    mechanism: soft_ecar
+    rationale: errors independent of the data
+  ear_limit_high:
+    mechanism: soft_ear
+    params:
+      condition_column: LIMIT_BAL
+      direction: high
+      strength: 4.0
+    rationale: errors concentrated in high-limit accounts handled by a separate process
+  ear_delinquent:
+    mechanism: soft_ear
+    params:
+      condition_column: PAY_0
+      segment_values:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      strength: 4.0
+    rationale: errors concentrated in delinquent accounts, which pass through a collections
+      system
+  enar_high:
+    mechanism: soft_enar
+    params:
+      direction: high
+      strength: 4.0
+    categorical_segments:
+      PAY_0:
+      - 0
+      EDUCATION:
+      - 2
+      MARRIAGE:
+      - 1
+    rationale: 'value-dependent errors: large amounts / one code mis-mapped'
+  window_ear_limit:
+    mechanism: tab_err_ear
+    params:
+      condition_column: LIMIT_BAL
+    rationale: 'tab_err EAR: contiguous window of the sorted limit (hard dependence)'
+  window_enar:
+    mechanism: tab_err_enar
+    rationale: 'tab_err ENAR: contiguous window of the sorted own value'
+  id_block:
+    mechanism: tab_err_ear
+    params:
+      condition_column: ID
+    rationale: 'realistic batch error: one contiguous block of records (one upstream
+      file segment)'
+  enar_low:
+    mechanism: soft_enar
+    params:
+      direction: low
+      strength: 8.0
+    categorical_segments:
+      PAY_3:
+      - -1
+      PAY_5:
+      - -1
+    rationale: 'held out: value dependence in the other direction'
+  ear_age_high:
+    mechanism: soft_ear
+    params:
+      condition_column: AGE
+      direction: high
+      strength: 8.0
+    rationale: 'held out: dependence on an attribute no strategy conditions on'
+strategies:
+  simple:
+    mechanisms:
+    - ecar
+  diverse:
+    mechanisms:
+    - ecar
+    - ear_limit_high
+    - enar_high
+cases:
+- id: bill1_x10
+  column: BILL_AMT1
+  operation: scale
+  params:
+    factor: 10
+  family: scale
+- id: bill1_k
+  column: BILL_AMT1
+  operation: scale
+  params:
+    factor: 0.001
+  family: scale
+- id: pay1_x10
+  column: PAY_AMT1
+  operation: scale
+  params:
+    factor: 10
+  family: scale
+- id: pay0_swap
+  column: PAY_0
+  operation: category_swap
+  params:
+    weighing: frequency
+  family: valid_category
+- id: edu_swap
+  column: EDUCATION
+  operation: category_swap
+  params:
+    weighing: frequency
+  family: valid_category
+- id: mar_swap
+  column: MARRIAGE
+  operation: category_swap
+  params:
+    weighing: frequency
+  family: valid_category
+- id: pay0_remap
+  column: PAY_0
+  operation: code_remap
+  family: valid_category
+- id: limit_subst
+  column: LIMIT_BAL
+  operation: plausible_substitution
+  family: substitution
+- id: bill1_subst
+  column: BILL_AMT1
+  operation: plausible_substitution
+  family: substitution
+- id: age_subst
+  column: AGE
+  operation: plausible_substitution
+  family: substitution
+- id: bill1_shift
+  column: BILL_AMT1
+  operation: period_shift
+  params:
+    source_column: BILL_AMT2
+  family: shift
+- id: pay0_shift
+  column: PAY_0
+  operation: period_shift
+  params:
+    source_column: PAY_2
+  family: shift
+- id: limit_transp
+  column: LIMIT_BAL
+  operation: digit_transposition
+  family: keying
+- id: pay1_round
+  column: PAY_AMT1
+  operation: rounding
+  params:
+    unit: 1000
+  family: precision
+- id: pay1_sign
+  column: PAY_AMT1
+  operation: sign_flip
+  family: sanity
+  role: sanity
+- id: age_missing
+  column: AGE
+  operation: missing
+  family: sanity
+  role: sanity
+- id: edu_invalid
+  column: EDUCATION
+  operation: invalid_code
+  params:
+    code: 9
+  family: sanity
+  role: sanity
+heldout:
+  mechanisms:
+  - ecar
+  - enar_low
+  - ear_age_high
+  cases:
+  - id: h_bill3_x10
+    column: BILL_AMT3
+    operation: scale
+    params:
+      factor: 10
+    family: scale
+  - id: h_pay3_x10
+    column: PAY_AMT3
+    operation: scale
+    params:
+      factor: 10
+    family: scale
+  - id: h_bill4_k
+    column: BILL_AMT4
+    operation: scale
+    params:
+      factor: 0.001
+    family: scale
+  - id: h_limit_x10
+    column: LIMIT_BAL
+    operation: scale
+    params:
+      factor: 10
+    family: scale
+  - id: h_pay3_swap
+    column: PAY_3
+    operation: category_swap
+    params:
+      weighing: frequency
+    family: valid_category
+  - id: h_pay5_shift
+    column: PAY_5
+    operation: period_shift
+    params:
+      source_column: PAY_6
+    family: shift
+  - id: h_bill2_subst
+    column: BILL_AMT2
+    operation: plausible_substitution
+    family: substitution
+  - id: h_pay2_transp
+    column: PAY_AMT2
+    operation: digit_transposition
+    family: keying
+  - id: h_bill5_round
+    column: BILL_AMT5
+    operation: rounding
+    params:
+      unit: 1000
+    family: precision
+  - id: h_age_transp
+    column: AGE
+    operation: digit_transposition
+    family: keying
+primary_detectors:
+- cdc
+- dboost_gaussian
+- dboost_gaussian_text
+detectors:
+  cdc:
+    name: cdc_hgb
+    params:
+      confidence: 0.999
+      max_iter: 100
+      seed: 0
+      rank_score: normalized_residual
+      calibration_rows: 512
+  dboost_gaussian:
+    name: dboost
+    params:
+      model: gaussian
+      params:
+      - 3.0
+      corr_threshold: 0.5
+  dboost_gaussian_text:
+    name: dboost
+    params:
+      model: gaussian
+      params:
+      - 3.0
+      corr_threshold: 0.5
+      type_mode: text
+  iqr_outlier:
+    name: iqr_outlier
+    params:
+      k: 1.5
+      fit_on: reference
+decision:
+  min_gain: 0.05
+  n_boot: 2000
+delivery_seeds:
+- 1
+- 2
+pool_max_rows: 9000
+shared_total_budget: true
